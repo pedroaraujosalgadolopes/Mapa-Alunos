@@ -1,0 +1,5 @@
+#!/bin/sh
+# Bloqueia commit com dado pessoal/bruto. Ative com: sh scripts/instalar_hooks.sh
+PY=python3
+[ -x .venv/bin/python ] && PY=.venv/bin/python
+exec "$PY" scripts/check_privacy.py --staged

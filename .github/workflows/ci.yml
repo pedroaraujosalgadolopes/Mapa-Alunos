@@ -1,0 +1,15 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  privacidade-e-testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Privacidade (falha com PDF, CSV indevido ou nº de inscrição)
+        run: python scripts/check_privacy.py
+      - name: Testes do pipeline
+        run: |
+          pip install -r pipeline/requirements-dev.txt
+          PYTHONPATH=pipeline pytest pipeline/tests -q
