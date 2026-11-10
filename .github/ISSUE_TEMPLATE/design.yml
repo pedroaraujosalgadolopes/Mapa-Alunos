@@ -1,0 +1,9 @@
+name: Proposta de design
+description: Cores, tipografia, layout ou acessibilidade
+labels: [design]
+body:
+  - type: markdown
+    attributes: { value: "Use só o dataset sintético em prints. O visual vive em `web/design/tokens.json`." }
+  - type: textarea
+    attributes: { label: Proposta }
+    validations: { required: true }

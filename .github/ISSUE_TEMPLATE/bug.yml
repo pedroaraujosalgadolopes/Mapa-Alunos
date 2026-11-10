@@ -1,0 +1,11 @@
+name: Bug
+description: Algo não funciona
+labels: [dev]
+body:
+  - type: markdown
+    attributes: { value: "**Sem dados reais** em logs ou capturas de tela. Reproduza com o dataset sintético." }
+  - type: textarea
+    attributes: { label: O que aconteceu e o que você esperava }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: Passos para reproduzir }

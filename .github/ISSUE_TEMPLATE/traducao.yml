@@ -1,0 +1,9 @@
+name: Tradução
+description: Interface em inglês ou espanhol
+labels: [i18n]
+body:
+  - type: dropdown
+    attributes: { label: Idioma, options: [Inglês, Espanhol, Outro] }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: Observações }

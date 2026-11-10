@@ -1,0 +1,15 @@
+name: Corrigir/adicionar instituição
+description: Cidade, campus, país ou grafia de uma universidade (sem dado pessoal)
+labels: [dados]
+body:
+  - type: markdown
+    attributes: { value: "**Não inclua nomes de alunos nem números de inscrição.**" }
+  - type: input
+    attributes: { label: Instituição (como aparece no edital), placeholder: Universidad Rey Juan Carlos }
+    validations: { required: true }
+  - type: input
+    attributes: { label: Cidade e campus corretos }
+    validations: { required: true }
+  - type: input
+    attributes: { label: Fonte (link oficial) }
+    validations: { required: true }

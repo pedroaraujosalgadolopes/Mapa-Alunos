@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Dado pessoal exposto por engano?
+    url: https://github.com/
+    about: NÃO abra issue pública. Avise a pessoa mantenedora por canal privado.
