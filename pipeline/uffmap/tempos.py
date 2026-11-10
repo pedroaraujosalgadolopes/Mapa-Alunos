@@ -8,6 +8,7 @@ Cada linha guarda fonte, modo, data de referência e quando foi consultada.
 from __future__ import annotations
 
 import csv
+import http.client
 import json
 import math
 import ssl
@@ -184,6 +185,17 @@ def onibus_estimados(ref: Referencia, destino: Path, cfg: ConfigOnibus | None = 
     return len(linhas)
 
 
+def _com_retentativa(fetch: Callable[[str, str], dict], url: str, contato: str, dormir: Callable[[float], None], pausa: float) -> dict:
+    """Uma nova tentativa em erro de rede transitório (conexão cortada no meio, timeout). HTTPError passa direto."""
+    try:
+        return fetch(url, contato)
+    except urllib.error.HTTPError:
+        raise
+    except (OSError, http.client.HTTPException, json.JSONDecodeError):
+        dormir(max(pausa, 5.0))
+        return fetch(url, contato)
+
+
 def le_cache(arq: Path) -> list[dict]:
     return list(csv.DictReader(open(arq, encoding="utf8"))) if arq.exists() else []
 
@@ -232,7 +244,7 @@ def rodar(data: Path, cfg: Config, hoje: date | None = None, forcar: bool = Fals
         for limite in (cfg.max_min, *cfg.reduzir_para):
             cfg_o = replace(cfg, max_min=limite)
             try:
-                resp = fetch(url_one_to_all(cfg_o, o, quando), cfg.contato)
+                resp = _com_retentativa(fetch, url_one_to_all(cfg_o, o, quando), cfg.contato, dormir, cfg.pausa_s)
                 break
             except urllib.error.HTTPError as e:
                 if e.code == 422 and limite != (cfg.reduzir_para or (None,))[-1]:
@@ -241,7 +253,7 @@ def rodar(data: Path, cfg: Config, hoje: date | None = None, forcar: bool = Fals
                 falhas.append(f"{o['cidade_id']}: HTTP {e.code}")
                 parar = e.code == 429  # pediram para desacelerar: para tudo e guarda o que já temos
                 break
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+            except (OSError, http.client.HTTPException, json.JSONDecodeError) as e:
                 falhas.append(f"{o['cidade_id']}: {type(e).__name__}")
                 break
         if parar:

@@ -136,3 +136,24 @@ def test_422_too_many_results_tenta_limite_menor(tmp_path):
     assert limites == [600, 420, 300] and out["consultadas"] == 1 and out["falhas"] == []
     linhas = list(csv.DictReader(open(data / "reference" / "tempos" / "tempos.csv", encoding="utf8")))
     assert any("300 min" in l["metodo"] for l in linhas if l["status"] == "sem_dado")  # registra o limite realmente usado
+
+
+def test_erro_de_rede_transitorio_tem_nova_tentativa_e_nao_derruba_a_rodada(tmp_path):
+    import http.client
+    data = montar(tmp_path)
+    chamadas = []
+
+    def fetch(url, contato):
+        chamadas.append(url)
+        if len(chamadas) == 1:
+            raise http.client.IncompleteRead(b"x", 10)  # conexão cortada no meio do download
+        return {"all": [parada("coimbra", 60)]}
+
+    out = tempos.rodar(data, CFG, hoje=date(2026, 1, 1), so_origem="porto", fetch=fetch, dormir=lambda s: None)
+    assert len(chamadas) == 2 and out["consultadas"] == 1 and out["falhas"] == []
+
+    def sempre_falha(url, contato):
+        raise http.client.IncompleteRead(b"x", 10)
+
+    out2 = tempos.rodar(montar(tmp_path / "b"), CFG, hoje=date(2026, 1, 1), so_origem="porto", fetch=sempre_falha, dormir=lambda s: None)
+    assert out2["consultadas"] == 0 and out2["falhas"] == ["porto: IncompleteRead"]  # registra a falha e segue, sem exceção
