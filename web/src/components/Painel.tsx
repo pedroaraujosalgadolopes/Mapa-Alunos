@@ -70,7 +70,7 @@ function Instituicao({ i, nomes, semestres, k }: { i: Instituicao; nomes: Nomes 
   );
 }
 
-export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number }
+export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number; modo: "terra" | "voo" }
 
 export default function Painel({ cidade, k, nomes, semestres, vizinhos, raioH, onFechar, onSelect }: {
   cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; vizinhos: Vizinho[] | null; raioH: number;
@@ -103,12 +103,13 @@ export default function Painel({ cidade, k, nomes, semestres, vizinhos, raioH, o
                   <button onClick={() => onSelect(v.id)}>
                     <span aria-hidden>{bandeira(v.iso2)}</span> <strong>{v.nome}</strong>
                     <span className="nota"> {v.pais} · {contagem(v.n)}</span>
-                    <span className="tempo">{fmtDuracao(v.min)}</span>
+                    <span className="tempo">{v.modo === "voo" && "✈ "}~{fmtDuracao(v.min)}{v.modo === "voo" && <small> {t("vizinhos.estimado")}</small>}</span>
                   </button>
                 </li>
               ))}
             </ul>
           )}
+          <p className="nota">{t("raio.notaTempos")}</p>
         </section>
       )}
       {cidade.instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} />)}

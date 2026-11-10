@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { contarCidade } from "@/lib/filtro";
 import { t } from "@/lib/i18n";
-import { type Tempos, minutosEntre, vizinhos as vizinhosDe } from "@/lib/tempos";
+import { type Tempos, vizinhos as vizinhosDe } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 import type { Filtros, Nomes, Resumo } from "@/lib/types";
 import Faixa from "./Faixa";
@@ -21,6 +21,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   const [raioH, setRaioH] = useState(0); // 0 = sem limite
   const [aba, setAba] = useState<"mapa" | "grafo">("mapa");
   const [corteH, setCorteH] = useState(3);
+  const [voos, setVoos] = useState(true); // incluir voos estimados
 
   const opcoes = useMemo(() => {
     const sem = new Set<string>(), paises = new Set<string>();
@@ -49,9 +50,9 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   // "perto de mim": a cidade selecionada é a origem; vizinhos pelo tempo conhecido
   const perto = useMemo(() => {
     if (!tempos || !selecionada) return null;
-    const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null);
+    const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null, voos);
     return raioH ? todosPerto : todosPerto.slice(0, MAIS_PROXIMAS);
-  }, [tempos, selecionada, ids, raioH]);
+  }, [tempos, selecionada, ids, raioH, voos]);
 
   const nos = useMemo(() => {
     if (!tempos || !selecionada || !raioH) return todos;
@@ -64,14 +65,14 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
     if (!tempos || !o || !perto) return [];
     return perto.map((v) => {
       const d = porId.get(v.id)!;
-      return { id: `${o.cidade_id}-${d.cidade_id}`, de: [o.lon!, o.lat!], para: [d.lon!, d.lat!], min: v.min };
+      return { id: `${o.cidade_id}-${d.cidade_id}`, de: [o.lon!, o.lat!], para: [d.lon!, d.lat!], min: v.min, modo: v.modo };
     });
   }, [tempos, selecionada, perto, porId]);
 
   const listaVizinhos = useMemo<Vizinho[] | null>(
     () => perto && perto.map((v) => {
       const c = porId.get(v.id)!;
-      return { id: v.id, nome: c.cidade ?? v.id, pais: c.pais ?? "", iso2: c.iso2, n: todos.find((x) => x.id === v.id)?.n ?? 0, min: v.min };
+      return { id: v.id, nome: c.cidade ?? v.id, pais: c.pais ?? "", iso2: c.iso2, n: todos.find((x) => x.id === v.id)?.n ?? 0, min: v.min, modo: v.modo };
     }),
     [perto, porId, todos],
   );
@@ -100,6 +101,11 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
                 </select>
               </label>
             ) : <p className="nota">{t("raio.semTempos")}</p>}
+            {tempos && (
+              <label className="check">
+                <input type="checkbox" checked={voos} onChange={(e) => setVoos(e.target.checked)} /> {t("raio.voos")}
+              </label>
+            )}
           </section>
           <section>
             <h2>{t("legenda.titulo")}</h2>
@@ -125,7 +131,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
           {aba === "grafo" && (
             <div className="grafo-wrap">
               {tempos ? (
-                <Grafo nos={nosGrafo} tempos={tempos} corteH={corteH} onCorte={setCorteH} k={resumo.k_min}
+                <Grafo nos={nosGrafo} tempos={tempos} voos={voos} corteH={corteH} onCorte={setCorteH} k={resumo.k_min}
                   selecionada={selecionada} onSelect={setSelecionada} />
               ) : <p className="nota" style={{ padding: 16 }}>{t("grafo.semTempos")}</p>}
             </div>

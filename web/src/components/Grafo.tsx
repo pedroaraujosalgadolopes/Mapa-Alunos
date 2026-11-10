@@ -5,20 +5,20 @@ import { type SimulationLinkDatum, type SimulationNodeDatum, forceCollide, force
 import { select } from "d3-selection";
 import { useEffect, useMemo, useReducer, useRef } from "react";
 import { t } from "@/lib/i18n";
-import { type Tempos, componentes, fmtDuracao, minutosEntre } from "@/lib/tempos";
+import { type Tempos, componentes, efetivo, fmtDuracao } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 
 export interface NoGrafo { id: string; nome: string; n: number }
 interface Sim extends SimulationNodeDatum { id: string; nome: string; n: number }
-interface Aresta extends SimulationLinkDatum<Sim> { min: number }
+interface Aresta extends SimulationLinkDatum<Sim> { min: number; voo: boolean }
 
 const L = 900, A = 620;
 const raio = (n: number) => 6 + Math.sqrt(n) * 3;
 
 export default function Grafo(props: {
-  nos: NoGrafo[]; tempos: Tempos; corteH: number; onCorte: (h: number) => void; k: number;
+  nos: NoGrafo[]; tempos: Tempos; voos: boolean; corteH: number; onCorte: (h: number) => void; k: number;
   selecionada: string | null; onSelect: (id: string) => void }) {
-  const { nos, tempos, corteH, k } = props;
+  const { nos, tempos, corteH, k, voos } = props;
   const [, redesenha] = useReducer((x: number) => x + 1, 0);
   const sim = useRef<ReturnType<typeof forceSimulation<Sim>> | null>(null);
   const noRef = useRef<Sim[]>([]);
@@ -26,10 +26,10 @@ export default function Grafo(props: {
   const svg = useRef<SVGSVGElement>(null);
 
   const grupos = useMemo(() => {
-    const comps = componentes(nos.map((n) => n.id), tempos, corteH * 60);
+    const comps = componentes(nos.map((n) => n.id), tempos, corteH * 60, voos);
     const porId = new Map(nos.map((n) => [n.id, n]));
     return comps.map((ids, i) => ({ i, ids, total: ids.reduce((s, id) => s + (porId.get(id)?.n ?? 0), 0) }));
-  }, [nos, tempos, corteH]);
+  }, [nos, tempos, corteH, voos]);
   const grupoDe = useMemo(() => new Map(grupos.flatMap((g) => g.ids.map((id) => [id, g] as const))), [grupos]);
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function Grafo(props: {
     const arestas: Aresta[] = [];
     for (let i = 0; i < nos.length; i++)
       for (let j = i + 1; j < nos.length; j++) {
-        const m = minutosEntre(tempos, nos[i].id, nos[j].id);
-        if (m !== undefined && m >= 0 && m <= corteH * 60) arestas.push({ source: nos[i].id, target: nos[j].id, min: m });
+        const e = efetivo(tempos, nos[i].id, nos[j].id, voos);
+        if (e && e.min >= 0 && e.min <= corteH * 60) arestas.push({ source: nos[i].id, target: nos[j].id, min: e.min, voo: e.modo === "voo" });
       }
     arRef.current = arestas;
     sim.current?.stop();
@@ -52,7 +52,7 @@ export default function Grafo(props: {
       .on("tick", redesenha);
     sim.current = s;
     return () => { s.stop(); };
-  }, [nos, tempos, corteH]);
+  }, [nos, tempos, corteH, voos]);
 
   // arrastar: liga o d3-drag aos nós a cada renderização de conjunto
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function Grafo(props: {
       .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
       .on("end", (e, d) => { if (!e.active) sim.current?.alphaTarget(0); d.fx = null; d.fy = null; });
     select(svg.current).selectAll<SVGGElement, Sim>("g.no").data(noRef.current, (d) => d.id).call(comportamento);
-  }, [nos, tempos, corteH]);
+  }, [nos, tempos, corteH, voos]);
 
   const cor = (id: string) => {
     const g = grupoDe.get(id);
@@ -82,8 +82,8 @@ export default function Grafo(props: {
         {arRef.current.map((a, i) => {
           const s = a.source as Sim, d = a.target as Sim;
           return s.x === undefined || d.x === undefined ? null : (
-            <line key={i} x1={s.x} y1={s.y} x2={d.x} y2={d.y} stroke={tokens.color.aresta} strokeOpacity={0.35} strokeWidth={1.5}>
-              <title>{`${s.nome} ↔ ${d.nome}: ${fmtDuracao(a.min)}`}</title>
+            <line key={i} x1={s.x} y1={s.y} x2={d.x} y2={d.y} stroke={tokens.color.aresta} strokeOpacity={0.4} strokeWidth={1.5} strokeDasharray={a.voo ? "5 4" : undefined}>
+              <title>{`${s.nome} ↔ ${d.nome}: ${a.voo ? "✈ " : ""}~${fmtDuracao(a.min)}${a.voo ? ` (${t("grafo.voo")})` : ""}`}</title>
             </line>
           );
         })}

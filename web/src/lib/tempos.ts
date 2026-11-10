@@ -1,10 +1,17 @@
-/** Tempos de viagem entre cidades. Pares: minutos (>= 0), SEM_DADO ou ALEM_DO_LIMITE. Nunca estimamos. */
+/**
+ * Tempos de viagem entre cidades.
+ * Terra (trem/ônibus, dado real): minutos (>= 0), SEM_DADO ou ALEM_DO_LIMITE. Voo: ESTIMATIVA marcada, sempre separada.
+ * Nunca inventamos tempo de terra; o voo só entra se o usuário quiser (e aparece com ✈ e "estimado").
+ */
 export const SEM_DADO = -1;
 export const ALEM_DO_LIMITE = -2;
 
+type Mapa = Record<string, Record<string, number>>;
+
 export interface Tempos {
-  fonte: "transitous" | "simulado";
-  pares: Record<string, Record<string, number>>; // simétrico: pares[a][b] === pares[b][a]
+  fonte: "transitous" | "simulado" | "estimativa";
+  pares: Mapa; // terra, simétrico
+  voos: Mapa; // estimativa de voo, simétrico
 }
 
 export interface LinhaTempo {
@@ -13,30 +20,56 @@ export interface LinhaTempo {
   minutos: string;
   status: string;
   fonte: string;
+  modo?: string;
 }
 
-/** Une as duas direções de cada par: vale o MAIOR tempo (conservador); sem tempo, sem dado/além do limite. */
+export type Modo = "terra" | "voo";
+export interface Efetivo { min: number; modo: Modo }
+
+function simetrico(m: Mapa, a: string, b: string, v: number) {
+  (m[a] ??= {})[b] = v;
+  (m[b] ??= {})[a] = v;
+}
+
+/** Une as duas direções de cada par: vale o MAIOR tempo (conservador). Voos ficam em `voos`. */
 export function montarTempos(linhas: LinhaTempo[]): Tempos | null {
   if (!linhas.length) return null;
-  const fonte = linhas[0].fonte === "simulado" ? "simulado" : "transitous";
-  const acc = new Map<string, number[]>();
-  for (const l of linhas) {
-    const v = l.status === "ok" ? Number(l.minutos) : l.status === "alem_do_limite" ? ALEM_DO_LIMITE : SEM_DADO;
-    const chave = [l.origem_cidade_id, l.destino_cidade_id].sort().join("|");
-    acc.set(chave, [...(acc.get(chave) ?? []), v]);
-  }
-  const pares: Tempos["pares"] = {};
-  for (const [chave, vs] of acc) {
+  const terra = linhas.filter((l) => l.modo !== "voo_estimado");
+  const voo = linhas.filter((l) => l.modo === "voo_estimado");
+  const fonte = terra.length ? (terra[0].fonte === "simulado" ? "simulado" : "transitous") : "estimativa";
+  const agrupa = (ls: LinhaTempo[]) => {
+    const acc = new Map<string, number[]>();
+    for (const l of ls) {
+      const v = l.status === "ok" || l.status === "estimado" ? Number(l.minutos) : l.status === "alem_do_limite" ? ALEM_DO_LIMITE : SEM_DADO;
+      const chave = [l.origem_cidade_id, l.destino_cidade_id].sort().join("|");
+      acc.set(chave, [...(acc.get(chave) ?? []), v]);
+    }
+    return acc;
+  };
+  const pares: Mapa = {}, voos: Mapa = {};
+  for (const [chave, vs] of agrupa(terra)) {
     const [a, b] = chave.split("|");
     const ok = vs.filter((v) => v >= 0);
-    const v = ok.length ? Math.max(...ok) : vs.includes(ALEM_DO_LIMITE) ? ALEM_DO_LIMITE : SEM_DADO;
-    (pares[a] ??= {})[b] = v;
-    (pares[b] ??= {})[a] = v;
+    simetrico(pares, a, b, ok.length ? Math.max(...ok) : vs.includes(ALEM_DO_LIMITE) ? ALEM_DO_LIMITE : SEM_DADO);
   }
-  return { fonte, pares };
+  for (const [chave, vs] of agrupa(voo)) {
+    const [a, b] = chave.split("|");
+    const ok = vs.filter((v) => v >= 0);
+    if (ok.length) simetrico(voos, a, b, Math.max(...ok));
+  }
+  return { fonte, pares, voos };
 }
 
-export const minutosEntre = (t: Tempos, a: string, b: string): number | undefined => t.pares[a]?.[b];
+/** Melhor tempo conhecido entre duas cidades. Com `voos`, o voo estimado vale se for mais rápido ou se não há terra. */
+export function efetivo(t: Tempos, a: string, b: string, voos = true): Efetivo | undefined {
+  const terra = t.pares[a]?.[b];
+  const voo = voos ? t.voos[a]?.[b] : undefined;
+  if (terra !== undefined && terra >= 0) return voo !== undefined && voo < terra ? { min: voo, modo: "voo" } : { min: terra, modo: "terra" };
+  if (voo !== undefined) return { min: voo, modo: "voo" };
+  return terra === undefined ? undefined : { min: terra, modo: "terra" };
+}
+
+export const minutosEntre = (t: Tempos, a: string, b: string, voos = true): number | undefined => efetivo(t, a, b, voos)?.min;
 
 export function fmtDuracao(min: number): string {
   if (min < 60) return `${min} min`;
@@ -45,21 +78,23 @@ export function fmtDuracao(min: number): string {
 }
 
 /** Cidades com tempo conhecido a partir de `origem`, mais perto primeiro; `maxMin` opcional filtra o raio. */
-export function vizinhos(t: Tempos, origem: string, ids: string[], maxMin: number | null = null): { id: string; min: number }[] {
-  return ids
-    .filter((id) => id !== origem)
-    .map((id) => ({ id, min: minutosEntre(t, origem, id) ?? SEM_DADO }))
-    .filter((v) => v.min >= 0 && (maxMin === null || v.min <= maxMin))
-    .sort((x, y) => x.min - y.min || x.id.localeCompare(y.id));
+export function vizinhos(t: Tempos, origem: string, ids: string[], maxMin: number | null = null, voos = true): (Efetivo & { id: string })[] {
+  const lista: (Efetivo & { id: string })[] = [];
+  for (const id of ids) {
+    if (id === origem) continue;
+    const e = efetivo(t, origem, id, voos);
+    if (e && e.min >= 0 && (maxMin === null || e.min <= maxMin)) lista.push({ id, ...e });
+  }
+  return lista.sort((x, y) => x.min - y.min || x.id.localeCompare(y.id));
 }
 
 /** Componentes conexos: duas cidades ficam no mesmo grupo se há caminho de arestas com tempo <= corte. */
-export function componentes(ids: string[], t: Tempos, corteMin: number): string[][] {
+export function componentes(ids: string[], t: Tempos, corteMin: number, voos = true): string[][] {
   const pai = new Map(ids.map((i) => [i, i]));
   const raiz = (x: string): string => (pai.get(x) === x ? x : (pai.set(x, raiz(pai.get(x)!)), pai.get(x)!));
   for (let i = 0; i < ids.length; i++)
     for (let j = i + 1; j < ids.length; j++) {
-      const m = minutosEntre(t, ids[i], ids[j]);
+      const m = minutosEntre(t, ids[i], ids[j], voos);
       if (m !== undefined && m >= 0 && m <= corteMin) pai.set(raiz(ids[i]), raiz(ids[j]));
     }
   const grupos = new Map<string, string[]>();

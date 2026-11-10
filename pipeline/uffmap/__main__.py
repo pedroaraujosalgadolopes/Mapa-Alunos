@@ -17,6 +17,10 @@ t.add_argument("--raio-parada-m", type=int, default=2000)
 t.add_argument("--forcar", action="store_true")
 t.add_argument("--so-origem")
 t.add_argument("--dry-run", action="store_true")
+v = sub.add_parser("voos", help="estimativa de voo (marcada como estimada) em data/reference/tempos/voos_estimados.csv")
+v.add_argument("--min-km", type=int, default=400)
+v.add_argument("--velocidade", type=int, default=750)
+v.add_argument("--overhead-min", type=int, default=180)
 sub.add_parser("flat", help="gera data/public/instituicoes_flat.csv a partir de data/reference")
 s = sub.add_parser("sintetico", help="gera o dataset sintético (PDFs falsos + snapshot) em data/synthetic")
 s.add_argument("--seed", type=int, default=7)
@@ -29,6 +33,11 @@ elif a.cmd == "reconstruir":
 elif a.cmd == "tempos":
     from .tempos import Config, rodar as rodar_tempos
     out = rodar_tempos(a.data, Config(a.contato, a.max_min, a.raio_parada_m), forcar=a.forcar, so_origem=a.so_origem, dry_run=a.dry_run)
+elif a.cmd == "voos":
+    from .normalize import Referencia
+    from .tempos import ConfigVoo, voos_estimados
+    out = {"linhas": voos_estimados(Referencia(a.data / "reference"), a.data / "reference" / "tempos" / "voos_estimados.csv",
+                                    ConfigVoo(a.min_km, a.velocidade, a.overhead_min))}
 elif a.cmd == "flat":
     from .flat import gerar
     from .normalize import Referencia

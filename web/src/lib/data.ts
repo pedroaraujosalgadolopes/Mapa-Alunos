@@ -52,7 +52,11 @@ export function carregar(opts: { apresentacao?: boolean } = {}): {
   const arqNomes = path.join(DATA, usarSintetico ? "synthetic" : "", "public", "nomes.json");
   const nomes: Nomes | null = permitido && fs.existsSync(arqNomes) ? JSON.parse(fs.readFileSync(arqNomes, "utf8")) : null;
   // tempos: o dado real só vem da consulta real; o simulado existe apenas no dataset sintético
-  const arqTempos = usarSintetico ? path.join(DATA, "synthetic", "tempos.csv") : path.join(DATA, "reference", "tempos", "tempos.csv");
-  const tempos = fs.existsSync(arqTempos) ? montarTempos(csv(arqTempos) as unknown as LinhaTempo[]) : null;
+  const dirTempos = usarSintetico ? path.join(DATA, "synthetic") : path.join(DATA, "reference", "tempos");
+  const lerTempos = (nome: string) => {
+    const arq = path.join(dirTempos, nome);
+    return fs.existsSync(arq) ? (csv(arq) as unknown as LinhaTempo[]) : [];
+  };
+  const tempos = montarTempos([...lerTempos("tempos.csv"), ...lerTempos("voos_estimados.csv")]);
   return { resumo, fonte: usarSintetico ? "sintetico" : "real", nomes, tempos };
 }

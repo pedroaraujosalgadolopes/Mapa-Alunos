@@ -10,6 +10,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import ssl
 import time
 import urllib.error
 import urllib.parse
@@ -62,9 +63,21 @@ def cidades_alvo(ref: Referencia) -> list[dict]:
     return [c for k, c in sorted(ref.cidades.items()) if k in com_inst and ref.regiao_ativa(k)]
 
 
+def _contexto_tls() -> ssl.SSLContext:
+    """TLS sempre verificado. O Python do python.org no macOS não traz CAs: usa certifi ou o pacote do sistema."""
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        for caminho in ("/etc/ssl/cert.pem", "/etc/ssl/certs/ca-certificates.crt"):
+            if Path(caminho).exists():
+                return ssl.create_default_context(cafile=caminho)
+    return ssl.create_default_context()
+
+
 def http_get(url: str, contato: str, timeout: int = 180) -> dict:
     req = urllib.request.Request(url, headers={"User-Agent": user_agent(contato), "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
+    with urllib.request.urlopen(req, timeout=timeout, context=_contexto_tls()) as r:
         return json.load(r)
 
 
@@ -76,6 +89,7 @@ def url_one_to_all(cfg: Config, origem: dict, quando: str) -> str:
 
 def linhas_da_origem(resp: dict, origem: dict, destinos: list[dict], cfg: Config, quando: str, hoje: date) -> list[dict]:
     """Converte a resposta de uma origem em linhas (uma por cidade de destino)."""
+    # `duration` do one-to-all é em MINUTOS (calibrado: Porto→Coimbra ≈ 103 min; em segundos seria impossível)
     paradas = [(p["place"], p["duration"], p.get("k", 0)) for p in resp.get("all", []) if p.get("k", 0) > 0]
     out = []
     for d in destinos:
@@ -91,12 +105,46 @@ def linhas_da_origem(resp: dict, origem: dict, destinos: list[dict], cfg: Config
                 "referencia": quando, "consultado_em": hoje.isoformat()}
         if melhores:
             dur, dist, k = min(melhores)
-            out.append({**base, "minutos": round(dur / 60), "status": "ok", "transferencias": max(k - 1, 0),
-                        "parada_dist_m": round(dist), "metodo": f"one-to-all; parada mais rápida a até {cfg.raio_parada_m} m do centro"})
+            out.append({**base, "minutos": round(dur), "status": "ok", "transferencias": max(k - 1, 0),
+                        "parada_dist_m": round(dist), "metodo": f"one-to-all; tempo aproximado desde o horário de referência até a parada mais rápida a até {cfg.raio_parada_m} m do centro"})
         else:
             out.append({**base, "minutos": "", "status": "sem_dado", "transferencias": "", "parada_dist_m": "",
                         "metodo": f"one-to-all; nenhuma parada alcançável em {cfg.max_min} min a até {cfg.raio_parada_m} m do centro"})
     return out
+
+
+@dataclass
+class ConfigVoo:
+    min_km: int = 400  # abaixo disso não faz sentido estimar voo
+    velocidade_kmh: int = 750
+    overhead_min: int = 180  # ida ao aeroporto, check-in/segurança, embarque e saída: porta a porta
+
+
+def voos_estimados(ref: Referencia, destino: Path, cfg: ConfigVoo | None = None, hoje: date | None = None) -> int:
+    """ESTIMATIVA de voo entre cidades (linha reta / velocidade + tempo fixo de aeroporto). Sem rede.
+
+    Não verifica se existe rota direta nem se há aeroporto na cidade: é uma estimativa grosseira, sempre marcada
+    como `estimado` (modo `voo_estimado`, fonte `estimativa`) e mantida em arquivo próprio, separada do dado real.
+    """
+    cfg = cfg or ConfigVoo()
+    hoje = hoje or date.today()
+    cidades = cidades_alvo(ref)
+    metodo = (f"ESTIMATIVA: linha reta / {cfg.velocidade_kmh} km/h + {cfg.overhead_min} min de aeroporto; "
+              f"só acima de {cfg.min_km} km; não verifica se existe voo")
+    linhas = []
+    for o in cidades:
+        for d in cidades:
+            if o["cidade_id"] == d["cidade_id"]:
+                continue
+            km = haversine_m((float(o["lat"]), float(o["lon"])), (float(d["lat"]), float(d["lon"]))) / 1000
+            if km < cfg.min_km:
+                continue
+            linhas.append({"origem_cidade_id": o["cidade_id"], "destino_cidade_id": d["cidade_id"], "modo": "voo_estimado",
+                           "minutos": round(km / cfg.velocidade_kmh * 60 + cfg.overhead_min), "status": "estimado",
+                           "transferencias": "", "parada_dist_m": "", "fonte": "estimativa", "metodo": metodo,
+                           "referencia": "", "consultado_em": hoje.isoformat()})
+    grava(destino, linhas)
+    return len(linhas)
 
 
 def le_cache(arq: Path) -> list[dict]:

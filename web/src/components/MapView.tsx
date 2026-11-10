@@ -22,7 +22,7 @@ maplibregl.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
 const FONTE = "nos";
 const FONTE_ARESTAS = "arestas";
 
-export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number }
+export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number; modo: "terra" | "voo" }
 const estilo: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
@@ -69,7 +69,7 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
 
   const geoArestas = useMemo<FeatureCollection>(() => ({
     type: "FeatureCollection",
-    features: props.arestas.map((a) => ({ type: "Feature", geometry: { type: "LineString", coordinates: [a.de, a.para] }, properties: { id: a.id, min: a.min } })),
+    features: props.arestas.map((a) => ({ type: "Feature", geometry: { type: "LineString", coordinates: [a.de, a.para] }, properties: { id: a.id, min: a.min, modo: a.modo } })),
   }), [props.arestas]);
   const arestasRef = useRef(geoArestas);
   arestasRef.current = geoArestas;
@@ -82,7 +82,9 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 12 });
     m.on("load", () => {
       m.addSource(FONTE_ARESTAS, { type: "geojson", data: arestasRef.current });
-      m.addLayer({ id: "arestas", type: "line", source: FONTE_ARESTAS, paint: {
+      m.addLayer({ id: "arestas", type: "line", source: FONTE_ARESTAS, filter: ["==", ["get", "modo"], "terra"], paint: {
+        "line-color": tokens.color.aresta, "line-width": 2.5, "line-opacity": 0.75 } });
+      m.addLayer({ id: "arestas-voo", type: "line", source: FONTE_ARESTAS, filter: ["==", ["get", "modo"], "voo"], paint: {
         "line-color": tokens.color.aresta, "line-width": 2, "line-opacity": 0.7, "line-dasharray": [2, 1.5] } });
       m.addSource(FONTE, { type: "geojson", data: geoRef.current });
       m.addLayer({ id: "nos", type: "circle", source: FONTE, paint: {
@@ -118,7 +120,7 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
     for (const a of props.arestas) {
       const el = document.createElement("div");
       el.className = "rotulo-aresta";
-      el.textContent = fmtDuracao(a.min);
+      el.textContent = `${a.modo === "voo" ? "✈ " : ""}~${fmtDuracao(a.min)}`;
       rotulos.current.push(new maplibregl.Marker({ element: el }).setLngLat([(a.de[0] + a.para[0]) / 2, (a.de[1] + a.para[1]) / 2]).addTo(mapa.current));
     }
   }, [geoArestas, props.arestas]);

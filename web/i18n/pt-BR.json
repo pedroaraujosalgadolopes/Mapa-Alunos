@@ -49,13 +49,16 @@
     "ajuda": "Selecione uma cidade no mapa e escolha até quantas horas.",
     "semLimite": "Sem limite",
     "ate": "até {h} h",
-    "semTempos": "Tempos de viagem ainda não disponíveis para estes dados."
+    "semTempos": "Tempos de viagem ainda não disponíveis para estes dados.",
+    "voos": "Incluir voos (estimados) ✈",
+    "notaTempos": "Tempos aproximados, de dia útil. ✈ = estimativa de voo (não verifica se existe rota direta)."
   },
   "vizinhos": {
     "titulo": "Quem está perto",
     "maisProximas": "Cidades mais próximas",
     "dentroDoRaio": "Dentro de {h} h",
-    "nenhuma": "Nenhuma cidade com alunos nesse raio."
+    "nenhuma": "Nenhuma cidade com alunos nesse raio.",
+    "estimado": "estimado"
   },
   "grafo": {
     "corte": "Ligar cidades a até {h} h de viagem",
@@ -63,6 +66,7 @@
     "isolado": "isolado (menos de {k} alunos)",
     "alunosN": "{n} alunos",
     "dica": "Arraste as cidades. Linhas: tempo de viagem. Cinza tracejado: grupo isolado.",
-    "semTempos": "O grafo precisa dos tempos de viagem, que ainda não estão disponíveis para estes dados."
+    "semTempos": "O grafo precisa dos tempos de viagem, que ainda não estão disponíveis para estes dados.",
+    "voo": "voo estimado"
   }
 }
