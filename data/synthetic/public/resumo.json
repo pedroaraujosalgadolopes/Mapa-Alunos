@@ -65,19 +65,6 @@
       "Jornalismo": 2,
       "Medicina": 1,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Arquitetura e Urbanismo": 1,
-       "Engenharia Civil": 1,
-       "Jornalismo": 1
-      },
-      "2028.1": {
-       "Arquitetura e Urbanismo": 1,
-       "Jornalismo": 1,
-       "Medicina": 1,
-       "Psicologia": 1
-      }
      }
     }
    ]
@@ -102,8 +89,7 @@
      "por_semestre": {
       "2028.1": 2
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -127,8 +113,7 @@
      "por_semestre": {
       "2028.1": 2
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -158,16 +143,6 @@
       "Engenharia Civil": 1,
       "Psicologia": 1,
       "Relações Internacionais": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Arquitetura e Urbanismo": 1,
-       "Engenharia Civil": 1,
-       "Relações Internacionais": 1
-      },
-      "2028.1": {
-       "Psicologia": 1
-      }
      }
     }
    ]
@@ -192,8 +167,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -222,15 +196,6 @@
       "Arquitetura e Urbanismo": 1,
       "Direito": 1,
       "Jornalismo": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Arquitetura e Urbanismo": 1,
-       "Jornalismo": 1
-      },
-      "2028.1": {
-       "Direito": 1
-      }
      }
     }
    ]
@@ -260,15 +225,6 @@
       "Cinema e Audiovisual": 1,
       "Engenharia Civil": 1,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Cinema e Audiovisual": 1
-      },
-      "2028.1": {
-       "Engenharia Civil": 1,
-       "Psicologia": 1
-      }
      }
     }
    ]
@@ -293,8 +249,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -318,8 +273,7 @@
      "por_semestre": {
       "2028.1": 2
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     },
     {
      "instituicao_id": "uc",
@@ -329,8 +283,7 @@
      "por_semestre": {
       "2027.2": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -354,8 +307,7 @@
      "por_semestre": {
       "2027.2": 2
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -379,8 +331,7 @@
      "por_semestre": {
       "2027.2": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -405,8 +356,7 @@
       "2027.2": 1,
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -430,8 +380,7 @@
      "por_semestre": {
       "2028.1": 2
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -456,8 +405,7 @@
       "2027.2": 1,
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -486,15 +434,6 @@
       "Ciência da Computação": 1,
       "Jornalismo": 1,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Ciência da Computação": 1
-      },
-      "2028.1": {
-       "Jornalismo": 1,
-       "Psicologia": 1
-      }
      }
     },
     {
@@ -511,16 +450,6 @@
       "Ciência da Computação": 1,
       "Direito": 1,
       "Relações Internacionais": 2
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Ciência da Computação": 1,
-       "Direito": 1
-      },
-      "2028.1": {
-       "Cinema e Audiovisual": 1,
-       "Relações Internacionais": 2
-      }
      }
     }
    ]
@@ -545,8 +474,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -570,8 +498,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -595,8 +522,7 @@
      "por_semestre": {
       "2027.2": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -624,15 +550,6 @@
      "cursos": {
       "Cinema e Audiovisual": 2,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Cinema e Audiovisual": 1,
-       "Psicologia": 1
-      },
-      "2028.1": {
-       "Cinema e Audiovisual": 1
-      }
      }
     }
    ]
@@ -664,18 +581,6 @@
       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
       "Psicologia": 3,
       "Relações Internacionais": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Psicologia": 2
-      },
-      "2028.1": {
-       "Arquitetura e Urbanismo": 1,
-       "Ciência da Computação": 1,
-       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
-       "Psicologia": 1,
-       "Relações Internacionais": 1
-      }
      }
     }
    ]
@@ -700,8 +605,7 @@
      "por_semestre": {
       "2027.2": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -730,14 +634,6 @@
       "Jornalismo": 1,
       "Medicina": 1,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2028.1": {
-       "Engenharia Civil": 1,
-       "Jornalismo": 1,
-       "Medicina": 1,
-       "Psicologia": 1
-      }
      }
     }
    ]
@@ -767,16 +663,6 @@
       "Arquitetura e Urbanismo": 3,
       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
       "Relações Internacionais": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Arquitetura e Urbanismo": 2,
-       "Engenharia de Recursos Hídricos e Meio Ambiente": 1
-      },
-      "2028.1": {
-       "Arquitetura e Urbanismo": 1,
-       "Relações Internacionais": 1
-      }
      }
     }
    ]
@@ -801,8 +687,7 @@
      "por_semestre": {
       "2027.2": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -829,12 +714,6 @@
      "cursos": {
       "Letras": 1,
       "Psicologia": 2
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Letras": 1,
-       "Psicologia": 2
-      }
      }
     }
    ]
@@ -865,16 +744,6 @@
       "Ciência da Computação": 1,
       "Direito": 1,
       "Relações Internacionais": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Direito": 1
-      },
-      "2028.1": {
-       "Arquitetura e Urbanismo": 2,
-       "Ciência da Computação": 1,
-       "Relações Internacionais": 1
-      }
      }
     }
    ]
@@ -907,18 +776,6 @@
       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
       "Jornalismo": 1,
       "Relações Internacionais": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
-       "Jornalismo": 1,
-       "Relações Internacionais": 1
-      },
-      "2028.1": {
-       "Ciência da Computação": 1,
-       "Direito": 2,
-       "Engenharia Civil": 1
-      }
      }
     }
    ]
@@ -943,8 +800,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   },
@@ -974,17 +830,6 @@
       "Ciência da Computação": 1,
       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
       "Psicologia": 1
-     },
-     "cursos_por_semestre": {
-      "2027.2": {
-       "Arquitetura e Urbanismo": 1,
-       "Ciência da Computação": 1,
-       "Psicologia": 1
-      },
-      "2028.1": {
-       "Arquitetura e Urbanismo": 3,
-       "Engenharia de Recursos Hídricos e Meio Ambiente": 1
-      }
      }
     }
    ]
@@ -1009,8 +854,7 @@
      "por_semestre": {
       "2028.1": 1
      },
-     "cursos": null,
-     "cursos_por_semestre": null
+     "cursos": null
     }
    ]
   }

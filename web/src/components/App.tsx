@@ -12,20 +12,19 @@ import Painel from "./Painel";
 
 export default function App({ resumo, fonte, nomes, apresentacao }: {
   resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; apresentacao: boolean }) {
-  const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "", curso: "" });
+  const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "" });
   const [selecionada, setSelecionada] = useState<string | null>(null);
 
   const opcoes = useMemo(() => {
-    const sem = new Set<string>(), paises = new Set<string>(), cursos = new Set<string>();
+    const sem = new Set<string>(), paises = new Set<string>();
     for (const c of resumo.cidades) {
       if (c.pais) paises.add(c.pais);
       for (const i of c.instituicoes) {
         Object.keys(i.por_semestre).forEach((s) => sem.add(s));
-        Object.keys(i.cursos ?? {}).forEach((x) => cursos.add(x)); // só cursos de grupos visíveis
       }
     }
     const ord = (s: Set<string>) => [...s].sort((a, b) => a.localeCompare(b, "pt-BR"));
-    return { semestres: ord(sem), paises: ord(paises), cursos: ord(cursos) };
+    return { semestres: ord(sem), paises: ord(paises) };
   }, [resumo]);
 
   const nos = useMemo<No[]>(

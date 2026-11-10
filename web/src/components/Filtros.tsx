@@ -4,7 +4,7 @@ import type { Filtros } from "@/lib/types";
 interface Props {
   filtros: Filtros;
   onChange: (f: Filtros) => void;
-  opcoes: { semestres: string[]; paises: string[]; cursos: string[] };
+  opcoes: { semestres: string[]; paises: string[] };
   resultado: { alunos: number; cidades: number };
 }
 
@@ -26,12 +26,10 @@ export default function FiltrosView({ filtros, onChange, opcoes, resultado }: Pr
       <div className="filtros-grade">
         {campo("semestre", t("filtros.semestre"), opcoes.semestres, t("filtros.todos"))}
         {campo("pais", t("filtros.pais"), opcoes.paises, t("filtros.todos"))}
-        {campo("curso", t("filtros.curso"), opcoes.cursos, t("filtros.todos"))}
       </div>
-      <p className="nota">{t("filtros.avisoCurso")}</p>
       <p><strong>{t("filtros.resultado", { n: resultado.alunos, c: resultado.cidades })}</strong></p>
-      {(filtros.semestre || filtros.pais || filtros.curso) && (
-        <button onClick={() => onChange({ semestre: "", pais: "", curso: "" })}>{t("filtros.limpar")}</button>
+      {(filtros.semestre || filtros.pais) && (
+        <button onClick={() => onChange({ semestre: "", pais: "" })}>{t("filtros.limpar")}</button>
       )}
     </section>
   );

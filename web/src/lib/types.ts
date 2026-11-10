@@ -5,7 +5,6 @@ export interface Instituicao {
   total: number;
   por_semestre: Record<string, number>;
   cursos: Record<string, number> | null; // null quando o grupo tem menos de 3 alunos
-  cursos_por_semestre: Record<string, Record<string, number>> | null;
 }
 
 export interface Cidade {
@@ -34,7 +33,6 @@ export interface Resumo {
 export interface Filtros {
   semestre: string;
   pais: string;
-  curso: string;
 }
 
 export interface Pessoa {

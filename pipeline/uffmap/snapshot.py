@@ -89,14 +89,10 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
         ocultos += oculto
         ent["total"] += len(ls)
         ent["campus_pendente"] |= bool(inst) and inst["campus_status"] == "pendente"
-        cps = defaultdict(Counter)
-        for l in ls:
-            cps[l["semestre"]][l["curso"]] += 1
         ent["instituicoes"].append({
             "instituicao_id": iid, "nome": inst["nome"] if inst else iid, "campus_status": inst["campus_status"] if inst else "pendente",
             "total": len(ls), "por_semestre": dict(sorted(Counter(l["semestre"] for l in ls).items())),
-            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items())),
-            "cursos_por_semestre": None if oculto else {k: dict(sorted(v.items())) for k, v in sorted(cps.items())}})
+            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items()))})
     por_pais = Counter()
     for c in cidades.values():
         por_pais[c["pais"] or "pendente"] += c["total"]

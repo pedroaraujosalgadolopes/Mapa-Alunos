@@ -32,7 +32,7 @@ button { cursor: pointer; }
 .quem { font-size: var(--font-size-small); margin: var(--space-2) 0; }
 .quem p { margin: var(--space-1) 0; }
 
-.filtros-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+.filtros-grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
 .filtros-grade .campo { margin-bottom: 0; min-width: 0; }
 .filtros-grade select { width: 100%; min-width: 0; }
 .cidade-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); }

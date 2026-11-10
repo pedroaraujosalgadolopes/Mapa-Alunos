@@ -54,7 +54,7 @@ def test_grupo_pequeno_sem_curso(rodada):
     assert any(g["total"] < 3 for g in grupos) and any(g["total"] >= 3 for g in grupos)
     for g in grupos:
         assert (g["cursos"] is None) == (g["total"] < 3)
-        assert (g["cursos_por_semestre"] is None) == (g["total"] < 3)
+        assert "cursos_por_semestre" not in g
 
 
 def test_diferencas_entre_rodadas(rodada, tmp_path):
