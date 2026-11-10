@@ -20,6 +20,7 @@ import pdfplumber
 
 RE_INSCRICAO = re.compile(r"\d{5}")
 RE_SEMESTRE = re.compile(r"20\d\d\.\d")
+RE_CID = re.compile(r"\(cid:\d+\)")  # glifos de controle que o pdfplumber não decodifica
 RE_NOTA = re.compile(r"\d{1,2}(?:,\d{1,2})?")
 # Nota colada na última palavra do curso: "Ambiente6,84", "Redonda)8,08" e o caso em que o PDF
 # troca a ordem dos glifos ("Redonda8),08" em vez de "Redonda)8,08").
@@ -53,6 +54,8 @@ def _join(words: list[dict]) -> str:
 def parse_words(words: list[dict], fonte: str, pagina: int, out: Extraction | None = None) -> Extraction:
     """`words`: dicts com text, x0, x1, top (formato de pdfplumber.extract_words)."""
     out = out or Extraction()
+    words = [dict(w, text=RE_CID.sub("", w["text"])) for w in words]
+    words = [w for w in words if w["text"]]
     cands = [w for w in words if RE_INSCRICAO.fullmatch(w["text"])]
     if not cands:
         return out

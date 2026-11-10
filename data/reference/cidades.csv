@@ -1,0 +1,82 @@
+cidade_id,cidade,pais,iso2,regiao
+porto,Porto,Portugal,PT,europa
+coimbra,Coimbra,Portugal,PT,europa
+lisboa,Lisboa,Portugal,PT,europa
+braga,Braga,Portugal,PT,europa
+tomar,Tomar,Portugal,PT,europa
+viseu,Viseu,Portugal,PT,europa
+beja,Beja,Portugal,PT,europa
+castelo-branco,Castelo Branco,Portugal,PT,europa
+portalegre,Portalegre,Portugal,PT,europa
+braganca,Bragança,Portugal,PT,europa
+barcelos,Barcelos,Portugal,PT,europa
+vila-do-conde,Vila do Conde,Portugal,PT,europa
+ponta-delgada,Ponta Delgada,Portugal,PT,europa
+a-coruna,A Coruña,Espanha,ES,europa
+santiago-de-compostela,Santiago de Compostela,Espanha,ES,europa
+ciudad-real,Ciudad Real,Espanha,ES,europa
+mostoles,Móstoles,Espanha,ES,europa
+madrid,Madrid,Espanha,ES,europa
+cerdanyola,Cerdanyola del Vallès,Espanha,ES,europa
+castello,Castelló de la Plana,Espanha,ES,europa
+girona,Girona,Espanha,ES,europa
+almeria,Almería,Espanha,ES,europa
+pamplona,Pamplona,Espanha,ES,europa
+santander,Santander,Espanha,ES,europa
+logrono,Logroño,Espanha,ES,europa
+roma,Roma,Itália,IT,europa
+bologna,Bolonha,Itália,IT,europa
+messina,Messina,Itália,IT,europa
+firenze,Florença,Itália,IT,europa
+siena,Siena,Itália,IT,europa
+weimar,Weimar,Alemanha,DE,europa
+braunschweig,Braunschweig,Alemanha,DE,europa
+tuebingen,Tübingen,Alemanha,DE,europa
+paderborn,Paderborn,Alemanha,DE,europa
+ulm,Ulm,Alemanha,DE,europa
+augsburg,Augsburg,Alemanha,DE,europa
+bielefeld,Bielefeld,Alemanha,DE,europa
+erfurt,Erfurt,Alemanha,DE,europa
+koeln,Colônia,Alemanha,DE,europa
+bochum,Bochum,Alemanha,DE,europa
+karlsruhe,Karlsruhe,Alemanha,DE,europa
+wilhelmshaven,Wilhelmshaven,Alemanha,DE,europa
+berlin,Berlim,Alemanha,DE,europa
+wien,Viena,Áustria,AT,europa
+leoben,Leoben,Áustria,AT,europa
+bern,Berna,Suíça,CH,europa
+paris,Paris,França,FR,europa
+toulouse,Toulouse,França,FR,europa
+toulon,Toulon,França,FR,europa
+poitiers,Poitiers,França,FR,europa
+beauvais,Beauvais,França,FR,europa
+bruxelles,Bruxelas,Bélgica,BE,europa
+liege,Liège,Bélgica,BE,europa
+tilburg,Tilburg,Países Baixos,NL,europa
+stockholm,Estocolmo,Suécia,SE,europa
+brno,Brno,Tchéquia,CZ,europa
+ostrava,Ostrava,Tchéquia,CZ,europa
+iasi,Iași,Romênia,RO,europa
+sofia,Sófia,Bulgária,BG,europa
+limerick,Limerick,Irlanda,IE,europa
+st-johns,St. John's,Canadá,CA,fora
+ottawa,Ottawa,Canadá,CA,fora
+montreal,Montreal,Canadá,CA,fora
+seul,Seul,Coreia do Sul,KR,fora
+macau,Macau,Macau (China),MO,fora
+luanda,Luanda,Angola,AO,fora
+lima,Lima,Peru,PE,fora
+bogota,Bogotá,Colômbia,CO,fora
+medellin,Medellín,Colômbia,CO,fora
+neiva,Neiva,Colômbia,CO,fora
+fusagasuga,Fusagasugá,Colômbia,CO,fora
+neuquen,Neuquén,Argentina,AR,fora
+avellaneda,Avellaneda,Argentina,AR,fora
+lujan,Luján,Argentina,AR,fora
+rosario,Rosário,Argentina,AR,fora
+tandil,Tandil,Argentina,AR,fora
+mendoza,Mendoza,Argentina,AR,fora
+buenos-aires,Buenos Aires,Argentina,AR,fora
+guanajuato,Guanajuato,México,MX,fora
+valparaiso,Valparaíso,Chile,CL,fora
+santiago-cl,Santiago,Chile,CL,fora

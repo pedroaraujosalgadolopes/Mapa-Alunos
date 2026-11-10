@@ -1,0 +1,92 @@
+instituicao_id,nome,cidade_id,campus_status,campus,como_resolver
+uporto,Universidade do Porto,porto,unico,,
+ipp-ese,IPP - Escola Superior de Educação,porto,unico,,
+ipp-esmad,IPP - Escola Superior de Media Artes e Design,vila-do-conde,unico,ESMAD,
+ipp-ess,IPP - Escola Superior de Saúde,porto,unico,,Regra do projeto: demais escolas do IPP no Porto. Pelo que sei a ESS fica em Vila Nova de Gaia; conferir no site da escola.
+ipp-isep,IPP - Instituto Superior de Engenharia do Porto,porto,unico,,
+ipp,Instituto Politécnico do Porto (escola não informada),porto,pendente,,Edital não diz a escola: perguntar ao aluno (cadastro) ou ver a escola do curso no site do IPP; se for ESMAD muda para Vila do Conde.
+uc,Universidade de Coimbra,coimbra,unico,,
+ipc,Instituto Politécnico de Coimbra,coimbra,unico,,
+ulisboa-iseg,Universidade de Lisboa - Instituto Superior de Economia e Gestão,lisboa,unico,,
+ulisboa-fc,Universidade de Lisboa - Faculdade de Ciências,lisboa,unico,,
+unl,Universidade Nova de Lisboa,lisboa,pendente,,Faculdades diferentes (a FCT fica em Almada/Caparica; as demais em Lisboa). Resolver pelo curso do aluno no site da Nova.
+uminho,Universidade do Minho,braga,padrao,,Padrão Braga (Gualtar); existe campus em Guimarães. Conferir pelo curso.
+ipt,Instituto Politécnico de Tomar,tomar,padrao,,Padrão Tomar; existe campus em Abrantes. Conferir pelo curso.
+ipv,Instituto Politécnico de Viseu,viseu,padrao,,Padrão Viseu; existe escola em Lamego. Conferir pelo curso.
+ipbeja,Instituto Politécnico de Beja,beja,unico,,
+ipcb,Instituto Politécnico de Castelo Branco,castelo-branco,unico,,
+ipportalegre,Instituto Politécnico de Portalegre,portalegre,padrao,,Padrão Portalegre; existe escola em Elvas. Conferir pelo curso.
+ipb,Instituto Politécnico de Bragança,braganca,padrao,,Padrão Bragança; existe escola em Mirandela. O edital escreve "Universidade Politécnica de Bragança"; assumi o IPB.
+ipca,Instituto Politécnico do Cávado e do Ave,barcelos,padrao,,Padrão Barcelos; há escolas em Braga/Guimarães/V.N. Famalicão. O edital também escreve "Universidade Politécnica do Cávado e do Ave"; assumi a mesma instituição.
+uac,Universidade dos Açores,ponta-delgada,pendente,,Três ilhas (Ponta Delgada/Angra do Heroísmo/Horta). Resolver pelo curso do aluno.
+udc,Universidade da Coruña,a-coruna,padrao,,Padrão A Coruña; existe campus em Ferrol (ex.: Engenharias/Arquitetura? conferir pelo curso).
+usc,Universidade de Santiago de Compostela,santiago-de-compostela,padrao,,Padrão Santiago; existe campus em Lugo. Conferir pelo curso.
+uclm,Universidad de Castilla-La Mancha,ciudad-real,pendente,,4 cidades (Ciudad Real/Albacete/Cuenca/Toledo). Nó provisório em Ciudad Real (sede da reitoria). Resolver pelo curso no site da UCLM.
+urjc,Universidad Rey Juan Carlos,mostoles,pendente,,5 campi (Móstoles/Alcorcón/Fuenlabrada/Vicálvaro/Aranjuez). Nó provisório em Móstoles (sede). Resolver pelo curso.
+uam,Universidad Autónoma de Madrid,madrid,unico,,
+uab,Universidad Autónoma de Barcelona,cerdanyola,unico,Bellaterra,Campus Bellaterra fica em Cerdanyola del Vallès (a ~30 min de Barcelona).
+uji,Universitat Jaume I,castello,unico,,
+udg,Universitat de Girona,girona,unico,,
+ual,Universidad de Almería,almeria,unico,,
+upna,Universidad Pública de Navarra,pamplona,padrao,,Padrão Pamplona; existe campus em Tudela. Conferir pelo curso.
+unican,Universidad de Cantabria,santander,unico,,
+unirioja,Universidad de La Rioja,logrono,unico,,
+sapienza,Sapienza Università di Roma,roma,unico,,
+unibo,Università di Bologna - Alma Mater Studiorum,bologna,padrao,,Padrão Bolonha; existem campi em Cesena/Forlì/Ravenna/Rimini. Conferir pelo curso.
+unime,Università degli Studi di Messina,messina,unico,,
+unifi,Università degli Studi di Firenze,firenze,unico,,
+unistrasi,Università per Stranieri di Siena,siena,unico,,
+bauhaus,Bauhaus-Universität Weimar,weimar,unico,,
+tubs,Technische Universität Braunschweig,braunschweig,unico,,
+tuebingen,Eberhard Karls Universität Tübingen,tuebingen,unico,,
+paderborn,Universität Paderborn,paderborn,unico,,
+ulm,Universität Ulm,ulm,unico,,
+augsburg,Universität Augsburg,augsburg,unico,,
+bielefeld,Universität Bielefeld,bielefeld,unico,,
+erfurt,Universität Erfurt,erfurt,unico,,
+koeln,Universität zu Köln,koeln,unico,,
+rub,Ruhr-Universität Bochum,bochum,unico,,
+hka,Hochschule Karlsruhe - University of Applied Sciences,karlsruhe,unico,,O edital escreve também "HKA - Karlsruhe University of Applied Sciences"; assumi a mesma instituição.
+jade,Jade University,wilhelmshaven,pendente,,Campi em Wilhelmshaven/Oldenburg/Elsfleth. Nó provisório em Wilhelmshaven. Resolver pelo curso.
+bht,Berliner Hochschule für Technik,berlin,unico,,
+univie,Universität Wien,wien,unico,,
+unileoben,Montanuniversität Leoben,leoben,unico,,
+unibe,Universität Bern,bern,unico,,
+sorbonne-nouvelle,Université Sorbonne Nouvelle - Paris 3,paris,unico,,
+ut2j,Université Toulouse - Jean Jaurès,toulouse,unico,,
+toulon,Université de Toulon,toulon,unico,,
+poitiers,Université de Poitiers,poitiers,padrao,,Padrão Poitiers; a universidade tem polos em outras cidades (Niort/Angoulême/Châtellerault). Conferir pelo curso.
+unilasalle,Institut Polytechnique UniLaSalle,beauvais,pendente,,Vários campi (Beauvais/Rennes/Rouen). Nó provisório em Beauvais (sede). Resolver pelo curso.
+ulb,Université Libre de Bruxelles,bruxelles,unico,,
+uliege,Université de Liège,liege,unico,,
+tilburg,Tilburg University,tilburg,unico,,
+stockholm,Stockholm University,stockholm,unico,,
+masaryk,Masaryk University,brno,unico,,
+ostrava,University of Ostrava,ostrava,unico,,
+uaic,Alexandru Ioan Cuza University,iasi,unico,,
+sofia-uni,Sofia University,sofia,unico,,
+mic,Mary Immaculate College,limerick,padrao,,Padrão Limerick; há campus em Thurles. Conferir pelo curso.
+memorial,Memorial University of Newfoundland,st-johns,padrao,,Padrão St. John's; há campus em Corner Brook (Grenfell). Conferir pelo curso.
+uottawa,University of Ottawa,ottawa,unico,,
+udem,Université de Montréal,montreal,unico,,
+konkuk,Konkuk University,seul,padrao,,Padrão Seul; há campus Glocal em Chungju. Conferir pelo curso.
+cityu-macau,City University of Macau,macau,unico,,
+um-macau,Universidade de Macau,macau,unico,,
+ucan,Universidade Católica de Angola,luanda,unico,,
+uni-pe,Universidad Nacional de Ingeniería,lima,unico,,Assumido Peru (decisão do projeto); existe homônima na Nicarágua.
+javeriana,Pontificia Universidad Javeriana - Bogotá,bogota,unico,,
+unal,Universidad Nacional de Colombia,bogota,padrao,,Padrão Bogotá; há sedes em Medellín/Manizales/Palmira. Conferir pelo curso.
+udea,Universidad de Antioquia,medellin,padrao,,Padrão Medellín; há sedes regionais. Conferir pelo curso.
+usco,Universidad Surcolombiana,neiva,unico,,
+umng,Universidad Militar Nueva Granada,bogota,padrao,,Padrão Bogotá; há campus em Cajicá. Conferir pelo curso.
+ucundinamarca,Universidad de Cundinamarca,fusagasuga,padrao,,Padrão Fusagasugá (sede); há outras sedes. Conferir pelo curso.
+comahue,Universidad Nacional del Comahue,neuquen,padrao,,Padrão Neuquén; há várias sedes. Conferir pelo curso.
+uai,Universidad Nacional de Avellaneda,avellaneda,unico,,
+unlu,Universidad Nacional de Luján,lujan,unico,,
+unr,Universidad Nacional de Rosario,rosario,unico,,
+unicen,Universidad Nacional del Centro de la Provincia de Buenos Aires,tandil,padrao,,Padrão Tandil; há sedes em Olavarría e Azul. Conferir pelo curso.
+ucongreso,Universidad de Congreso,mendoza,unico,,
+uces,Universidad de Ciencias Empresariales y Sociales,buenos-aires,unico,,
+ugto,Universidad de Guanajuato,guanajuato,pendente,,Campi em Guanajuato/León/Irapuato/Celaya/Salamanca. Nó provisório em Guanajuato. Resolver pelo curso.
+pucv,Pontificia Universidad Católica de Valparaíso,valparaiso,unico,,
+uchile,Universidad de Chile,santiago-cl,unico,,
