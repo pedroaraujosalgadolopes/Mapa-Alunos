@@ -23,3 +23,4 @@ data/public/pendencias.md
 *.pdf
 *.tsbuildinfo
 next-env.d.ts
+web/public/maplibre/

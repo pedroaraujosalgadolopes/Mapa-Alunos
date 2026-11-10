@@ -15,6 +15,9 @@ export interface No {
   tipo: "padrao" | "pendente" | "fora";
 }
 
+// worker copiado para public/ por scripts/copiar-worker-maplibre.mjs
+maplibregl.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
+
 const FONTE = "nos";
 const estilo: maplibregl.StyleSpecification = {
   version: 8,

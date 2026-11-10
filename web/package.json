@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "node scripts/copiar-worker-maplibre.mjs",
+    "predev": "node scripts/copiar-worker-maplibre.mjs",
+    "prebuild": "node scripts/copiar-worker-maplibre.mjs"
   },
   "dependencies": {
     "maplibre-gl": "^6.17.0",
