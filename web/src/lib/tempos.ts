@@ -31,7 +31,10 @@ function simetrico(m: Mapa, a: string, b: string, v: number) {
   (m[b] ??= {})[a] = v;
 }
 
-/** Une as duas direções de cada par: vale o MAIOR tempo (conservador). Voos ficam em `voos`. */
+/**
+ * Une as duas direções de cada par: vale o MENOR tempo conhecido. Os dados abertos de transporte são incompletos, então
+ * cada direção é um limite superior do tempo real; o menor é o mais próximo da realidade. Voos ficam em `voos`.
+ */
 export function montarTempos(linhas: LinhaTempo[]): Tempos | null {
   if (!linhas.length) return null;
   const terra = linhas.filter((l) => l.modo !== "voo_estimado");
@@ -50,12 +53,12 @@ export function montarTempos(linhas: LinhaTempo[]): Tempos | null {
   for (const [chave, vs] of agrupa(terra)) {
     const [a, b] = chave.split("|");
     const ok = vs.filter((v) => v >= 0);
-    simetrico(pares, a, b, ok.length ? Math.max(...ok) : vs.includes(ALEM_DO_LIMITE) ? ALEM_DO_LIMITE : SEM_DADO);
+    simetrico(pares, a, b, ok.length ? Math.min(...ok) : vs.includes(ALEM_DO_LIMITE) ? ALEM_DO_LIMITE : SEM_DADO);
   }
   for (const [chave, vs] of agrupa(voo)) {
     const [a, b] = chave.split("|");
     const ok = vs.filter((v) => v >= 0);
-    if (ok.length) simetrico(voos, a, b, Math.max(...ok));
+    if (ok.length) simetrico(voos, a, b, Math.min(...ok));
   }
   return { fonte, pares, voos };
 }

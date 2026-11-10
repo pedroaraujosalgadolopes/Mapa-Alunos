@@ -6,10 +6,10 @@ const L = (o: string, d: string, minutos: string, status = "ok", fonte = "transi
   ({ origem_cidade_id: o, destino_cidade_id: d, minutos, status, fonte, modo });
 const V = (o: string, d: string, minutos: string) => L(o, d, minutos, "estimado", "estimativa", "voo_estimado");
 
-test("une as duas direções com o maior tempo e fica simétrico", () => {
+test("une as duas direções com o menor tempo e fica simétrico", () => {
   const t = montarTempos([L("a", "b", "60"), L("b", "a", "70"), L("a", "c", "", "sem_dado"), L("c", "a", "", "alem_do_limite")])!;
-  assert.equal(t.pares.a.b, 70);
-  assert.equal(t.pares.b.a, 70);
+  assert.equal(t.pares.a.b, 60);
+  assert.equal(t.pares.b.a, 60);
   assert.equal(t.pares.a.c, ALEM_DO_LIMITE); // sem tempo conhecido: além do limite tem precedência sobre sem dado
 });
 

@@ -15,7 +15,9 @@
     "todas": "Todas",
     "limpar": "Limpar filtros",
     "resultado": "{n} alunos em {c} cidades",
-    "ajudaSemestre": "Mostra só quem estará lá no mesmo semestre que você: mapa, \"perto de mim\" e grafo."
+    "ajudaSemestre": "Mostra só quem estará lá no mesmo semestre que você: mapa, \"perto de mim\" e grafo.",
+    "resultadoUm": "{n} aluno em {c} cidade",
+    "resultadoMisto": "{n} alunos em {c} cidade"
   },
   "legenda": {
     "titulo": "Legenda",
@@ -53,7 +55,7 @@
     "ate": "até {h} h",
     "semTempos": "Tempos de viagem ainda não disponíveis para estes dados.",
     "voos": "Incluir voos (estimados) ✈",
-    "notaTempos": "Tempos aproximados, de dia útil. ✈ = estimativa de voo (não verifica se existe rota direta)."
+    "notaTempos": "Tempos aproximados, de dia útil. Trem/ônibus vêm de dados abertos incompletos e podem estar SUPERESTIMADOS (faltam linhas regionais). ✈ = estimativa de voo (não verifica se existe rota direta)."
   },
   "vizinhos": {
     "titulo": "Quem está perto",

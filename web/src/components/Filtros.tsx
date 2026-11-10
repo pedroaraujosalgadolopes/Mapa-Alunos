@@ -31,7 +31,8 @@ export default function FiltrosView({ filtros, onChange, opcoes, resultado }: Pr
           {opcoes.paises.map((v) => <option key={v} value={v}>{v}</option>)}
         </select>
       </label>
-      <p><strong>{t("filtros.resultado", { n: resultado.alunos, c: resultado.cidades })}</strong></p>
+      <p><strong>{t(resultado.alunos === 1 ? "filtros.resultadoUm" : resultado.cidades === 1 ? "filtros.resultadoMisto" : "filtros.resultado",
+        { n: resultado.alunos, c: resultado.cidades })}</strong></p>
       {(filtros.semestre || filtros.pais) && (
         <button onClick={() => onChange({ semestre: "", pais: "" })}>{t("filtros.limpar")}</button>
       )}
