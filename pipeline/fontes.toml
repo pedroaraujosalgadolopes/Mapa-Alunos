@@ -1,0 +1,34 @@
+# Fontes do edital. Rodada maior vence em caso de mesma inscrição. Novas chamadas entram aqui.
+edital = "08/2026"
+rotulo = "preliminar"
+base_url = "https://editais.uff.br/sites/default/files/arquivos/"
+
+[[fonte]]
+arquivo = "Edital 082026 - Alocação Geral (sem os bolsistas).pdf"
+tipo = "alocacao"
+rodada = 1
+
+[[fonte]]
+arquivo = "Edital 082026 - Alocação - Socioeconômico - Grupo 1.pdf"
+tipo = "alocacao"
+rodada = 1
+
+[[fonte]]
+arquivo = "Edital 082026 - Alocação - Socioeconômico - Grupo 2.pdf"
+tipo = "alocacao"
+rodada = 1
+
+[[fonte]]
+arquivo = "Edital 082026 - Alocação - Socioeconômico - Grupo 3.pdf"
+tipo = "alocacao"
+rodada = 1
+
+[[fonte]]
+arquivo = "Edital 082026 - Alocação dos candidatos excedentes.pdf"
+tipo = "alocacao"
+rodada = 2
+
+[[fonte]]
+arquivo = "Edital 082026 - Lista de candidatos excedentes.pdf"
+tipo = "lista_espera"  # sem destino: só entra no hash
+rodada = 0

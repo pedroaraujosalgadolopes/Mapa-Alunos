@@ -13,3 +13,9 @@ node_modules/
 .next/
 .env*
 .DS_Store
+
+# Saídas derivadas de dados reais (mesmo agregadas) ficam locais
+data/snapshots/
+data/public/resumo.json
+data/public/pendencias.md
+*.pdf
