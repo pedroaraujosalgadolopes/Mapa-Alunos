@@ -5,6 +5,7 @@ import { ALEM_DO_LIMITE, SEM_DADO, componentes, efetivo, fmtDuracao, montarTempo
 const L = (o: string, d: string, minutos: string, status = "ok", fonte = "transitous", modo = "trem_onibus") =>
   ({ origem_cidade_id: o, destino_cidade_id: d, minutos, status, fonte, modo });
 const V = (o: string, d: string, minutos: string) => L(o, d, minutos, "estimado", "estimativa", "voo_estimado");
+const B = (o: string, d: string, minutos: string) => L(o, d, minutos, "estimado", "estimativa", "onibus_estimado");
 
 test("une as duas direções com o menor tempo e fica simétrico", () => {
   const t = montarTempos([L("a", "b", "60"), L("b", "a", "70"), L("a", "c", "", "sem_dado"), L("c", "a", "", "alem_do_limite")])!;
@@ -31,6 +32,13 @@ test("voo estimado cobre trecho além do limite e só vale se for mais rápido q
   assert.deepEqual(efetivo(t, "a", "c", true), { min: 120, modo: "terra" });
   assert.deepEqual(efetivo(t, "d", "a", true), { min: 300, modo: "voo" });
   assert.equal(efetivo(t, "a", "z", true), undefined);
+});
+
+test("ônibus estimado corrige tempo real inflado em trecho curto, e só vale se for mais rápido", () => {
+  const t = montarTempos([L("lg", "pa", "451"), B("lg", "pa", "122"), L("po", "co", "103"), B("po", "co", "157")])!;
+  assert.deepEqual(efetivo(t, "lg", "pa", true), { min: 122, modo: "onibus" });
+  assert.deepEqual(efetivo(t, "pa", "lg", false), { min: 451, modo: "terra" }); // sem estimativas: dado real, mesmo inflado
+  assert.deepEqual(efetivo(t, "po", "co", true), { min: 103, modo: "terra" }); // o real é menor: vence
 });
 
 test("formata duração", () => {

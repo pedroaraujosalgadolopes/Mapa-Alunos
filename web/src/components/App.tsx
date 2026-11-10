@@ -21,7 +21,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   const [raioH, setRaioH] = useState(0); // 0 = sem limite
   const [aba, setAba] = useState<"mapa" | "grafo">("mapa");
   const [corteH, setCorteH] = useState(3);
-  const [voos, setVoos] = useState(true); // incluir voos estimados
+  const [estimativas, setEstimativas] = useState(true); // incluir estimativas (ônibus curto, voo)
 
   const opcoes = useMemo(() => {
     const sem = new Set<string>(), paises = new Set<string>();
@@ -50,18 +50,18 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   // "perto de mim": a cidade selecionada é a origem; vizinhos pelo tempo conhecido
   const perto = useMemo(() => {
     if (!tempos || !selecionada) return null;
-    const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null, voos);
+    const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null, estimativas);
     return raioH ? todosPerto : todosPerto.slice(0, MAIS_PROXIMAS);
-  }, [tempos, selecionada, ids, raioH, voos]);
+  }, [tempos, selecionada, ids, raioH, estimativas]);
 
   // cidades com alunos (no filtro) mas sem tempo conhecido a partir da selecionada: mostramos, não escondemos
   const semTempo = useMemo<string[]>(() => {
     if (!tempos || !selecionada) return [];
     return todos
-      .filter((n) => n.id !== selecionada && n.tipo !== "fora" && !((efetivo(tempos, selecionada, n.id, voos)?.min ?? -1) >= 0))
+      .filter((n) => n.id !== selecionada && n.tipo !== "fora" && !((efetivo(tempos, selecionada, n.id, estimativas)?.min ?? -1) >= 0))
       .map((n) => n.nome)
       .sort((a, b) => a.localeCompare(b, "pt-BR"));
-  }, [tempos, selecionada, todos, voos]);
+  }, [tempos, selecionada, todos, estimativas]);
 
   const nos = useMemo(() => {
     if (!tempos || !selecionada || !raioH) return todos;
@@ -112,7 +112,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
             ) : <p className="nota">{t("raio.semTempos")}</p>}
             {tempos && (
               <label className="check">
-                <input type="checkbox" checked={voos} onChange={(e) => setVoos(e.target.checked)} /> {t("raio.voos")}
+                <input type="checkbox" checked={estimativas} onChange={(e) => setEstimativas(e.target.checked)} /> {t("raio.estimativas")}
               </label>
             )}
           </section>
@@ -140,7 +140,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
           {aba === "grafo" && (
             <div className="grafo-wrap">
               {tempos ? (
-                <Grafo nos={nosGrafo} tempos={tempos} voos={voos} corteH={corteH} onCorte={setCorteH} k={resumo.k_min}
+                <Grafo nos={nosGrafo} tempos={tempos} estimativas={estimativas} corteH={corteH} onCorte={setCorteH} k={resumo.k_min}
                   selecionada={selecionada} onSelect={setSelecionada} />
               ) : <p className="nota" style={{ padding: 16 }}>{t("grafo.semTempos")}</p>}
             </div>

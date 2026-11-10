@@ -3,7 +3,7 @@
 import * as maplibregl from "maplibre-gl";
 import type { FeatureCollection, Point } from "geojson";
 import { useEffect, useMemo, useRef } from "react";
-import { fmtDuracao } from "@/lib/tempos";
+import { type Modo, fmtDuracao, icone } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 
 export interface No {
@@ -22,7 +22,7 @@ maplibregl.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
 const FONTE = "nos";
 const FONTE_ARESTAS = "arestas";
 
-export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number; modo: "terra" | "voo" }
+export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number; modo: Modo }
 const estilo: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
@@ -84,7 +84,7 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
       m.addSource(FONTE_ARESTAS, { type: "geojson", data: arestasRef.current });
       m.addLayer({ id: "arestas", type: "line", source: FONTE_ARESTAS, filter: ["==", ["get", "modo"], "terra"], paint: {
         "line-color": tokens.color.aresta, "line-width": 2.5, "line-opacity": 0.75 } });
-      m.addLayer({ id: "arestas-voo", type: "line", source: FONTE_ARESTAS, filter: ["==", ["get", "modo"], "voo"], paint: {
+      m.addLayer({ id: "arestas-voo", type: "line", source: FONTE_ARESTAS, filter: ["!=", ["get", "modo"], "terra"], paint: {
         "line-color": tokens.color.aresta, "line-width": 2, "line-opacity": 0.7, "line-dasharray": [2, 1.5] } });
       m.addSource(FONTE, { type: "geojson", data: geoRef.current });
       m.addLayer({ id: "nos", type: "circle", source: FONTE, paint: {
@@ -120,7 +120,7 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
     for (const a of props.arestas) {
       const el = document.createElement("div");
       el.className = "rotulo-aresta";
-      el.textContent = `${a.modo === "voo" ? "✈ " : ""}~${fmtDuracao(a.min)}`;
+      el.textContent = `${icone(a.modo)}~${fmtDuracao(a.min)}`;
       rotulos.current.push(new maplibregl.Marker({ element: el }).setLngLat([(a.de[0] + a.para[0]) / 2, (a.de[1] + a.para[1]) / 2]).addTo(mapa.current));
     }
   }, [geoArestas, props.arestas]);

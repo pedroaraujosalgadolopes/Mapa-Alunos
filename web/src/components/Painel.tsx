@@ -1,5 +1,5 @@
 import { t } from "@/lib/i18n";
-import { fmtDuracao } from "@/lib/tempos";
+import { type Modo, fmtDuracao, icone } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 import type { Cidade, Instituicao, Nomes, Pessoa } from "@/lib/types";
 
@@ -71,7 +71,7 @@ function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nom
   );
 }
 
-export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number; modo: "terra" | "voo" }
+export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number; modo: Modo }
 
 export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos, semTempo, raioH, onFechar, onSelect }: {
   cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; semestre: string; vizinhos: Vizinho[] | null; semTempo: string[]; raioH: number;
@@ -106,7 +106,7 @@ export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos
                   <button onClick={() => onSelect(v.id)}>
                     <span aria-hidden>{bandeira(v.iso2)}</span> <strong>{v.nome}</strong>
                     <span className="nota"> {v.pais} · {contagem(v.n)}</span>
-                    <span className="tempo">{v.modo === "voo" && "✈ "}~{fmtDuracao(v.min)}{v.modo === "voo" && <small> {t("vizinhos.estimado")}</small>}</span>
+                    <span className="tempo">{icone(v.modo)}~{fmtDuracao(v.min)}{v.modo !== "terra" && <small> {t("vizinhos.estimado")}</small>}</span>
                   </button>
                 </li>
               ))}

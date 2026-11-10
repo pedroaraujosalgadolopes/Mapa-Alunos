@@ -57,6 +57,6 @@ export function carregar(opts: { apresentacao?: boolean } = {}): {
     const arq = path.join(dirTempos, nome);
     return fs.existsSync(arq) ? (csv(arq) as unknown as LinhaTempo[]) : [];
   };
-  const tempos = montarTempos([...lerTempos("tempos.csv"), ...lerTempos("voos_estimados.csv")]);
+  const tempos = montarTempos([...lerTempos("tempos.csv"), ...lerTempos("voos_estimados.csv"), ...lerTempos("onibus_estimados.csv")]);
   return { resumo, fonte: usarSintetico ? "sintetico" : "real", nomes, tempos };
 }

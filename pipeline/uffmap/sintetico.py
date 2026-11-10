@@ -114,6 +114,7 @@ def tempos_simulados(data: Path, seed: int = 7) -> int:
                 linhas.append({**base, "minutos": minutos, "status": "ok", "transferencias": 1, "parada_dist_m": 0})
     T.grava(data / "synthetic" / "tempos.csv", linhas)
     T.voos_estimados(ref, data / "synthetic" / "voos_estimados.csv", hoje=date(2026, 1, 15))
+    T.onibus_estimados(ref, data / "synthetic" / "onibus_estimados.csv", hoje=date(2026, 1, 15))
     return len(linhas)
 
 

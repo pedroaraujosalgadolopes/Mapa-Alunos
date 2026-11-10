@@ -106,3 +106,16 @@ def test_voos_estimados_marcados_e_com_limite_de_distancia(tmp_path):
     assert ("porto", "coimbra") not in pares  # ~100 km: sem voo estimado
     lisboa_estocolmo = pares[("lisboa", "stockholm")]  # ~3.000 km: 3.000/750*60 + 180 ≈ 419 min
     assert 400 < lisboa_estocolmo < 440 and pares[("stockholm", "lisboa")] == lisboa_estocolmo  # simétrico
+
+
+def test_onibus_estimado_so_trechos_curtos_e_marcado(tmp_path):
+    destino = tmp_path / "onibus.csv"
+    n = tempos.onibus_estimados(REF, destino, hoje=date(2026, 1, 1))
+    linhas = list(csv.DictReader(open(destino, encoding="utf8")))
+    assert n == len(linhas) > 100
+    assert {l["modo"] for l in linhas} == {"onibus_estimado"} and {l["status"] for l in linhas} == {"estimado"}
+    assert {l["fonte"] for l in linhas} == {"estimativa"} and all("ESTIMATIVA" in l["metodo"] for l in linhas)
+    pares = {(l["origem_cidade_id"], l["destino_cidade_id"]): int(l["minutos"]) for l in linhas}
+    assert 100 < pares[("logrono", "pamplona")] < 160  # ~90 km: antes o dado aberto dava 451 min
+    assert ("lisboa", "stockholm") not in pares  # longe demais para ônibus estimado
+    assert pares[("pamplona", "logrono")] == pares[("logrono", "pamplona")]

@@ -147,6 +147,42 @@ def voos_estimados(ref: Referencia, destino: Path, cfg: ConfigVoo | None = None,
     return len(linhas)
 
 
+@dataclass
+class ConfigOnibus:
+    max_km: int = 300  # só trechos curtos; acima disso a estimativa deixa de fazer sentido
+    desvio: float = 1.3  # distância por estrada/trilho ≈ 1,3 × linha reta
+    velocidade_kmh: int = 65  # média de ônibus regional
+    overhead_min: int = 30  # espera/ida à estação
+
+
+def onibus_estimados(ref: Referencia, destino: Path, cfg: ConfigOnibus | None = None, hoje: date | None = None) -> int:
+    """ESTIMATIVA de ônibus/trem regional em trechos curtos. Sem rede.
+
+    O dado aberto (Transitous) não tem várias linhas regionais e superestima esses trechos (ex.: Logroño→Pamplona,
+    90 km, saía 5 a 7 h). Esta estimativa só serve de teto: a interface usa o MENOR entre o tempo real, esta
+    estimativa e o voo. Sempre marcada como `estimado` (modo `onibus_estimado`, fonte `estimativa`), em arquivo próprio.
+    """
+    cfg = cfg or ConfigOnibus()
+    hoje = hoje or date.today()
+    cidades = cidades_alvo(ref)
+    metodo = (f"ESTIMATIVA: linha reta x {cfg.desvio} / {cfg.velocidade_kmh} km/h + {cfg.overhead_min} min; "
+              f"só abaixo de {cfg.max_km} km; não verifica se existe linha")
+    linhas = []
+    for o in cidades:
+        for d in cidades:
+            if o["cidade_id"] == d["cidade_id"]:
+                continue
+            km = haversine_m((float(o["lat"]), float(o["lon"])), (float(d["lat"]), float(d["lon"]))) / 1000
+            if km >= cfg.max_km:
+                continue
+            linhas.append({"origem_cidade_id": o["cidade_id"], "destino_cidade_id": d["cidade_id"], "modo": "onibus_estimado",
+                           "minutos": round(km * cfg.desvio / cfg.velocidade_kmh * 60 + cfg.overhead_min), "status": "estimado",
+                           "transferencias": "", "parada_dist_m": "", "fonte": "estimativa", "metodo": metodo,
+                           "referencia": "", "consultado_em": hoje.isoformat()})
+    grava(destino, linhas)
+    return len(linhas)
+
+
 def le_cache(arq: Path) -> list[dict]:
     return list(csv.DictReader(open(arq, encoding="utf8"))) if arq.exists() else []
 

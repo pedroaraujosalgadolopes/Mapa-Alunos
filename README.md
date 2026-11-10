@@ -20,6 +20,7 @@ python3 -m venv .venv && .venv/bin/pip install -r pipeline/requirements-dev.txt
 PYTHONPATH=pipeline .venv/bin/pytest pipeline/tests -q            # testes do pipeline
 PYTHONPATH=pipeline .venv/bin/python -m uffmap sintetico          # regera data/synthetic (opcional)
 PYTHONPATH=pipeline .venv/bin/python -m uffmap tempos --dry-run --contato seu@contato  # plano da consulta real (sem rede)
+PYTHONPATH=pipeline .venv/bin/python -m uffmap voos; PYTHONPATH=pipeline .venv/bin/python -m uffmap onibus   # estimativas (sem rede)
 sh scripts/instalar_hooks.sh                                      # ativa o bloqueio de dado pessoal no commit
 
 cd web && npm install && npm test                                   # testes da lógica de tempos/grupos

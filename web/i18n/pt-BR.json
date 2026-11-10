@@ -54,8 +54,8 @@
     "semLimite": "Sem limite",
     "ate": "até {h} h",
     "semTempos": "Tempos de viagem ainda não disponíveis para estes dados.",
-    "voos": "Incluir voos (estimados) ✈",
-    "notaTempos": "Tempos aproximados, de dia útil. Trem/ônibus vêm de dados abertos incompletos e podem estar SUPERESTIMADOS (faltam linhas regionais). ✈ = estimativa de voo (não verifica se existe rota direta)."
+    "notaTempos": "Tempos aproximados, de dia útil. O tempo real de trem/ônibus vem de dados abertos incompletos e pode estar SUPERESTIMADO; por isso mostramos o MENOR entre ele e as estimativas. 🚌 ✈ = estimado (não verifica se existe linha ou voo direto).",
+    "estimativas": "Incluir estimativas: 🚌 ônibus em trechos curtos e ✈ voos"
   },
   "vizinhos": {
     "titulo": "Quem está perto",
@@ -75,6 +75,6 @@
     "alunosN": "{n} alunos",
     "dica": "Arraste as cidades. Linhas: tempo de viagem. Cinza tracejado: grupo isolado.",
     "semTempos": "O grafo precisa dos tempos de viagem, que ainda não estão disponíveis para estes dados.",
-    "voo": "voo estimado"
+    "estimado": "estimado"
   }
 }

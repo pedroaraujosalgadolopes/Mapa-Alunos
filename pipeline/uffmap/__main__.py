@@ -21,6 +21,7 @@ v = sub.add_parser("voos", help="estimativa de voo (marcada como estimada) em da
 v.add_argument("--min-km", type=int, default=400)
 v.add_argument("--velocidade", type=int, default=750)
 v.add_argument("--overhead-min", type=int, default=180)
+sub.add_parser("onibus", help="estimativa de ônibus em trechos curtos (marcada como estimada)")
 sub.add_parser("flat", help="gera data/public/instituicoes_flat.csv a partir de data/reference")
 s = sub.add_parser("sintetico", help="gera o dataset sintético (PDFs falsos + snapshot) em data/synthetic")
 s.add_argument("--seed", type=int, default=7)
@@ -38,6 +39,10 @@ elif a.cmd == "voos":
     from .tempos import ConfigVoo, voos_estimados
     out = {"linhas": voos_estimados(Referencia(a.data / "reference"), a.data / "reference" / "tempos" / "voos_estimados.csv",
                                     ConfigVoo(a.min_km, a.velocidade, a.overhead_min))}
+elif a.cmd == "onibus":
+    from .normalize import Referencia
+    from .tempos import onibus_estimados
+    out = {"linhas": onibus_estimados(Referencia(a.data / "reference"), a.data / "reference" / "tempos" / "onibus_estimados.csv")}
 elif a.cmd == "flat":
     from .flat import gerar
     from .normalize import Referencia
