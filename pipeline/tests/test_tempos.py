@@ -119,3 +119,20 @@ def test_onibus_estimado_so_trechos_curtos_e_marcado(tmp_path):
     assert 100 < pares[("logrono", "pamplona")] < 160  # ~90 km: antes o dado aberto dava 451 min
     assert ("lisboa", "stockholm") not in pares  # longe demais para ônibus estimado
     assert pares[("pamplona", "logrono")] == pares[("logrono", "pamplona")]
+
+
+def test_422_too_many_results_tenta_limite_menor(tmp_path):
+    data = montar(tmp_path)
+    limites = []
+
+    def fetch(url, contato):
+        m = int(url.split("maxTravelTime=")[1].split("&")[0])
+        limites.append(m)
+        if m > 300:  # hub denso: 600 e 420 estouram o limite de resultados da API
+            raise urllib.error.HTTPError(url, 422, "too many results", {}, None)
+        return {"all": [parada("coimbra", 60)]}
+
+    out = tempos.rodar(data, CFG, hoje=date(2026, 1, 1), so_origem="porto", fetch=fetch, dormir=lambda s: None)
+    assert limites == [600, 420, 300] and out["consultadas"] == 1 and out["falhas"] == []
+    linhas = list(csv.DictReader(open(data / "reference" / "tempos" / "tempos.csv", encoding="utf8")))
+    assert any("300 min" in l["metodo"] for l in linhas if l["status"] == "sem_dado")  # registra o limite realmente usado

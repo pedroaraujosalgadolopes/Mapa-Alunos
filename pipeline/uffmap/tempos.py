@@ -15,7 +15,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable
@@ -36,6 +36,7 @@ class Config:
     max_min: int = 600  # acima disso: alem_do_limite
     raio_parada_m: int = 2000
     pausa_s: float = 3.0
+    reduzir_para: tuple = (420, 300, 200)  # limites tentados quando a API responde 'too many results' (HTTP 422)
     validade_dias: int = 30
     base: str = BASE
 
@@ -227,17 +228,27 @@ def rodar(data: Path, cfg: Config, hoje: date | None = None, forcar: bool = Fals
     novas: list[dict] = []
     falhas = []
     for n, o in enumerate(fazer):
-        try:
-            resp = fetch(url_one_to_all(cfg, o, quando), cfg.contato)
-        except urllib.error.HTTPError as e:
-            falhas.append(f"{o['cidade_id']}: HTTP {e.code}")
-            if e.code == 429:  # pediram para desacelerar: para tudo e guarda o que já temos
+        resp, cfg_o, parar = None, cfg, False
+        for limite in (cfg.max_min, *cfg.reduzir_para):
+            cfg_o = replace(cfg, max_min=limite)
+            try:
+                resp = fetch(url_one_to_all(cfg_o, o, quando), cfg.contato)
                 break
+            except urllib.error.HTTPError as e:
+                if e.code == 422 and limite != (cfg.reduzir_para or (None,))[-1]:
+                    dormir(cfg.pausa_s)  # resultado grande demais: tenta um limite menor de horas
+                    continue
+                falhas.append(f"{o['cidade_id']}: HTTP {e.code}")
+                parar = e.code == 429  # pediram para desacelerar: para tudo e guarda o que já temos
+                break
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+                falhas.append(f"{o['cidade_id']}: {type(e).__name__}")
+                break
+        if parar:
+            break
+        if resp is None:
             continue
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
-            falhas.append(f"{o['cidade_id']}: {type(e).__name__}")
-            continue
-        novas += linhas_da_origem(resp, o, alvo, cfg, quando, hoje)
+        novas += linhas_da_origem(resp, o, alvo, cfg_o, quando, hoje)
         grava(arq, mantidas + novas)  # progresso salvo a cada origem
         if n < len(fazer) - 1:
             dormir(cfg.pausa_s)
