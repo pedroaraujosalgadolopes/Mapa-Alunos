@@ -82,3 +82,14 @@ def test_cache_progresso_e_429(tmp_path):
     chamadas.clear()
     out2 = tempos.rodar(data, CFG, hoje=date(2026, 1, 2), dry_run=True)
     assert out2["em_cache"] == 2 and out2["origens_a_consultar"] == len(ALVO) - 2
+
+
+def test_tempos_simulados_so_no_sintetico(tmp_path):
+    from uffmap.sintetico import tempos_simulados
+    data = montar(tmp_path)
+    n = tempos_simulados(data)
+    linhas = list(csv.DictReader(open(data / "synthetic" / "tempos.csv", encoding="utf8")))
+    assert n == len(linhas) > 1000
+    assert {l["fonte"] for l in linhas} == {"simulado"} and all("SIMULADO" in l["metodo"] for l in linhas)
+    assert {"ok", "sem_dado", "alem_do_limite"} <= {l["status"] for l in linhas}
+    assert not (data / "reference" / "tempos" / "tempos.csv").exists()  # o dado real nunca recebe simulação

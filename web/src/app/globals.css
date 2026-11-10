@@ -17,7 +17,8 @@ button { cursor: pointer; }
 .legenda { display: flex; flex-wrap: wrap; gap: var(--space-3); font-size: var(--font-size-small); }
 .legenda span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; background: var(--c); }
 .mapa { position: relative; }
-.mapa > div { position: absolute; inset: 0; }
+.mapa-camada { position: absolute; inset: 0; }
+.mapa-camada > div { position: absolute; inset: 0; }
 .painel h2 { font-size: var(--font-size-title); }
 .inst { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-3); }
 .inst h3 { margin: 0 0 var(--space-1); font-size: var(--font-size-base); }
@@ -56,3 +57,22 @@ button { cursor: pointer; }
 .aluno-txt strong { font-size: var(--font-size-base); }
 .aluno-txt span { color: var(--color-muted); overflow-wrap: anywhere; }
 .aluno-txt .origem { font-size: 12px; opacity: .85; }
+
+.abas { position: absolute; top: var(--space-3); left: var(--space-3); z-index: 5; display: flex; gap: 0; background: var(--color-surface);
+  border: 1px solid var(--color-border); border-radius: var(--radius-pill); overflow: hidden; }
+.abas button { border: 0; border-radius: 0; padding: var(--space-2) var(--space-4); }
+.abas button.ativa { background: var(--color-accent); color: #fff; font-weight: var(--font-weight-bold); }
+.rotulo-aresta { background: var(--color-aresta-rotulo-bg); color: var(--color-text); border: 1px solid var(--color-border); border-radius: var(--radius-pill);
+  padding: 1px 8px; font-size: 12px; font-weight: var(--font-weight-bold); box-shadow: 0 1px 3px rgba(0,0,0,.15); pointer-events: none; }
+.vizinhos h3 { margin: var(--space-3) 0 var(--space-2); font-size: var(--font-size-base); }
+.vizinhos ul { list-style: none; margin: 0 0 var(--space-3); padding: 0; display: grid; gap: var(--space-1); }
+.vizinhos button { width: 100%; text-align: left; display: flex; align-items: center; gap: var(--space-1); flex-wrap: wrap; }
+.vizinhos .tempo { margin-left: auto; font-weight: var(--font-weight-bold); color: var(--color-accent); }
+.grafo-wrap { position: absolute; inset: 0; background: var(--color-surface); overflow: auto; }
+.grafo { display: flex; flex-direction: column; gap: var(--space-3); padding: 56px var(--space-4) var(--space-4); }
+.grafo-controles { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--font-size-small); }
+.grafo-controles input { width: 280px; }
+.grafo svg { width: 100%; height: auto; max-height: 70vh; background: var(--color-surface-alt); border-radius: var(--radius-md); touch-action: none; }
+.grafo .no { cursor: grab; }
+.grafo-grupos ul { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-1); font-size: var(--font-size-small); }
+.grafo-grupos .ponto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 6px; }

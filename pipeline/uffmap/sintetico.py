@@ -87,9 +87,40 @@ def gerar_pdfs(dest: Path, seed: int = 7, n: int = 90) -> dict:
             "desconhecida": "Universidade Ficticia de Teste"}
 
 
+def tempos_simulados(data: Path, seed: int = 7) -> int:
+    """Tempos SIMULADOS (linha reta / 70 km/h + 30 min) só para demonstrar o grafo no dataset sintético.
+
+    Marcados com fonte=simulado. Nunca são gravados em data/reference/tempos (dado real).
+    Alguns pares ficam sem_dado e outros além do limite, para exercitar a interface.
+    """
+    from . import tempos as T
+    ref = Referencia(data / "reference")
+    cidades = T.cidades_alvo(ref)
+    rnd = random.Random(seed)
+    linhas = []
+    for o in cidades:
+        for d in cidades:
+            if o["cidade_id"] == d["cidade_id"]:
+                continue
+            km = T.haversine_m((float(o["lat"]), float(o["lon"])), (float(d["lat"]), float(d["lon"]))) / 1000
+            minutos = round(30 + km / 70 * 60)
+            base = {"origem_cidade_id": o["cidade_id"], "destino_cidade_id": d["cidade_id"], "modo": T.MODO, "fonte": "simulado",
+                    "referencia": "simulado", "consultado_em": "2026-01-15", "metodo": "SIMULADO: linha reta / 70 km/h + 30 min (não é dado real)"}
+            if minutos > 600:
+                linhas.append({**base, "minutos": "", "status": "alem_do_limite", "transferencias": "", "parada_dist_m": ""})
+            elif rnd.random() < 0.03:
+                linhas.append({**base, "minutos": "", "status": "sem_dado", "transferencias": "", "parada_dist_m": ""})
+            else:
+                linhas.append({**base, "minutos": minutos, "status": "ok", "transferencias": 1, "parada_dist_m": 0})
+    T.grava(data / "synthetic" / "tempos.csv", linhas)
+    return len(linhas)
+
+
 def gerar_snapshot(data: Path, seed: int = 7) -> dict:
     """Gera PDFs falsos num diretório temporário e roda o pipeline real em data/synthetic."""
     from . import snapshot
     with tempfile.TemporaryDirectory() as tmp:
         gerar_pdfs(Path(tmp), seed)
-        return snapshot.rodar(Path(tmp), data, hoje=date(2026, 1, 15), base=data / "synthetic", rotulo="sintetico")
+        out = snapshot.rodar(Path(tmp), data, hoje=date(2026, 1, 15), base=data / "synthetic", rotulo="sintetico")
+    out["tempos_simulados"] = tempos_simulados(data, seed)
+    return out

@@ -1,4 +1,5 @@
 import { t } from "@/lib/i18n";
+import { fmtDuracao } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 import type { Cidade, Instituicao, Nomes, Pessoa } from "@/lib/types";
 
@@ -69,8 +70,11 @@ function Instituicao({ i, nomes, semestres, k }: { i: Instituicao; nomes: Nomes 
   );
 }
 
-export default function Painel({ cidade, k, nomes, semestres, onFechar }: {
-  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; onFechar: () => void }) {
+export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number }
+
+export default function Painel({ cidade, k, nomes, semestres, vizinhos, raioH, onFechar, onSelect }: {
+  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; vizinhos: Vizinho[] | null; raioH: number;
+  onFechar: () => void; onSelect: (id: string) => void }) {
   if (!cidade) return <p className="nota">{t("painel.vazio")}</p>;
   const porSem: Record<string, number> = {};
   for (const i of cidade.instituicoes) for (const [s, n] of Object.entries(i.por_semestre)) porSem[s] = (porSem[s] ?? 0) + n;
@@ -89,6 +93,24 @@ export default function Painel({ cidade, k, nomes, semestres, onFechar }: {
           <span key={s} className="chip" style={{ "--c": corSemestre(semestres, s) } as React.CSSProperties}>{t("painel.semestreN", { n, s })}</span>
         ))}
       </div>
+      {vizinhos && (
+        <section className="vizinhos">
+          <h3>{t("vizinhos.titulo")} <span className="nota">· {raioH ? t("vizinhos.dentroDoRaio", { h: raioH }) : t("vizinhos.maisProximas")}</span></h3>
+          {vizinhos.length === 0 ? <p className="nota">{t("vizinhos.nenhuma")}</p> : (
+            <ul>
+              {vizinhos.map((v) => (
+                <li key={v.id}>
+                  <button onClick={() => onSelect(v.id)}>
+                    <span aria-hidden>{bandeira(v.iso2)}</span> <strong>{v.nome}</strong>
+                    <span className="nota"> {v.pais} · {contagem(v.n)}</span>
+                    <span className="tempo">{fmtDuracao(v.min)}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
       {cidade.instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} />)}
     </section>
   );

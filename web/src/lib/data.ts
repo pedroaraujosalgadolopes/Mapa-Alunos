@@ -1,18 +1,39 @@
 import fs from "node:fs";
 import path from "node:path";
+import { type LinhaTempo, type Tempos, montarTempos } from "./tempos";
 import type { Nomes, Resumo } from "./types";
 
-// Lê SOMENTE data/public/resumo.json (ou o sintético) e data/reference/cidades.csv. Nunca data/private.
+// Lê SOMENTE data/public/resumo.json (ou o sintético), data/reference/cidades.csv e a tabela de tempos. Nunca data/private.
 const DATA = process.env.DATA_DIR ?? path.resolve(process.cwd(), "..", "data");
 
+/** CSV simples com suporte a aspas. */
 function csv(arquivo: string): Record<string, string>[] {
-  const [cab, ...linhas] = fs.readFileSync(arquivo, "utf8").trim().split(/\r?\n/);
-  const cols = cab.split(",");
-  return linhas.map((l) => Object.fromEntries(l.split(",").map((v, i) => [cols[i], v])));
+  const linhas: string[][] = [];
+  let campo = "", linha: string[] = [], aspas = false;
+  const txt = fs.readFileSync(arquivo, "utf8");
+  for (let i = 0; i < txt.length; i++) {
+    const c = txt[i];
+    if (aspas) {
+      if (c === '"' && txt[i + 1] === '"') { campo += '"'; i++; }
+      else if (c === '"') aspas = false;
+      else campo += c;
+    } else if (c === '"') aspas = true;
+    else if (c === ",") { linha.push(campo); campo = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && txt[i + 1] === "\n") i++;
+      linha.push(campo); campo = "";
+      if (linha.some((v) => v !== "")) linhas.push(linha);
+      linha = [];
+    } else campo += c;
+  }
+  if (campo || linha.length) { linha.push(campo); linhas.push(linha); }
+  const [cab, ...resto] = linhas;
+  return resto.map((l) => Object.fromEntries(cab.map((k, i) => [k, l[i] ?? ""])));
 }
 
 /** Nomes (primeiro nome, nunca inscrição): só com MOSTRAR_NOMES=1 e fora do modo apresentação. */
-export function carregar(opts: { apresentacao?: boolean } = {}): { resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null } {
+export function carregar(opts: { apresentacao?: boolean } = {}): {
+  resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; tempos: Tempos | null } {
   const real = path.join(DATA, "public", "resumo.json");
   const sint = path.join(DATA, "synthetic", "public", "resumo.json");
   const usarSintetico = process.env.DATA_SOURCE === "synthetic" || !fs.existsSync(real);
@@ -30,5 +51,8 @@ export function carregar(opts: { apresentacao?: boolean } = {}): { resumo: Resum
   const permitido = process.env.MOSTRAR_NOMES === "1" && !opts.apresentacao;
   const arqNomes = path.join(DATA, usarSintetico ? "synthetic" : "", "public", "nomes.json");
   const nomes: Nomes | null = permitido && fs.existsSync(arqNomes) ? JSON.parse(fs.readFileSync(arqNomes, "utf8")) : null;
-  return { resumo, fonte: usarSintetico ? "sintetico" : "real", nomes };
+  // tempos: o dado real só vem da consulta real; o simulado existe apenas no dataset sintético
+  const arqTempos = usarSintetico ? path.join(DATA, "synthetic", "tempos.csv") : path.join(DATA, "reference", "tempos", "tempos.csv");
+  const tempos = fs.existsSync(arqTempos) ? montarTempos(csv(arqTempos) as unknown as LinhaTempo[]) : null;
+  return { resumo, fonte: usarSintetico ? "sintetico" : "real", nomes, tempos };
 }

@@ -6,8 +6,10 @@ A ideia central: um aluno em Santander poder visitar uma colega em Barcelona, e 
 perto.
 
 > **Status: protótipo.** Pronto: extração dos PDFs do edital, snapshots reexecutáveis, mapa com filtros de semestre e
-> país, painel por cidade, modo apresentação. **Ainda não existe:** tempos de viagem e grafo (Fase 1), clusters e a regra
-> "ninguém sozinho" (Fase 2), cadastro/login/chat (Fase 4). Os dados são **preliminares**; a alocação final sai depois.
+> país, painel por cidade, modo apresentação, "perto de mim" (raio em horas) e grafo arrastável com grupos por corte de
+> horas. **Tempos de viagem:** o módulo (Transitous) está pronto, mas só o dataset **sintético** tem tempos, e são
+> **simulados** (marcados como tal). Os tempos reais dependem da primeira consulta ao Transitous. **Ainda não existe:**
+> fusão automática de grupos pequenos (Fase 2), cadastro/login/chat (Fase 4). Os dados são **preliminares**.
 
 ## Rodar só com dados sintéticos (sem nenhum dado real)
 
@@ -17,9 +19,10 @@ Você não precisa de PDF nem de dado pessoal. Requisitos: Python 3.11+ e Node 2
 python3 -m venv .venv && .venv/bin/pip install -r pipeline/requirements-dev.txt
 PYTHONPATH=pipeline .venv/bin/pytest pipeline/tests -q            # testes do pipeline
 PYTHONPATH=pipeline .venv/bin/python -m uffmap sintetico          # regera data/synthetic (opcional)
+PYTHONPATH=pipeline .venv/bin/python -m uffmap tempos --dry-run --contato seu@contato  # plano da consulta real (sem rede)
 sh scripts/instalar_hooks.sh                                      # ativa o bloqueio de dado pessoal no commit
 
-cd web && npm install
+cd web && npm install && npm test                                   # testes da lógica de tempos/grupos
 DATA_SOURCE=synthetic MOSTRAR_NOMES=1 npm run dev                 # http://localhost:3000
 ```
 
@@ -78,6 +81,8 @@ testes e comunicação.
 - **Dados de referência** (`data/reference/`, `data/public/instituicoes_flat.csv`, `data/synthetic/`): CC0 1.0,
   ver [data/reference/LICENSE.md](data/reference/LICENSE.md).
 - **Dado pessoal nunca entra no repositório**, qualquer que seja a licença.
+- **Tempos de viagem reais** (`data/reference/tempos/`): derivados do Transitous e das fontes de transporte dele, cada uma
+  com sua licença (não são CC0). Veja [transitous.org/sources](https://transitous.org/sources/).
 - Mapa: © contribuidores do OpenStreetMap.
 
 Projeto de estudantes, sem vínculo oficial com a UFF. Os dados vêm de PDFs públicos do edital da UFF.

@@ -3,6 +3,7 @@
 import * as maplibregl from "maplibre-gl";
 import type { FeatureCollection, Point } from "geojson";
 import { useEffect, useMemo, useRef } from "react";
+import { fmtDuracao } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 
 export interface No {
@@ -19,6 +20,9 @@ export interface No {
 maplibregl.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
 
 const FONTE = "nos";
+const FONTE_ARESTAS = "arestas";
+
+export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number }
 const estilo: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
@@ -42,7 +46,7 @@ const cor = [
   tokens.color.nodeDefault,
 ] as maplibregl.ExpressionSpecification;
 
-export default function MapView(props: { nos: No[]; selecionada: string | null; onSelect: (id: string | null) => void }) {
+export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selecionada: string | null; onSelect: (id: string | null) => void }) {
   const el = useRef<HTMLDivElement>(null);
   const mapa = useRef<maplibregl.Map | null>(null);
   const pronto = useRef(false);
@@ -63,12 +67,23 @@ export default function MapView(props: { nos: No[]; selecionada: string | null; 
   const geoRef = useRef(geo);
   geoRef.current = geo;
 
+  const geoArestas = useMemo<FeatureCollection>(() => ({
+    type: "FeatureCollection",
+    features: props.arestas.map((a) => ({ type: "Feature", geometry: { type: "LineString", coordinates: [a.de, a.para] }, properties: { id: a.id, min: a.min } })),
+  }), [props.arestas]);
+  const arestasRef = useRef(geoArestas);
+  arestasRef.current = geoArestas;
+  const rotulos = useRef<maplibregl.Marker[]>([]);
+
   useEffect(() => {
     const m = new maplibregl.Map({ container: el.current!, style: estilo, center: [12, 49], zoom: 3.4, attributionControl: { compact: true } });
     mapa.current = m;
     m.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 12 });
     m.on("load", () => {
+      m.addSource(FONTE_ARESTAS, { type: "geojson", data: arestasRef.current });
+      m.addLayer({ id: "arestas", type: "line", source: FONTE_ARESTAS, paint: {
+        "line-color": tokens.color.aresta, "line-width": 2, "line-opacity": 0.7, "line-dasharray": [2, 1.5] } });
       m.addSource(FONTE, { type: "geojson", data: geoRef.current });
       m.addLayer({ id: "nos", type: "circle", source: FONTE, paint: {
         "circle-radius": raio, "circle-color": cor, "circle-opacity": 0.82,
@@ -87,12 +102,26 @@ export default function MapView(props: { nos: No[]; selecionada: string | null; 
       pronto.current = true;
       m.getSource(FONTE) && (m.getSource(FONTE) as maplibregl.GeoJSONSource).setData(geoRef.current);
     });
-    return () => { pronto.current = false; m.remove(); };
+    return () => { pronto.current = false; rotulos.current.forEach((r) => r.remove()); m.remove(); };
   }, []);
 
   useEffect(() => {
     if (pronto.current) (mapa.current!.getSource(FONTE) as maplibregl.GeoJSONSource).setData(geo);
   }, [geo]);
+
+  useEffect(() => {
+    if (pronto.current) (mapa.current!.getSource(FONTE_ARESTAS) as maplibregl.GeoJSONSource).setData(geoArestas);
+    // rótulos de tempo no meio de cada linha
+    rotulos.current.forEach((r) => r.remove());
+    rotulos.current = [];
+    if (!mapa.current) return;
+    for (const a of props.arestas) {
+      const el = document.createElement("div");
+      el.className = "rotulo-aresta";
+      el.textContent = fmtDuracao(a.min);
+      rotulos.current.push(new maplibregl.Marker({ element: el }).setLngLat([(a.de[0] + a.para[0]) / 2, (a.de[1] + a.para[1]) / 2]).addTo(mapa.current));
+    }
+  }, [geoArestas, props.arestas]);
 
   useEffect(() => {
     if (pronto.current) mapa.current!.setFilter("sel", ["==", ["get", "id"], props.selecionada ?? ""]);

@@ -1,13 +1,68 @@
 {
-  "banner": { "preliminar": "Dados preliminares do Edital {edital}, atualizados em {data}", "snapshot": "snapshot {snapshot}",
-              "sintetico": "DADOS SINTÉTICOS (demonstração, sem alunos reais)", "apresentacao": "modo apresentação (sem nomes)" },
+  "banner": {
+    "preliminar": "Dados preliminares do Edital {edital}, atualizados em {data}",
+    "snapshot": "snapshot {snapshot}",
+    "sintetico": "DADOS SINTÉTICOS (demonstração, sem alunos reais)",
+    "apresentacao": "modo apresentação (sem nomes)",
+    "temposSimulados": "TEMPOS SIMULADOS (demonstração)"
+  },
   "titulo": "Rede de Apoio do Intercâmbio UFF",
-  "filtros": { "titulo": "Filtros", "semestre": "Semestre", "pais": "País", "todos": "Todos", "todas": "Todas",
-               "limpar": "Limpar filtros", "resultado": "{n} alunos em {c} cidades" },
-  "legenda": { "titulo": "Legenda", "padrao": "Cidade (Europa)", "pendente": "Campus pendente", "fora": "Fora da Europa" },
-  "painel": { "vazio": "Clique numa cidade para ver as instituições.", "alunos": "{n} alunos", "aluno": "1 aluno",
-              "campusPendente": "campus pendente", "campusPadrao": "campus padrão", "semestre": "Semestre {s}",
-              "cursos": "Cursos", "uffNiteroi": "UFF", "uffCampus": "UFF {campus}", "semestreN": "{n} em {s}", "ocultoPrivacidade": "Grupo com menos de 3 alunos: o curso não é exibido.",
-              "fechar": "Fechar" },
-  "rodape": { "dados": "Dados: PDFs públicos do Edital 08/2026 (cidade e país inferidos pelo nome da instituição). Mapa © OpenStreetMap." }
+  "filtros": {
+    "titulo": "Filtros",
+    "semestre": "Semestre",
+    "pais": "País",
+    "todos": "Todos",
+    "todas": "Todas",
+    "limpar": "Limpar filtros",
+    "resultado": "{n} alunos em {c} cidades"
+  },
+  "legenda": {
+    "titulo": "Legenda",
+    "padrao": "Cidade (Europa)",
+    "pendente": "Campus pendente",
+    "fora": "Fora da Europa"
+  },
+  "painel": {
+    "vazio": "Clique numa cidade para ver as instituições.",
+    "alunos": "{n} alunos",
+    "aluno": "1 aluno",
+    "campusPendente": "campus pendente",
+    "campusPadrao": "campus padrão",
+    "semestre": "Semestre {s}",
+    "cursos": "Cursos",
+    "uffNiteroi": "UFF",
+    "uffCampus": "UFF {campus}",
+    "semestreN": "{n} em {s}",
+    "ocultoPrivacidade": "Grupo com menos de 3 alunos: o curso não é exibido.",
+    "fechar": "Fechar"
+  },
+  "rodape": {
+    "dados": "Dados: PDFs públicos do Edital 08/2026 (cidade e país inferidos pelo nome da instituição). Mapa © OpenStreetMap.",
+    "tempos": "Tempos de viagem: Transitous (transitous.org/sources), horário de dia útil."
+  },
+  "abas": {
+    "mapa": "Mapa",
+    "grafo": "Grafo"
+  },
+  "raio": {
+    "titulo": "Perto de mim",
+    "ajuda": "Selecione uma cidade no mapa e escolha até quantas horas.",
+    "semLimite": "Sem limite",
+    "ate": "até {h} h",
+    "semTempos": "Tempos de viagem ainda não disponíveis para estes dados."
+  },
+  "vizinhos": {
+    "titulo": "Quem está perto",
+    "maisProximas": "Cidades mais próximas",
+    "dentroDoRaio": "Dentro de {h} h",
+    "nenhuma": "Nenhuma cidade com alunos nesse raio."
+  },
+  "grafo": {
+    "corte": "Ligar cidades a até {h} h de viagem",
+    "grupos": "Grupos",
+    "isolado": "isolado (menos de {k} alunos)",
+    "alunosN": "{n} alunos",
+    "dica": "Arraste as cidades. Linhas: tempo de viagem. Cinza tracejado: grupo isolado.",
+    "semTempos": "O grafo precisa dos tempos de viagem, que ainda não estão disponíveis para estes dados."
+  }
 }
