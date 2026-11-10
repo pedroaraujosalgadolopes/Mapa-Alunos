@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { contarCidade } from "@/lib/filtro";
 import { t } from "@/lib/i18n";
-import { type Tempos, vizinhos as vizinhosDe } from "@/lib/tempos";
+import { type Tempos, efetivo, vizinhos as vizinhosDe } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 import type { Filtros, Nomes, Resumo } from "@/lib/types";
 import Faixa from "./Faixa";
@@ -53,6 +53,15 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
     const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null, voos);
     return raioH ? todosPerto : todosPerto.slice(0, MAIS_PROXIMAS);
   }, [tempos, selecionada, ids, raioH, voos]);
+
+  // cidades com alunos (no filtro) mas sem tempo conhecido a partir da selecionada: mostramos, não escondemos
+  const semTempo = useMemo<string[]>(() => {
+    if (!tempos || !selecionada) return [];
+    return todos
+      .filter((n) => n.id !== selecionada && n.tipo !== "fora" && !((efetivo(tempos, selecionada, n.id, voos)?.min ?? -1) >= 0))
+      .map((n) => n.nome)
+      .sort((a, b) => a.localeCompare(b, "pt-BR"));
+  }, [tempos, selecionada, todos, voos]);
 
   const nos = useMemo(() => {
     if (!tempos || !selecionada || !raioH) return todos;
@@ -115,7 +124,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
               <span style={{ "--c": tokens.color.nodeFora } as React.CSSProperties}>{t("legenda.fora")}</span>
             </div>
           </section>
-          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} vizinhos={listaVizinhos} raioH={raioH}
+          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} vizinhos={listaVizinhos} semTempo={semTempo} raioH={raioH}
             onFechar={() => setSelecionada(null)} onSelect={setSelecionada} />
           <p className="nota">{t("rodape.dados")}{tempos?.fonte === "transitous" && <> {t("rodape.tempos")}</>}</p>
         </aside>

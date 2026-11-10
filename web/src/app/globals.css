@@ -81,3 +81,5 @@ button { cursor: pointer; }
 .segmentos { display: flex; gap: 0; border: 1px solid var(--color-border); border-radius: var(--radius-pill); overflow: hidden; width: fit-content; }
 .segmentos button { border: 0; border-radius: 0; padding: var(--space-2) var(--space-4); }
 .segmentos button.ativa { background: var(--color-accent); color: #fff; font-weight: var(--font-weight-bold); }
+.sem-tempo { font-size: var(--font-size-small); margin: var(--space-2) 0; }
+.sem-tempo summary { cursor: pointer; color: var(--color-muted); }

@@ -73,8 +73,8 @@ function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nom
 
 export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number; modo: "terra" | "voo" }
 
-export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos, raioH, onFechar, onSelect }: {
-  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; semestre: string; vizinhos: Vizinho[] | null; raioH: number;
+export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos, semTempo, raioH, onFechar, onSelect }: {
+  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; semestre: string; vizinhos: Vizinho[] | null; semTempo: string[]; raioH: number;
   onFechar: () => void; onSelect: (id: string) => void }) {
   if (!cidade) return <p className="nota">{t("painel.vazio")}</p>;
   const porSem: Record<string, number> = {};
@@ -113,6 +113,13 @@ export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos
             </ul>
           )}
           <p className="nota">{t("raio.notaTempos")}</p>
+          {semTempo.length > 0 && (
+            <details className="sem-tempo">
+              <summary>{t("vizinhos.semTempo")} ({semTempo.length})</summary>
+              <p className="nota">{t("vizinhos.semTempoAjuda")}</p>
+              <p>{semTempo.slice(0, 15).join(", ")}{semTempo.length > 15 && ` ${t("vizinhos.emais", { n: semTempo.length - 15 })}`}</p>
+            </details>
+          )}
         </section>
       )}
       {totalCidade === 0 && <p className="nota">{t("painel.ninguemNoSemestre", { s: semestre })}</p>}
