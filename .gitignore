@@ -1,0 +1,15 @@
+# Dados brutos e pessoais: nunca versionar
+data/raw/
+data/private/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node (fases seguintes)
+node_modules/
+.next/
+.env*
+.DS_Store
