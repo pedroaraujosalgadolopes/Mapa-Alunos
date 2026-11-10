@@ -1,249 +1,613 @@
 {
  "ipb": {
   "2028.1": [
-   "Alfa"
+   {
+    "nome": "Alfa",
+    "curso": "Engenharia de Agronegócios",
+    "campus_origem": "Volta Redonda"
+   }
   ]
  },
  "ipbeja": {
   "2028.1": [
-   "Bravo",
-   "Oscar"
+   {
+    "nome": "Bravo",
+    "curso": "Direito",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Oscar",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   }
   ]
  },
  "ipc": {
   "2028.1": [
-   "Juliet",
-   "Tango"
+   {
+    "nome": "Juliet",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Tango",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   }
   ]
  },
  "ipca": {
   "2028.1": [
-   "Foxtrot",
-   "Hotel"
+   {
+    "nome": "Foxtrot",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Hotel",
+    "curso": "Direito",
+    "campus_origem": ""
+   }
   ]
  },
  "ipcb": {
   "2027.2": [
-   "Juliet"
+   {
+    "nome": "Juliet",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "India",
-   "India"
+   {
+    "nome": "India",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   },
+   {
+    "nome": "India",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   }
   ]
  },
  "ipp-esmad": {
   "2028.1": [
-   "Papa"
+   {
+    "nome": "Papa",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   }
   ]
  },
  "ipp-isep": {
   "2028.1": [
-   "Alfa",
-   "Bravo",
-   "Mike",
-   "Nova"
+   {
+    "nome": "Alfa",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Bravo",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Mike",
+    "curso": "Medicina",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Nova",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   }
   ]
  },
  "ipt": {
   "2027.2": [
-   "India",
-   "Lima",
-   "Zulu"
+   {
+    "nome": "India",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Lima",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Zulu",
+    "curso": "Letras",
+    "campus_origem": ""
+   }
   ]
  },
  "masaryk": {
   "2027.2": [
-   "Delta",
-   "Quebec"
+   {
+    "nome": "Delta",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Quebec",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Oscar"
+   {
+    "nome": "Oscar",
+    "curso": "Direito",
+    "campus_origem": ""
+   }
   ]
  },
  "pendente-universidade-ficticia-de-teste": {
   "2028.1": [
-   "Charlie"
+   {
+    "nome": "Charlie",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   }
   ]
  },
  "sorbonne-nouvelle": {
   "2027.2": [
-   "Charlie",
-   "India"
+   {
+    "nome": "Charlie",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   },
+   {
+    "nome": "India",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Alfa",
-   "Eco",
-   "Hotel",
-   "Sierra",
-   "Tango"
+   {
+    "nome": "Alfa",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   },
+   {
+    "nome": "Eco",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Hotel",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Sierra",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Tango",
+    "curso": "Engenharia de Recursos Hídricos e Meio Ambiente",
+    "campus_origem": ""
+   }
   ]
  },
  "uab": {
   "2028.1": [
-   "Delta"
+   {
+    "nome": "Delta",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   }
   ]
  },
  "uac": {
   "2027.2": [
-   "Charlie"
+   {
+    "nome": "Charlie",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   }
   ]
  },
  "uaic": {
   "2027.2": [
-   "Bravo"
+   {
+    "nome": "Bravo",
+    "curso": "Medicina",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Foxtrot"
+   {
+    "nome": "Foxtrot",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   }
   ]
  },
  "ual": {
   "2027.2": [
-   "Alfa",
-   "Bravo",
-   "Papa"
+   {
+    "nome": "Alfa",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Bravo",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Papa",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Eco",
-   "Hotel",
-   "Juliet",
-   "Nova"
+   {
+    "nome": "Eco",
+    "curso": "Medicina",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Hotel",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Juliet",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   },
+   {
+    "nome": "Nova",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ]
  },
  "uc": {
   "2027.2": [
-   "Romeu"
+   {
+    "nome": "Romeu",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   }
   ]
  },
  "ucan": {
   "2028.1": [
-   "Mike"
+   {
+    "nome": "Mike",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   }
   ]
  },
  "ucongreso": {
   "2028.1": [
-   "India"
+   {
+    "nome": "India",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   }
   ]
  },
  "ucundinamarca": {
   "2027.2": [
-   "Delta"
+   {
+    "nome": "Delta",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   }
   ]
  },
  "udem": {
   "2027.2": [
-   "Tango"
+   {
+    "nome": "Tango",
+    "curso": "Engenharia de Recursos Hídricos e Meio Ambiente",
+    "campus_origem": ""
+   }
   ]
  },
  "udg": {
   "2027.2": [
-   "Quebec"
+   {
+    "nome": "Quebec",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Romeu"
+   {
+    "nome": "Romeu",
+    "curso": "Direito",
+    "campus_origem": ""
+   }
   ]
  },
  "ugto": {
   "2028.1": [
-   "Juliet",
-   "Nova"
+   {
+    "nome": "Juliet",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Nova",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   }
   ]
  },
  "ulisboa-fc": {
   "2027.2": [
-   "Kilo"
+   {
+    "nome": "Kilo",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Golf",
-   "Lima"
+   {
+    "nome": "Golf",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Lima",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ]
  },
  "ulisboa-iseg": {
   "2027.2": [
-   "Nova",
-   "Romeu"
+   {
+    "nome": "Nova",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Romeu",
+    "curso": "Direito",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Bravo",
-   "Foxtrot",
-   "Kilo"
+   {
+    "nome": "Bravo",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Foxtrot",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Kilo",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   }
   ]
  },
  "ulm": {
   "2027.2": [
-   "Kilo",
-   "Mike",
-   "Papa"
+   {
+    "nome": "Kilo",
+    "curso": "Engenharia de Recursos Hídricos e Meio Ambiente",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Mike",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Papa",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Eco",
-   "Kilo",
-   "Romeu",
-   "Sierra"
+   {
+    "nome": "Eco",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Kilo",
+    "curso": "Direito",
+    "campus_origem": "Volta Redonda"
+   },
+   {
+    "nome": "Romeu",
+    "curso": "Direito",
+    "campus_origem": "Volta Redonda"
+   },
+   {
+    "nome": "Sierra",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   }
   ]
  },
  "uminho": {
   "2027.2": [
-   "Charlie",
-   "Hotel",
-   "Lima"
+   {
+    "nome": "Charlie",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Hotel",
+    "curso": "Engenharia Civil",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Lima",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Eco"
+   {
+    "nome": "Eco",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   }
   ]
  },
  "unican": {
   "2027.2": [
-   "Oscar"
+   {
+    "nome": "Oscar",
+    "curso": "Jornalismo",
+    "campus_origem": ""
+   }
   ]
  },
  "unifi": {
   "2027.2": [
-   "Golf",
-   "Hotel"
+   {
+    "nome": "Golf",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Hotel",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   }
   ]
  },
  "univie": {
   "2027.2": [
-   "Alfa",
-   "Quebec",
-   "Sierra"
+   {
+    "nome": "Alfa",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Quebec",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Sierra",
+    "curso": "Psicologia",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Charlie",
-   "Eco",
-   "Foxtrot",
-   "Golf"
+   {
+    "nome": "Charlie",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Eco",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Foxtrot",
+    "curso": "Engenharia de Recursos Hídricos e Meio Ambiente",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Golf",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   }
   ]
  },
  "unr": {
   "2027.2": [
-   "Delta",
-   "Golf",
-   "Juliet"
+   {
+    "nome": "Delta",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Golf",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Juliet",
+    "curso": "Engenharia de Recursos Hídricos e Meio Ambiente",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Lima",
-   "Quebec"
+   {
+    "nome": "Lima",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Quebec",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   }
   ]
  },
  "uottawa": {
   "2027.2": [
-   "Delta",
-   "Mike"
+   {
+    "nome": "Delta",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Mike",
+    "curso": "Psicologia",
+    "campus_origem": "Rio das Ostras"
+   }
   ],
   "2028.1": [
-   "Oscar"
+   {
+    "nome": "Oscar",
+    "curso": "Cinema e Audiovisual",
+    "campus_origem": ""
+   }
   ]
  },
  "ut2j": {
   "2027.2": [
-   "Golf"
+   {
+    "nome": "Golf",
+    "curso": "Direito",
+    "campus_origem": ""
+   }
   ],
   "2028.1": [
-   "Foxtrot",
-   "Papa",
-   "Sierra",
-   "Tango"
+   {
+    "nome": "Foxtrot",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Papa",
+    "curso": "Relações Internacionais",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Sierra",
+    "curso": "Ciência da Computação",
+    "campus_origem": ""
+   },
+   {
+    "nome": "Tango",
+    "curso": "Arquitetura e Urbanismo",
+    "campus_origem": ""
+   }
   ]
  }
 }

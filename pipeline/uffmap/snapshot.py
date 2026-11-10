@@ -108,12 +108,14 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
 
 
 def nomes_por_grupo(ativos: list[dict]) -> dict:
-    """{instituicao_id: {semestre: [primeiro nome, ...]}} em ordem alfabética (não revela a nota).
+    """{instituicao_id: {semestre: [{nome, curso, campus_origem}]}} em ordem alfabética (não revela a nota).
     Sem inscrição. Dado pessoal: o arquivo é gitignored e o front o oculta no modo apresentação."""
     out: dict = defaultdict(lambda: defaultdict(list))
     for l in ativos:
-        out[l["instituicao_id"]][l["semestre"]].append(l["primeiro_nome"])
-    return {i: {s: sorted(ns, key=str.casefold) for s, ns in sorted(sem.items())} for i, sem in sorted(out.items())}
+        out[l["instituicao_id"]][l["semestre"]].append(
+            {"nome": l["primeiro_nome"], "curso": l["curso"], "campus_origem": l["campus_origem"]})
+    return {i: {s: sorted(ps, key=lambda p: (p["nome"].casefold(), p["curso"])) for s, ps in sorted(sem.items())}
+            for i, sem in sorted(out.items())}
 
 
 def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: str) -> tuple[str, str]:

@@ -57,7 +57,7 @@ export default function App({ resumo, fonte, nomes, apresentacao }: {
               <span style={{ "--c": tokens.color.nodeFora } as React.CSSProperties}>{t("legenda.fora")}</span>
             </div>
           </section>
-          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} onFechar={() => setSelecionada(null)} />
+          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} onFechar={() => setSelecionada(null)} />
           <p className="nota">{t("rodape.dados")}</p>
         </aside>
         <main className="mapa">

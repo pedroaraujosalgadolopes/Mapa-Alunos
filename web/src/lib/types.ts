@@ -12,6 +12,7 @@ export interface Cidade {
   cidade_id: string;
   cidade: string | null;
   pais: string | null;
+  iso2: string | null;
   regiao_id: string | null;
   regiao_ativa: boolean;
   lat: number | null;
@@ -36,5 +37,11 @@ export interface Filtros {
   curso: string;
 }
 
-/** {instituicao_id: {semestre: [primeiro nome]}}; só chega ao cliente se MOSTRAR_NOMES=1 e fora do modo apresentação. */
-export type Nomes = Record<string, Record<string, string[]>>;
+export interface Pessoa {
+  nome: string; // só o primeiro nome, nunca inscrição
+  curso: string;
+  campus_origem: string; // campus da UFF de origem (ex.: Volta Redonda); vazio = Niterói
+}
+
+/** {instituicao_id: {semestre: [Pessoa]}}; só chega ao cliente se MOSTRAR_NOMES=1 e fora do modo apresentação. */
+export type Nomes = Record<string, Record<string, Pessoa[]>>;
