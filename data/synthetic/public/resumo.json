@@ -1,0 +1,1019 @@
+{
+ "snapshot": "2026_01_15",
+ "edital": "08/2026",
+ "rotulo": "sintetico",
+ "total": 91,
+ "por_semestre": {
+  "2027.2": 38,
+  "2028.1": 53
+ },
+ "por_pais": {
+  "Alemanha": 7,
+  "Angola": 1,
+  "Argentina": 6,
+  "Canadá": 4,
+  "Colômbia": 1,
+  "Espanha": 11,
+  "França": 12,
+  "Itália": 2,
+  "México": 2,
+  "Portugal": 32,
+  "Romênia": 2,
+  "Tchéquia": 3,
+  "pendente": 1,
+  "Áustria": 7
+ },
+ "por_curso": {
+  "Arquitetura e Urbanismo": 17,
+  "Cinema e Audiovisual": 7,
+  "Ciência da Computação": 10,
+  "Direito": 8,
+  "Engenharia Civil": 6,
+  "Engenharia de Agronegócios": 1,
+  "Engenharia de Recursos Hídricos e Meio Ambiente": 5,
+  "Jornalismo": 9,
+  "Letras": 1,
+  "Medicina": 3,
+  "Psicologia": 15,
+  "Relações Internacionais": 9
+ },
+ "cidades": [
+  {
+   "cidade_id": "almeria",
+   "cidade": "Almería",
+   "pais": "Espanha",
+   "iso2": "ES",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 36.84,
+   "lon": -2.46,
+   "campus_pendente": false,
+   "total": 7,
+   "instituicoes": [
+    {
+     "instituicao_id": "ual",
+     "nome": "Universidad de Almería",
+     "campus_status": "unico",
+     "total": 7,
+     "por_semestre": {
+      "2027.2": 3,
+      "2028.1": 4
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 2,
+      "Engenharia Civil": 1,
+      "Jornalismo": 2,
+      "Medicina": 1,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Arquitetura e Urbanismo": 1,
+       "Engenharia Civil": 1,
+       "Jornalismo": 1
+      },
+      "2028.1": {
+       "Arquitetura e Urbanismo": 1,
+       "Jornalismo": 1,
+       "Medicina": 1,
+       "Psicologia": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "barcelos",
+   "cidade": "Barcelos",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.54,
+   "lon": -8.62,
+   "campus_pendente": false,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipca",
+     "nome": "Instituto Politécnico do Cávado e do Ave",
+     "campus_status": "padrao",
+     "total": 2,
+     "por_semestre": {
+      "2028.1": 2
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "beja",
+   "cidade": "Beja",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 38.02,
+   "lon": -7.86,
+   "campus_pendente": false,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipbeja",
+     "nome": "Instituto Politécnico de Beja",
+     "campus_status": "unico",
+     "total": 2,
+     "por_semestre": {
+      "2028.1": 2
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "braga",
+   "cidade": "Braga",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.55,
+   "lon": -8.42,
+   "campus_pendente": false,
+   "total": 4,
+   "instituicoes": [
+    {
+     "instituicao_id": "uminho",
+     "nome": "Universidade do Minho",
+     "campus_status": "padrao",
+     "total": 4,
+     "por_semestre": {
+      "2027.2": 3,
+      "2028.1": 1
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 1,
+      "Engenharia Civil": 1,
+      "Psicologia": 1,
+      "Relações Internacionais": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Arquitetura e Urbanismo": 1,
+       "Engenharia Civil": 1,
+       "Relações Internacionais": 1
+      },
+      "2028.1": {
+       "Psicologia": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "braganca",
+   "cidade": "Bragança",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.81,
+   "lon": -6.76,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipb",
+     "nome": "Instituto Politécnico de Bragança",
+     "campus_status": "padrao",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "brno",
+   "cidade": "Brno",
+   "pais": "Tchéquia",
+   "iso2": "CZ",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 49.2,
+   "lon": 16.61,
+   "campus_pendente": false,
+   "total": 3,
+   "instituicoes": [
+    {
+     "instituicao_id": "masaryk",
+     "nome": "Masaryk University",
+     "campus_status": "unico",
+     "total": 3,
+     "por_semestre": {
+      "2027.2": 2,
+      "2028.1": 1
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 1,
+      "Direito": 1,
+      "Jornalismo": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Arquitetura e Urbanismo": 1,
+       "Jornalismo": 1
+      },
+      "2028.1": {
+       "Direito": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "castelo-branco",
+   "cidade": "Castelo Branco",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 39.82,
+   "lon": -7.49,
+   "campus_pendente": false,
+   "total": 3,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipcb",
+     "nome": "Instituto Politécnico de Castelo Branco",
+     "campus_status": "unico",
+     "total": 3,
+     "por_semestre": {
+      "2027.2": 1,
+      "2028.1": 2
+     },
+     "cursos": {
+      "Cinema e Audiovisual": 1,
+      "Engenharia Civil": 1,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Cinema e Audiovisual": 1
+      },
+      "2028.1": {
+       "Engenharia Civil": 1,
+       "Psicologia": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "cerdanyola",
+   "cidade": "Cerdanyola del Vallès",
+   "pais": "Espanha",
+   "iso2": "ES",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.49,
+   "lon": 2.14,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "uab",
+     "nome": "Universidad Autónoma de Barcelona",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "coimbra",
+   "cidade": "Coimbra",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 40.21,
+   "lon": -8.43,
+   "campus_pendente": false,
+   "total": 3,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipc",
+     "nome": "Instituto Politécnico de Coimbra",
+     "campus_status": "unico",
+     "total": 2,
+     "por_semestre": {
+      "2028.1": 2
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    },
+    {
+     "instituicao_id": "uc",
+     "nome": "Universidade de Coimbra",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2027.2": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "firenze",
+   "cidade": "Florença",
+   "pais": "Itália",
+   "iso2": "IT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 43.77,
+   "lon": 11.26,
+   "campus_pendente": false,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "unifi",
+     "nome": "Università degli Studi di Firenze",
+     "campus_status": "unico",
+     "total": 2,
+     "por_semestre": {
+      "2027.2": 2
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "fusagasuga",
+   "cidade": "Fusagasugá",
+   "pais": "Colômbia",
+   "iso2": "CO",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": 4.34,
+   "lon": -74.36,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "ucundinamarca",
+     "nome": "Universidad de Cundinamarca",
+     "campus_status": "padrao",
+     "total": 1,
+     "por_semestre": {
+      "2027.2": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "girona",
+   "cidade": "Girona",
+   "pais": "Espanha",
+   "iso2": "ES",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.98,
+   "lon": 2.82,
+   "campus_pendente": false,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "udg",
+     "nome": "Universitat de Girona",
+     "campus_status": "unico",
+     "total": 2,
+     "por_semestre": {
+      "2027.2": 1,
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "guanajuato",
+   "cidade": "Guanajuato",
+   "pais": "México",
+   "iso2": "MX",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": 21.02,
+   "lon": -101.26,
+   "campus_pendente": true,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "ugto",
+     "nome": "Universidad de Guanajuato",
+     "campus_status": "pendente",
+     "total": 2,
+     "por_semestre": {
+      "2028.1": 2
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "iasi",
+   "cidade": "Iași",
+   "pais": "Romênia",
+   "iso2": "RO",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 47.16,
+   "lon": 27.59,
+   "campus_pendente": false,
+   "total": 2,
+   "instituicoes": [
+    {
+     "instituicao_id": "uaic",
+     "nome": "Alexandru Ioan Cuza University",
+     "campus_status": "unico",
+     "total": 2,
+     "por_semestre": {
+      "2027.2": 1,
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "lisboa",
+   "cidade": "Lisboa",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 38.72,
+   "lon": -9.14,
+   "campus_pendente": false,
+   "total": 8,
+   "instituicoes": [
+    {
+     "instituicao_id": "ulisboa-fc",
+     "nome": "Universidade de Lisboa - Faculdade de Ciências",
+     "campus_status": "unico",
+     "total": 3,
+     "por_semestre": {
+      "2027.2": 1,
+      "2028.1": 2
+     },
+     "cursos": {
+      "Ciência da Computação": 1,
+      "Jornalismo": 1,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Ciência da Computação": 1
+      },
+      "2028.1": {
+       "Jornalismo": 1,
+       "Psicologia": 1
+      }
+     }
+    },
+    {
+     "instituicao_id": "ulisboa-iseg",
+     "nome": "Universidade de Lisboa - Instituto Superior de Economia e Gestão",
+     "campus_status": "unico",
+     "total": 5,
+     "por_semestre": {
+      "2027.2": 2,
+      "2028.1": 3
+     },
+     "cursos": {
+      "Cinema e Audiovisual": 1,
+      "Ciência da Computação": 1,
+      "Direito": 1,
+      "Relações Internacionais": 2
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Ciência da Computação": 1,
+       "Direito": 1
+      },
+      "2028.1": {
+       "Cinema e Audiovisual": 1,
+       "Relações Internacionais": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "luanda",
+   "cidade": "Luanda",
+   "pais": "Angola",
+   "iso2": "AO",
+   "regiao_id": "africa",
+   "regiao_ativa": false,
+   "lat": -8.84,
+   "lon": 13.23,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "ucan",
+     "nome": "Universidade Católica de Angola",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "mendoza",
+   "cidade": "Mendoza",
+   "pais": "Argentina",
+   "iso2": "AR",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": -32.89,
+   "lon": -68.84,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "ucongreso",
+     "nome": "Universidad de Congreso",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "montreal",
+   "cidade": "Montreal",
+   "pais": "Canadá",
+   "iso2": "CA",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": 45.5,
+   "lon": -73.57,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "udem",
+     "nome": "Université de Montréal",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2027.2": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "ottawa",
+   "cidade": "Ottawa",
+   "pais": "Canadá",
+   "iso2": "CA",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": 45.42,
+   "lon": -75.7,
+   "campus_pendente": false,
+   "total": 3,
+   "instituicoes": [
+    {
+     "instituicao_id": "uottawa",
+     "nome": "University of Ottawa",
+     "campus_status": "unico",
+     "total": 3,
+     "por_semestre": {
+      "2027.2": 2,
+      "2028.1": 1
+     },
+     "cursos": {
+      "Cinema e Audiovisual": 2,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Cinema e Audiovisual": 1,
+       "Psicologia": 1
+      },
+      "2028.1": {
+       "Cinema e Audiovisual": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "paris",
+   "cidade": "Paris",
+   "pais": "França",
+   "iso2": "FR",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 48.86,
+   "lon": 2.35,
+   "campus_pendente": false,
+   "total": 7,
+   "instituicoes": [
+    {
+     "instituicao_id": "sorbonne-nouvelle",
+     "nome": "Université Sorbonne Nouvelle - Paris 3",
+     "campus_status": "unico",
+     "total": 7,
+     "por_semestre": {
+      "2027.2": 2,
+      "2028.1": 5
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 1,
+      "Ciência da Computação": 1,
+      "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+      "Psicologia": 3,
+      "Relações Internacionais": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Psicologia": 2
+      },
+      "2028.1": {
+       "Arquitetura e Urbanismo": 1,
+       "Ciência da Computação": 1,
+       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+       "Psicologia": 1,
+       "Relações Internacionais": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "ponta-delgada",
+   "cidade": "Ponta Delgada",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 37.74,
+   "lon": -25.67,
+   "campus_pendente": true,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "uac",
+     "nome": "Universidade dos Açores",
+     "campus_status": "pendente",
+     "total": 1,
+     "por_semestre": {
+      "2027.2": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "porto",
+   "cidade": "Porto",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.15,
+   "lon": -8.61,
+   "campus_pendente": false,
+   "total": 4,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipp-isep",
+     "nome": "IPP - Instituto Superior de Engenharia do Porto",
+     "campus_status": "unico",
+     "total": 4,
+     "por_semestre": {
+      "2028.1": 4
+     },
+     "cursos": {
+      "Engenharia Civil": 1,
+      "Jornalismo": 1,
+      "Medicina": 1,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2028.1": {
+       "Engenharia Civil": 1,
+       "Jornalismo": 1,
+       "Medicina": 1,
+       "Psicologia": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "rosario",
+   "cidade": "Rosário",
+   "pais": "Argentina",
+   "iso2": "AR",
+   "regiao_id": "americas",
+   "regiao_ativa": false,
+   "lat": -32.95,
+   "lon": -60.64,
+   "campus_pendente": false,
+   "total": 5,
+   "instituicoes": [
+    {
+     "instituicao_id": "unr",
+     "nome": "Universidad Nacional de Rosario",
+     "campus_status": "unico",
+     "total": 5,
+     "por_semestre": {
+      "2027.2": 3,
+      "2028.1": 2
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 3,
+      "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+      "Relações Internacionais": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Arquitetura e Urbanismo": 2,
+       "Engenharia de Recursos Hídricos e Meio Ambiente": 1
+      },
+      "2028.1": {
+       "Arquitetura e Urbanismo": 1,
+       "Relações Internacionais": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "santander",
+   "cidade": "Santander",
+   "pais": "Espanha",
+   "iso2": "ES",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 43.46,
+   "lon": -3.81,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "unican",
+     "nome": "Universidad de Cantabria",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2027.2": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "tomar",
+   "cidade": "Tomar",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 39.6,
+   "lon": -8.41,
+   "campus_pendente": false,
+   "total": 3,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipt",
+     "nome": "Instituto Politécnico de Tomar",
+     "campus_status": "padrao",
+     "total": 3,
+     "por_semestre": {
+      "2027.2": 3
+     },
+     "cursos": {
+      "Letras": 1,
+      "Psicologia": 2
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Letras": 1,
+       "Psicologia": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "toulouse",
+   "cidade": "Toulouse",
+   "pais": "França",
+   "iso2": "FR",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 43.6,
+   "lon": 1.44,
+   "campus_pendente": false,
+   "total": 5,
+   "instituicoes": [
+    {
+     "instituicao_id": "ut2j",
+     "nome": "Université Toulouse - Jean Jaurès",
+     "campus_status": "unico",
+     "total": 5,
+     "por_semestre": {
+      "2027.2": 1,
+      "2028.1": 4
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 2,
+      "Ciência da Computação": 1,
+      "Direito": 1,
+      "Relações Internacionais": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Direito": 1
+      },
+      "2028.1": {
+       "Arquitetura e Urbanismo": 2,
+       "Ciência da Computação": 1,
+       "Relações Internacionais": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "ulm",
+   "cidade": "Ulm",
+   "pais": "Alemanha",
+   "iso2": "DE",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 48.4,
+   "lon": 9.99,
+   "campus_pendente": false,
+   "total": 7,
+   "instituicoes": [
+    {
+     "instituicao_id": "ulm",
+     "nome": "Universität Ulm",
+     "campus_status": "unico",
+     "total": 7,
+     "por_semestre": {
+      "2027.2": 3,
+      "2028.1": 4
+     },
+     "cursos": {
+      "Ciência da Computação": 1,
+      "Direito": 2,
+      "Engenharia Civil": 1,
+      "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+      "Jornalismo": 1,
+      "Relações Internacionais": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+       "Jornalismo": 1,
+       "Relações Internacionais": 1
+      },
+      "2028.1": {
+       "Ciência da Computação": 1,
+       "Direito": 2,
+       "Engenharia Civil": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "vila-do-conde",
+   "cidade": "Vila do Conde",
+   "pais": "Portugal",
+   "iso2": "PT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 41.35,
+   "lon": -8.74,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "ipp-esmad",
+     "nome": "IPP - Escola Superior de Media Artes e Design",
+     "campus_status": "unico",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  },
+  {
+   "cidade_id": "wien",
+   "cidade": "Viena",
+   "pais": "Áustria",
+   "iso2": "AT",
+   "regiao_id": "europa",
+   "regiao_ativa": true,
+   "lat": 48.21,
+   "lon": 16.37,
+   "campus_pendente": false,
+   "total": 7,
+   "instituicoes": [
+    {
+     "instituicao_id": "univie",
+     "nome": "Universität Wien",
+     "campus_status": "unico",
+     "total": 7,
+     "por_semestre": {
+      "2027.2": 3,
+      "2028.1": 4
+     },
+     "cursos": {
+      "Arquitetura e Urbanismo": 4,
+      "Ciência da Computação": 1,
+      "Engenharia de Recursos Hídricos e Meio Ambiente": 1,
+      "Psicologia": 1
+     },
+     "cursos_por_semestre": {
+      "2027.2": {
+       "Arquitetura e Urbanismo": 1,
+       "Ciência da Computação": 1,
+       "Psicologia": 1
+      },
+      "2028.1": {
+       "Arquitetura e Urbanismo": 3,
+       "Engenharia de Recursos Hídricos e Meio Ambiente": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "cidade_id": "pendente",
+   "cidade": null,
+   "pais": null,
+   "iso2": null,
+   "regiao_id": null,
+   "regiao_ativa": false,
+   "lat": null,
+   "lon": null,
+   "campus_pendente": false,
+   "total": 1,
+   "instituicoes": [
+    {
+     "instituicao_id": "pendente-universidade-ficticia-de-teste",
+     "nome": "pendente-universidade-ficticia-de-teste",
+     "campus_status": "pendente",
+     "total": 1,
+     "por_semestre": {
+      "2028.1": 1
+     },
+     "cursos": null,
+     "cursos_por_semestre": null
+    }
+   ]
+  }
+ ],
+ "k_min": 3
+}

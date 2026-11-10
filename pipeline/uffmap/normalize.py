@@ -63,16 +63,24 @@ class Referencia:
 
     def __init__(self, ref_dir: Path):
         rd = lambda n: list(csv.DictReader(open(ref_dir / n, encoding="utf8")))
+        self.regioes = {r["regiao_id"]: r for r in rd("regioes.csv")}
         self.cidades = {r["cidade_id"]: r for r in rd("cidades.csv")}
         self.instituicoes = {r["instituicao_id"]: r for r in rd("instituicoes.csv")}
         self.aliases_obs: dict[str, tuple[str, str]] = {}
         self._chaves: dict[str, str] = {}
+        self.grafias: list[tuple[str, str]] = []  # (grafia original, instituicao_id)
         for i in self.instituicoes.values():
             self._chaves[fold(i["nome"])] = i["instituicao_id"]
+            self.grafias.append((i["nome"], i["instituicao_id"]))
         for a in rd("aliases.csv"):
             self._chaves[fold(a["alias"])] = a["instituicao_id"]
+            self.grafias.append((a["alias"], a["instituicao_id"]))
             if a["observacao"]:
                 self.aliases_obs[a["instituicao_id"]] = (a["alias"], a["observacao"])
+
+    def regiao_ativa(self, cidade_id: str | None) -> bool:
+        c = self.cidades.get(cidade_id or "")
+        return bool(c) and self.regioes[c["regiao_id"]]["ativa"] == "sim"
 
     def resolver(self, raw: str) -> Resolucao:
         flags: list[str] = []

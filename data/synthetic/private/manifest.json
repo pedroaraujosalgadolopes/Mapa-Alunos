@@ -1,0 +1,14 @@
+{
+ "snapshot": "2026_01_15",
+ "edital": "08/2026",
+ "rotulo": "sintetico",
+ "pdfs_sha256": {
+  "Edital 082026 - Aloca\u00e7\u00e3o Geral (sem os bolsistas).pdf": "f69aedff5b37f2c2081ea2bf25011606f128b6a30fc0d56c3d8af150de44d828",
+  "Edital 082026 - Aloca\u00e7\u00e3o - Socioecon\u00f4mico - Grupo 1.pdf": "53757301c88a4511b03251074ce77ce4163fed68337d0c3edb45979cb9af14d7",
+  "Edital 082026 - Aloca\u00e7\u00e3o - Socioecon\u00f4mico - Grupo 2.pdf": "68ff51f4d4bf00e4436469faf82eb98b4b005de458e8dbb6b0e82549ab6bd3b4",
+  "Edital 082026 - Aloca\u00e7\u00e3o - Socioecon\u00f4mico - Grupo 3.pdf": "798958ba2d69dbdfe7ffdc6b8b014fe56c835606b368d05de57d5de84f122b21",
+  "Edital 082026 - Aloca\u00e7\u00e3o dos candidatos excedentes.pdf": "e5f3e229ecf0e98bd9ffed95c4b487ff83a39d6f5aa2d2f0f59dfa042a2798c9",
+  "Edital 082026 - Lista de candidatos excedentes.pdf": "7a633563eaa0c15ccc7b317ba8f1ff1989a17dffe6b64652c0bb2614fa7157fa"
+ },
+ "rejeitadas": []
+}

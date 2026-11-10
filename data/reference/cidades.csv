@@ -1,82 +1,83 @@
-cidade_id,cidade,pais,iso2,regiao
-porto,Porto,Portugal,PT,europa
-coimbra,Coimbra,Portugal,PT,europa
-lisboa,Lisboa,Portugal,PT,europa
-braga,Braga,Portugal,PT,europa
-tomar,Tomar,Portugal,PT,europa
-viseu,Viseu,Portugal,PT,europa
-beja,Beja,Portugal,PT,europa
-castelo-branco,Castelo Branco,Portugal,PT,europa
-portalegre,Portalegre,Portugal,PT,europa
-braganca,Bragança,Portugal,PT,europa
-barcelos,Barcelos,Portugal,PT,europa
-vila-do-conde,Vila do Conde,Portugal,PT,europa
-ponta-delgada,Ponta Delgada,Portugal,PT,europa
-a-coruna,A Coruña,Espanha,ES,europa
-santiago-de-compostela,Santiago de Compostela,Espanha,ES,europa
-ciudad-real,Ciudad Real,Espanha,ES,europa
-mostoles,Móstoles,Espanha,ES,europa
-madrid,Madrid,Espanha,ES,europa
-cerdanyola,Cerdanyola del Vallès,Espanha,ES,europa
-castello,Castelló de la Plana,Espanha,ES,europa
-girona,Girona,Espanha,ES,europa
-almeria,Almería,Espanha,ES,europa
-pamplona,Pamplona,Espanha,ES,europa
-santander,Santander,Espanha,ES,europa
-logrono,Logroño,Espanha,ES,europa
-roma,Roma,Itália,IT,europa
-bologna,Bolonha,Itália,IT,europa
-messina,Messina,Itália,IT,europa
-firenze,Florença,Itália,IT,europa
-siena,Siena,Itália,IT,europa
-weimar,Weimar,Alemanha,DE,europa
-braunschweig,Braunschweig,Alemanha,DE,europa
-tuebingen,Tübingen,Alemanha,DE,europa
-paderborn,Paderborn,Alemanha,DE,europa
-ulm,Ulm,Alemanha,DE,europa
-augsburg,Augsburg,Alemanha,DE,europa
-bielefeld,Bielefeld,Alemanha,DE,europa
-erfurt,Erfurt,Alemanha,DE,europa
-koeln,Colônia,Alemanha,DE,europa
-bochum,Bochum,Alemanha,DE,europa
-karlsruhe,Karlsruhe,Alemanha,DE,europa
-wilhelmshaven,Wilhelmshaven,Alemanha,DE,europa
-berlin,Berlim,Alemanha,DE,europa
-wien,Viena,Áustria,AT,europa
-leoben,Leoben,Áustria,AT,europa
-bern,Berna,Suíça,CH,europa
-paris,Paris,França,FR,europa
-toulouse,Toulouse,França,FR,europa
-toulon,Toulon,França,FR,europa
-poitiers,Poitiers,França,FR,europa
-beauvais,Beauvais,França,FR,europa
-bruxelles,Bruxelas,Bélgica,BE,europa
-liege,Liège,Bélgica,BE,europa
-tilburg,Tilburg,Países Baixos,NL,europa
-stockholm,Estocolmo,Suécia,SE,europa
-brno,Brno,Tchéquia,CZ,europa
-ostrava,Ostrava,Tchéquia,CZ,europa
-iasi,Iași,Romênia,RO,europa
-sofia,Sófia,Bulgária,BG,europa
-limerick,Limerick,Irlanda,IE,europa
-st-johns,St. John's,Canadá,CA,fora
-ottawa,Ottawa,Canadá,CA,fora
-montreal,Montreal,Canadá,CA,fora
-seul,Seul,Coreia do Sul,KR,fora
-macau,Macau,Macau (China),MO,fora
-luanda,Luanda,Angola,AO,fora
-lima,Lima,Peru,PE,fora
-bogota,Bogotá,Colômbia,CO,fora
-medellin,Medellín,Colômbia,CO,fora
-neiva,Neiva,Colômbia,CO,fora
-fusagasuga,Fusagasugá,Colômbia,CO,fora
-neuquen,Neuquén,Argentina,AR,fora
-avellaneda,Avellaneda,Argentina,AR,fora
-lujan,Luján,Argentina,AR,fora
-rosario,Rosário,Argentina,AR,fora
-tandil,Tandil,Argentina,AR,fora
-mendoza,Mendoza,Argentina,AR,fora
-buenos-aires,Buenos Aires,Argentina,AR,fora
-guanajuato,Guanajuato,México,MX,fora
-valparaiso,Valparaíso,Chile,CL,fora
-santiago-cl,Santiago,Chile,CL,fora
+cidade_id,cidade,pais,iso2,regiao_id,lat,lon,coord_origem
+porto,Porto,Portugal,PT,europa,41.15,-8.61,inferido
+coimbra,Coimbra,Portugal,PT,europa,40.21,-8.43,inferido
+lisboa,Lisboa,Portugal,PT,europa,38.72,-9.14,inferido
+braga,Braga,Portugal,PT,europa,41.55,-8.42,inferido
+tomar,Tomar,Portugal,PT,europa,39.6,-8.41,inferido
+viseu,Viseu,Portugal,PT,europa,40.66,-7.91,inferido
+beja,Beja,Portugal,PT,europa,38.02,-7.86,inferido
+castelo-branco,Castelo Branco,Portugal,PT,europa,39.82,-7.49,inferido
+portalegre,Portalegre,Portugal,PT,europa,39.29,-7.43,inferido
+braganca,Bragança,Portugal,PT,europa,41.81,-6.76,inferido
+barcelos,Barcelos,Portugal,PT,europa,41.54,-8.62,inferido
+vila-do-conde,Vila do Conde,Portugal,PT,europa,41.35,-8.74,inferido
+ponta-delgada,Ponta Delgada,Portugal,PT,europa,37.74,-25.67,inferido
+a-coruna,A Coruña,Espanha,ES,europa,43.37,-8.4,inferido
+santiago-de-compostela,Santiago de Compostela,Espanha,ES,europa,42.88,-8.54,inferido
+ciudad-real,Ciudad Real,Espanha,ES,europa,38.99,-3.93,inferido
+mostoles,Móstoles,Espanha,ES,europa,40.32,-3.87,inferido
+madrid,Madrid,Espanha,ES,europa,40.42,-3.7,inferido
+cerdanyola,Cerdanyola del Vallès,Espanha,ES,europa,41.49,2.14,inferido
+castello,Castelló de la Plana,Espanha,ES,europa,39.99,-0.04,inferido
+girona,Girona,Espanha,ES,europa,41.98,2.82,inferido
+almeria,Almería,Espanha,ES,europa,36.84,-2.46,inferido
+pamplona,Pamplona,Espanha,ES,europa,42.82,-1.64,inferido
+santander,Santander,Espanha,ES,europa,43.46,-3.81,inferido
+logrono,Logroño,Espanha,ES,europa,42.47,-2.45,inferido
+roma,Roma,Itália,IT,europa,41.9,12.5,inferido
+bologna,Bolonha,Itália,IT,europa,44.49,11.34,inferido
+messina,Messina,Itália,IT,europa,38.19,15.55,inferido
+firenze,Florença,Itália,IT,europa,43.77,11.26,inferido
+siena,Siena,Itália,IT,europa,43.32,11.33,inferido
+weimar,Weimar,Alemanha,DE,europa,50.98,11.33,inferido
+braunschweig,Braunschweig,Alemanha,DE,europa,52.27,10.52,inferido
+tuebingen,Tübingen,Alemanha,DE,europa,48.52,9.06,inferido
+paderborn,Paderborn,Alemanha,DE,europa,51.72,8.75,inferido
+ulm,Ulm,Alemanha,DE,europa,48.4,9.99,inferido
+augsburg,Augsburg,Alemanha,DE,europa,48.37,10.9,inferido
+bielefeld,Bielefeld,Alemanha,DE,europa,52.02,8.53,inferido
+erfurt,Erfurt,Alemanha,DE,europa,50.98,11.03,inferido
+koeln,Colônia,Alemanha,DE,europa,50.94,6.96,inferido
+bochum,Bochum,Alemanha,DE,europa,51.48,7.22,inferido
+karlsruhe,Karlsruhe,Alemanha,DE,europa,49.01,8.4,inferido
+wilhelmshaven,Wilhelmshaven,Alemanha,DE,europa,53.53,8.11,inferido
+berlin,Berlim,Alemanha,DE,europa,52.52,13.4,inferido
+wien,Viena,Áustria,AT,europa,48.21,16.37,inferido
+leoben,Leoben,Áustria,AT,europa,47.38,15.09,inferido
+bern,Berna,Suíça,CH,europa,46.95,7.45,inferido
+paris,Paris,França,FR,europa,48.86,2.35,inferido
+toulouse,Toulouse,França,FR,europa,43.6,1.44,inferido
+toulon,Toulon,França,FR,europa,43.12,5.93,inferido
+poitiers,Poitiers,França,FR,europa,46.58,0.34,inferido
+beauvais,Beauvais,França,FR,europa,49.43,2.08,inferido
+bruxelles,Bruxelas,Bélgica,BE,europa,50.85,4.35,inferido
+liege,Liège,Bélgica,BE,europa,50.63,5.57,inferido
+tilburg,Tilburg,Países Baixos,NL,europa,51.56,5.09,inferido
+stockholm,Estocolmo,Suécia,SE,europa,59.33,18.07,inferido
+brno,Brno,Tchéquia,CZ,europa,49.2,16.61,inferido
+ostrava,Ostrava,Tchéquia,CZ,europa,49.82,18.26,inferido
+iasi,Iași,Romênia,RO,europa,47.16,27.59,inferido
+sofia,Sófia,Bulgária,BG,europa,42.7,23.32,inferido
+limerick,Limerick,Irlanda,IE,europa,52.66,-8.63,inferido
+st-johns,St. John's,Canadá,CA,americas,47.56,-52.71,inferido
+ottawa,Ottawa,Canadá,CA,americas,45.42,-75.7,inferido
+montreal,Montreal,Canadá,CA,americas,45.5,-73.57,inferido
+seul,Seul,Coreia do Sul,KR,asia,37.57,126.98,inferido
+macau,Macau,Macau (China),MO,asia,22.2,113.55,inferido
+luanda,Luanda,Angola,AO,africa,-8.84,13.23,inferido
+lima,Lima,Peru,PE,americas,-12.05,-77.04,inferido
+bogota,Bogotá,Colômbia,CO,americas,4.71,-74.07,inferido
+medellin,Medellín,Colômbia,CO,americas,6.24,-75.58,inferido
+neiva,Neiva,Colômbia,CO,americas,2.93,-75.28,inferido
+fusagasuga,Fusagasugá,Colômbia,CO,americas,4.34,-74.36,inferido
+neuquen,Neuquén,Argentina,AR,americas,-38.95,-68.06,inferido
+avellaneda,Avellaneda,Argentina,AR,americas,-34.66,-58.37,inferido
+lujan,Luján,Argentina,AR,americas,-34.57,-59.11,inferido
+rosario,Rosário,Argentina,AR,americas,-32.95,-60.64,inferido
+tandil,Tandil,Argentina,AR,americas,-37.32,-59.13,inferido
+mendoza,Mendoza,Argentina,AR,americas,-32.89,-68.84,inferido
+buenos-aires,Buenos Aires,Argentina,AR,americas,-34.6,-58.38,inferido
+guanajuato,Guanajuato,México,MX,americas,21.02,-101.26,inferido
+valparaiso,Valparaíso,Chile,CL,americas,-33.05,-71.62,inferido
+santiago-cl,Santiago,Chile,CL,americas,-33.45,-70.67,inferido
+vila-nova-de-gaia,Vila Nova de Gaia,Portugal,PT,europa,41.13,-8.61,inferido

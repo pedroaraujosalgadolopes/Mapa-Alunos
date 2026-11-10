@@ -28,9 +28,9 @@ def _le_csv(p: Path) -> list[dict]:
     return list(csv.DictReader(open(p, encoding="utf8"))) if p.exists() else []
 
 
-def construir(pdfs: Path, fontes: dict, ref: Referencia, snap: str):
-    """Extrai os PDFs e devolve (linhas, hashes, rejeitadas, resolucoes)."""
-    linhas, hashes, rej, resol = [], {}, [], {}
+def extrair(pdfs: Path, fontes: dict, ref: Referencia, snap: str):
+    """Lê os PDFs e devolve (linhas, hashes, rejeitadas). Só roda numa nova rodada de snapshot."""
+    linhas, hashes, rej = [], {}, []
     for f in fontes["fonte"]:
         p = pdfs / f["arquivo"]
         if not p.exists():
@@ -43,13 +43,11 @@ def construir(pdfs: Path, fontes: dict, ref: Referencia, snap: str):
         rej += ex.rejeitadas
         for r in ex.rows:
             curso, campus = normaliza_curso(r.curso)
-            res = ref.resolver(r.instituicao)
-            resol[r.instituicao] = res
             linhas.append({
                 "edital": fontes["edital"], "inscricao": r.inscricao, "primeiro_nome": normaliza_nome(r.nome),
                 "curso": curso, "campus_origem": campus or "", "instituicao_raw": r.instituicao,
-                "instituicao_id": res.instituicao_id, "semestre": r.semestre, "arquivo_origem": f["arquivo"],
-                "status": "", "snapshot": snap, "_rodada": f["rodada"]})
+                "instituicao_id": ref.resolver(r.instituicao).instituicao_id, "semestre": r.semestre,
+                "arquivo_origem": f["arquivo"], "status": "", "snapshot": snap, "_rodada": f["rodada"]})
     # mesma inscrição: vale a rodada mais recente; as anteriores ficam como substituido
     por_insc = defaultdict(list)
     for l in linhas:
@@ -59,7 +57,7 @@ def construir(pdfs: Path, fontes: dict, ref: Referencia, snap: str):
         for l in ls[:-1]:
             l["status"] = "substituido"
         ls[-1]["status"] = "sem_vaga" if ls[-1]["instituicao_id"] == "sem-destino" else "ativo"
-    return linhas, hashes, rej, resol
+    return linhas, hashes, rej
 
 
 def diferencas(antigas: list[dict], novas: list[dict]) -> dict:
@@ -84,14 +82,21 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
         c = ref.cidades.get(cid) if cid else None
         ent = cidades.setdefault(cid or "pendente", {
             "cidade_id": cid or "pendente", "cidade": c["cidade"] if c else None, "pais": c["pais"] if c else None,
-            "regiao": c["regiao"] if c else None, "total": 0, "instituicoes": []})
+            "iso2": c["iso2"] if c else None, "regiao_id": c["regiao_id"] if c else None,
+            "regiao_ativa": ref.regiao_ativa(cid), "lat": float(c["lat"]) if c else None, "lon": float(c["lon"]) if c else None,
+            "campus_pendente": False, "total": 0, "instituicoes": []})
         oculto = len(ls) < K_MIN
         ocultos += oculto
         ent["total"] += len(ls)
+        ent["campus_pendente"] |= bool(inst) and inst["campus_status"] == "pendente"
+        cps = defaultdict(Counter)
+        for l in ls:
+            cps[l["semestre"]][l["curso"]] += 1
         ent["instituicoes"].append({
             "instituicao_id": iid, "nome": inst["nome"] if inst else iid, "campus_status": inst["campus_status"] if inst else "pendente",
             "total": len(ls), "por_semestre": dict(sorted(Counter(l["semestre"] for l in ls).items())),
-            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items()))})
+            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items())),
+            "cursos_por_semestre": None if oculto else {k: dict(sorted(v.items())) for k, v in sorted(cps.items())}})
     por_pais = Counter()
     for c in cidades.values():
         por_pais[c["pais"] or "pendente"] += c["total"]
@@ -100,23 +105,6 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
             "por_pais": dict(sorted(por_pais.items())),
             "por_curso": dict(sorted(Counter(l["curso"] for l in ativos).items())),
             "cidades": list(cidades.values()), "k_min": K_MIN}, ocultos
-
-
-def instituicoes_publico(ref: Referencia, resol: dict, p: Path):
-    """grafia, instituicao, cidade, pais, campus, status — contribuição da comunidade, sem dado pessoal."""
-    rows = {}
-    for g, r in resol.items():
-        i = ref.instituicoes.get(r.instituicao_id)
-        if not i:
-            rows[g] = [g, "", "", "", "", "desconhecida" if r.metodo == "desconhecida" else "sem_destino"]
-            continue
-        c = ref.cidades[i["cidade_id"]]
-        st = {"unico": "inferido", "padrao": "campus_padrao", "pendente": "campus_pendente"}[i["campus_status"]]
-        rows[g] = [g, i["nome"], c["cidade"], c["pais"], i["campus"], st]
-    with open(p, "w", encoding="utf8", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["grafia", "instituicao", "cidade", "pais", "campus", "status"])
-        w.writerows(sorted(rows.values()))
 
 
 def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: str) -> tuple[str, str]:
@@ -129,7 +117,7 @@ def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: 
     md.append(f"## Instituições desconhecidas ({len(desc)})\nAdicione a grafia em `data/reference/aliases.csv` ou crie a instituição.\n")
     md += [f"- `{g}`" for g in desc]
     rec = {g: r for g, r in resol.items() if r.metodo in ("prefixo", "subsequencia")}
-    md.append(f"\n## Texto quebrado/embaralhado no PDF, recuperado por heurística ({len(rec)}) — confirmar\n")
+    md.append(f"\n## A conferir no PDF: texto quebrado/embaralhado, recuperado por heurística ({len(rec)})\n")
     md += [f"- `{g}` → {ref.instituicoes[r.instituicao_id]['nome']} ({r.metodo})" for g, r in rec.items()]
     for st, tit in (("pendente", "Campus pendente (nó provisório na cidade principal)"), ("padrao", "Campus padrão assumido (existe outro campus)")):
         md.append(f"\n## {tit}\n")
@@ -139,9 +127,11 @@ def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: 
     md.append("\n## Aliases com fusão assumida\n")
     md += [f"- {a} → {ref.instituicoes[iid]['nome']}: {o}" for iid, (a, o) in ref.aliases_obs.items() if o]
     md.append("\n## Cidade e país inferidos (revisar)\nTodas as cidades e países vêm da tabela de instituições, inferidos.\n")
-    md.append("| Instituição | Cidade | País | Alunos |\n|---|---|---|---|")
+    md.append("| Instituição | Cidade | País | Status | Alunos |\n|---|---|---|---|---|")
     md += [f"| {ref.instituicoes[i]['nome']} | {ref.cidades[ref.instituicoes[i]['cidade_id']]['cidade']} | "
-           f"{ref.cidades[ref.instituicoes[i]['cidade_id']]['pais']} | {n} |" for i, n in sorted(cont.items()) if i in ref.instituicoes]
+           f"{ref.cidades[ref.instituicoes[i]['cidade_id']]['pais']} | {ref.instituicoes[i]['status']} | {n} |" for i, n in sorted(cont.items()) if i in ref.instituicoes]
+    md.append(f"\n## Coordenadas das cidades\nLatitude/longitude de {len(ref.cidades)} cidades preenchidas por conhecimento do assistente "
+              "(`coord_origem=inferido` em `data/reference/cidades.csv`): conferir, principalmente cidades pequenas.")
     bad = [l for l in linhas if not RE_SEMESTRE.match(l["semestre"])]
     md.append(f"\n## Extração\n- Linhas rejeitadas pelo extrator: {len(rej)}\n" + "".join(f"  - {r}\n" for r in rej)
               + f"- Semestres fora do formato: {len(bad)}")
@@ -159,20 +149,21 @@ def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: 
     return "\n".join(md) + "\n", "\n".join(pv) + "\n"
 
 
-def rodar(pdfs: Path, data: Path, hoje: date | None = None):
-    hoje = hoje or date.today()
-    snap = hoje.strftime("%Y_%m_%d")
-    fontes = tomllib.loads((Path(__file__).parent.parent / "fontes.toml").read_text(encoding="utf8"))
-    ref = Referencia(data / "reference")
-    linhas, hashes, rej, resol = construir(pdfs, fontes, ref, snap)
-    priv, pub = data / "private", data / "public"
+def publicar(linhas: list[dict], ref: Referencia, rej: list[str], hashes: dict, fontes: dict, snap: str,
+             base: Path, rotulo: str | None = None) -> dict:
+    """Escreve as saídas a partir das linhas (sem ler PDFs)."""
+    fontes = dict(fontes, rotulo=rotulo or fontes["rotulo"])
+    priv, pub = base / "private", base / "public"
     priv.mkdir(parents=True, exist_ok=True)
     pub.mkdir(parents=True, exist_ok=True)
+    resol = {l["instituicao_raw"]: ref.resolver(l["instituicao_raw"]) for l in linhas}
     atual = priv / "alunos.csv"
     antigas = _le_csv(atual)
-    if antigas:  # preserva a rodada anterior e gera o relatório de diferenças
+    if antigas and antigas[0]["snapshot"] != snap:  # rodada nova: guarda a anterior e gera diferenças
         (priv / "snapshots").mkdir(exist_ok=True)
         shutil.copy(atual, priv / "snapshots" / f"alunos_{antigas[0]['snapshot']}.csv")
+    else:
+        antigas = []
     with open(atual, "w", encoding="utf8", newline="") as f:
         w = csv.DictWriter(f, COLUNAS, extrasaction="ignore")
         w.writeheader()
@@ -180,12 +171,11 @@ def rodar(pdfs: Path, data: Path, hoje: date | None = None):
     ativos = [l for l in linhas if l["status"] == "ativo"]
     res, ocultos = resumo(ativos, ref, snap, fontes)
     (pub / "resumo.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf8")
-    instituicoes_publico(ref, resol, pub / "instituicoes.csv")
     md_pub, md_priv = pendencias(ativos, linhas, resol, rej, ref, ocultos, snap)
     (pub / "pendencias.md").write_text(md_pub, encoding="utf8")
     (priv / "pendencias_alunos.md").write_text(md_priv, encoding="utf8")
     (priv / "manifest.json").write_text(json.dumps({"snapshot": snap, "edital": fontes["edital"], "rotulo": fontes["rotulo"],
-                                                    "pdfs_sha256": hashes}, indent=1), encoding="utf8")
+                                                    "pdfs_sha256": hashes, "rejeitadas": rej}, indent=1), encoding="utf8")
     dif = diferencas(antigas, linhas) if antigas else None
     if dif:
         (priv / "diff.md").write_text("# Diferenças vs rodada anterior\n" + "".join(
@@ -193,3 +183,32 @@ def rodar(pdfs: Path, data: Path, hoje: date | None = None):
     return {"linhas": len(linhas), "ativos": len(ativos), "substituidos": sum(l["status"] == "substituido" for l in linhas),
             "sem_vaga": sum(l["status"] == "sem_vaga" for l in linhas), "resolucao": dict(Counter(r.metodo for r in resol.values())),
             "rejeitadas": len(rej), "grupos_ocultos": ocultos, "diff": {k: len(v) for k, v in dif.items()} if dif else None}
+
+
+def _fontes(caminho: Path | None) -> dict:
+    return tomllib.loads((caminho or Path(__file__).parent.parent / "fontes.toml").read_text(encoding="utf8"))
+
+
+def rodar(pdfs: Path, data: Path, hoje: date | None = None, base: Path | None = None, rotulo: str | None = None) -> dict:
+    """Nova rodada de snapshot: lê os PDFs. `base` = onde gravar (padrão `data`)."""
+    snap = (hoje or date.today()).strftime("%Y_%m_%d")
+    fontes, ref = _fontes(None), Referencia(data / "reference")
+    linhas, hashes, rej = extrair(pdfs, fontes, ref, snap)
+    out = publicar(linhas, ref, rej, hashes, fontes, snap, base or data, rotulo)
+    from . import flat
+    flat.gerar(ref, (base or data) / "public" / "instituicoes_flat.csv")
+    return out
+
+
+def reconstruir(data: Path, base: Path | None = None, rotulo: str | None = None) -> dict:
+    """Regera as saídas a partir de alunos.csv, reaplicando a referência atual. Não lê PDFs."""
+    base = base or data
+    linhas = _le_csv(base / "private" / "alunos.csv")
+    ref, fontes = Referencia(data / "reference"), _fontes(None)
+    for l in linhas:
+        l["instituicao_id"] = ref.resolver(l["instituicao_raw"]).instituicao_id
+    man = json.loads((base / "private" / "manifest.json").read_text(encoding="utf8"))
+    out = publicar(linhas, ref, man.get("rejeitadas", []), man.get("pdfs_sha256", {}), fontes, linhas[0]["snapshot"], base, rotulo or man.get("rotulo"))
+    from . import flat
+    flat.gerar(ref, (base or data) / "public" / "instituicoes_flat.csv")
+    return out
