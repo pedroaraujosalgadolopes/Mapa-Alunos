@@ -115,7 +115,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
               <span style={{ "--c": tokens.color.nodeFora } as React.CSSProperties}>{t("legenda.fora")}</span>
             </div>
           </section>
-          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} vizinhos={listaVizinhos} raioH={raioH}
+          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} vizinhos={listaVizinhos} raioH={raioH}
             onFechar={() => setSelecionada(null)} onSelect={setSelecionada} />
           <p className="nota">{t("rodape.dados")}{tempos?.fonte === "transitous" && <> {t("rodape.tempos")}</>}</p>
         </aside>

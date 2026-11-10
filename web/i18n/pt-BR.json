@@ -9,12 +9,13 @@
   "titulo": "Rede de Apoio do Intercâmbio UFF",
   "filtros": {
     "titulo": "Filtros",
-    "semestre": "Semestre",
+    "semestre": "Meu semestre",
     "pais": "País",
     "todos": "Todos",
     "todas": "Todas",
     "limpar": "Limpar filtros",
-    "resultado": "{n} alunos em {c} cidades"
+    "resultado": "{n} alunos em {c} cidades",
+    "ajudaSemestre": "Mostra só quem estará lá no mesmo semestre que você: mapa, \"perto de mim\" e grafo."
   },
   "legenda": {
     "titulo": "Legenda",
@@ -34,7 +35,8 @@
     "uffCampus": "UFF {campus}",
     "semestreN": "{n} em {s}",
     "ocultoPrivacidade": "Grupo com menos de 3 alunos: o curso não é exibido.",
-    "fechar": "Fechar"
+    "fechar": "Fechar",
+    "ninguemNoSemestre": "Ninguém nesta cidade em {s}."
   },
   "rodape": {
     "dados": "Dados: PDFs públicos do Edital 08/2026 (cidade e país inferidos pelo nome da instituição). Mapa © OpenStreetMap.",
@@ -58,7 +60,8 @@
     "maisProximas": "Cidades mais próximas",
     "dentroDoRaio": "Dentro de {h} h",
     "nenhuma": "Nenhuma cidade com alunos nesse raio.",
-    "estimado": "estimado"
+    "estimado": "estimado",
+    "noSemestre": "em {s}"
   },
   "grafo": {
     "corte": "Ligar cidades a até {h} h de viagem",
