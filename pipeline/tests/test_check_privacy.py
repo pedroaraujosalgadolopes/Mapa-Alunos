@@ -10,6 +10,7 @@ def test_pdf_e_dados_reais_bloqueados():
     assert analisar("data/private/alunos.csv", b"")
     assert analisar("data/snapshots/2026_11_10/a.json", b"{}")
     assert analisar("data/public/resumo.json", b"{}")
+    assert analisar("data/public/nomes.json", b"{}")
     assert analisar(".env", b"PSEUDONYM_SECRET=abc")
 
 

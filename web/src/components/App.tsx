@@ -4,13 +4,14 @@ import { useMemo, useState } from "react";
 import { contarCidade } from "@/lib/filtro";
 import { t } from "@/lib/i18n";
 import { tokens } from "@/lib/tokens";
-import type { Filtros, Resumo } from "@/lib/types";
+import type { Filtros, Nomes, Resumo } from "@/lib/types";
 import Faixa from "./Faixa";
 import FiltrosView from "./Filtros";
 import MapView, { type No } from "./MapView";
 import Painel from "./Painel";
 
-export default function App({ resumo, fonte }: { resumo: Resumo; fonte: "real" | "sintetico" }) {
+export default function App({ resumo, fonte, nomes, apresentacao }: {
+  resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; apresentacao: boolean }) {
   const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "", curso: "" });
   const [selecionada, setSelecionada] = useState<string | null>(null);
 
@@ -42,7 +43,7 @@ export default function App({ resumo, fonte }: { resumo: Resumo; fonte: "real" |
 
   return (
     <>
-      <Faixa resumo={resumo} fonte={fonte} />
+      <Faixa resumo={resumo} fonte={fonte} apresentacao={apresentacao} />
       <div className="app">
         <aside className="lateral">
           <h1>{t("titulo")}</h1>
@@ -56,7 +57,7 @@ export default function App({ resumo, fonte }: { resumo: Resumo; fonte: "real" |
               <span style={{ "--c": tokens.color.nodeFora } as React.CSSProperties}>{t("legenda.fora")}</span>
             </div>
           </section>
-          <Painel cidade={cidade} k={resumo.k_min} onFechar={() => setSelecionada(null)} />
+          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} onFechar={() => setSelecionada(null)} />
           <p className="nota">{t("rodape.dados")}</p>
         </aside>
         <main className="mapa">

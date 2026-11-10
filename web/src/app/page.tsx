@@ -3,7 +3,9 @@ import App from "@/components/App";
 
 export const dynamic = "force-dynamic"; // o resumo muda a cada snapshot
 
-export default function Page() {
-  const { resumo, fonte } = carregar();
-  return <App resumo={resumo} fonte={fonte} />;
+// ?apresentacao=1 : modo SRI, só dados agregados (sem nomes)
+export default async function Page({ searchParams }: { searchParams: Promise<{ apresentacao?: string }> }) {
+  const apresentacao = (await searchParams).apresentacao === "1";
+  const { resumo, fonte, nomes } = carregar({ apresentacao });
+  return <App resumo={resumo} fonte={fonte} nomes={nomes} apresentacao={apresentacao} />;
 }

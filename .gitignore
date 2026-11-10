@@ -20,6 +20,7 @@ node_modules/
 data/snapshots/
 data/public/resumo.json
 data/public/pendencias.md
+data/public/nomes.json
 *.pdf
 *.tsbuildinfo
 next-env.d.ts

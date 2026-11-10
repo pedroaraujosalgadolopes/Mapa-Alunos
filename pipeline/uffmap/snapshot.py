@@ -107,6 +107,15 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
             "cidades": list(cidades.values()), "k_min": K_MIN}, ocultos
 
 
+def nomes_por_grupo(ativos: list[dict]) -> dict:
+    """{instituicao_id: {semestre: [primeiro nome, ...]}} em ordem alfabética (não revela a nota).
+    Sem inscrição. Dado pessoal: o arquivo é gitignored e o front o oculta no modo apresentação."""
+    out: dict = defaultdict(lambda: defaultdict(list))
+    for l in ativos:
+        out[l["instituicao_id"]][l["semestre"]].append(l["primeiro_nome"])
+    return {i: {s: sorted(ns, key=str.casefold) for s, ns in sorted(sem.items())} for i, sem in sorted(out.items())}
+
+
 def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: str) -> tuple[str, str]:
     cont = Counter(l["instituicao_id"] for l in ativos)
     md = [f"# Pendências do snapshot {snap}\n", "Gerado por script. Sem nomes nem inscrições (isso fica em `data/private/`).\n",
@@ -171,6 +180,7 @@ def publicar(linhas: list[dict], ref: Referencia, rej: list[str], hashes: dict, 
     ativos = [l for l in linhas if l["status"] == "ativo"]
     res, ocultos = resumo(ativos, ref, snap, fontes)
     (pub / "resumo.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf8")
+    (pub / "nomes.json").write_text(json.dumps(nomes_por_grupo(ativos), ensure_ascii=False, indent=1), encoding="utf8")
     md_pub, md_priv = pendencias(ativos, linhas, resol, rej, ref, ocultos, snap)
     (pub / "pendencias.md").write_text(md_pub, encoding="utf8")
     (priv / "pendencias_alunos.md").write_text(md_priv, encoding="utf8")

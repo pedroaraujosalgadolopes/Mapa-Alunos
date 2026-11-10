@@ -29,3 +29,5 @@ button { cursor: pointer; }
   .mapa { order: -1; }
   .lateral { border-right: 0; border-top: 1px solid var(--color-border); }
 }
+.quem { font-size: var(--font-size-small); margin: var(--space-2) 0; }
+.quem p { margin: var(--space-1) 0; }

@@ -1,9 +1,9 @@
 import { t } from "@/lib/i18n";
-import type { Cidade } from "@/lib/types";
+import type { Cidade, Nomes } from "@/lib/types";
 
 const contagem = (n: number) => (n === 1 ? t("painel.aluno") : t("painel.alunos", { n }));
 
-export default function Painel({ cidade, k, onFechar }: { cidade: Cidade | null; k: number; onFechar: () => void }) {
+export default function Painel({ cidade, k, nomes, onFechar }: { cidade: Cidade | null; k: number; nomes: Nomes | null; onFechar: () => void }) {
   if (!cidade) return <p className="nota">{t("painel.vazio")}</p>;
   return (
     <section className="painel">
@@ -17,14 +17,24 @@ export default function Painel({ cidade, k, onFechar }: { cidade: Cidade | null;
             {i.campus_status === "padrao" && <span className="selo">{t("painel.campusPadrao")}</span>}
           </h3>
           <div><strong>{contagem(i.total)}</strong></div>
-          {/* privacidade: grupo com menos de k alunos mostra só a contagem, sem semestre nem curso */}
+          {/* nomes (só primeiro nome, nunca inscrição): chegam apenas com MOSTRAR_NOMES=1 e fora do modo apresentação */}
+          {nomes?.[i.instituicao_id] && (
+            <div className="quem">
+              {Object.entries(nomes[i.instituicao_id]).map(([s, lista]) => (
+                <p key={s}><strong>{t("painel.semestre", { s })}</strong> ({lista.length}): {lista.join(", ")}</p>
+              ))}
+            </div>
+          )}
+          {/* privacidade: grupo com menos de k alunos não mostra curso (nem semestre, quando não há nomes) */}
           {i.total >= k && i.cursos ? (
             <>
-              <div className="sem">
-                {Object.entries(i.por_semestre).map(([s, n]) => (
-                  <span key={s}>{t("painel.semestre", { s })}: {n}</span>
-                ))}
-              </div>
+              {!nomes?.[i.instituicao_id] && (
+                <div className="sem">
+                  {Object.entries(i.por_semestre).map(([s, n]) => (
+                    <span key={s}>{t("painel.semestre", { s })}: {n}</span>
+                  ))}
+                </div>
+              )}
               <strong className="nota">{t("painel.cursos")}</strong>
               <ul className="cursos">
                 {Object.entries(i.cursos).map(([c, n]) => (

@@ -17,7 +17,7 @@ import sys
 from pathlib import PurePosixPath
 
 PREFIXOS_PROIBIDOS = ("data/raw/", "data/private/", "data/snapshots/")
-EXATOS_PROIBIDOS = {"data/public/resumo.json", "data/public/pendencias.md"}  # derivados de dado real
+EXATOS_PROIBIDOS = {"data/public/resumo.json", "data/public/pendencias.md", "data/public/nomes.json"}  # derivados de dado real
 EXT_PROIBIDAS = {".pdf", ".xlsx", ".xls", ".xlsm", ".db", ".sqlite", ".sqlite3", ".parquet"}
 CSV_PERMITIDO_PREFIXOS = ("data/reference/", "data/synthetic/", "pipeline/tests/fixtures/")
 CSV_PERMITIDO_EXATOS = {"data/public/instituicoes_flat.csv"}

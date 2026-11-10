@@ -1,6 +1,6 @@
 {
   "banner": { "preliminar": "Dados preliminares do Edital {edital}, atualizados em {data}", "snapshot": "snapshot {snapshot}",
-              "sintetico": "DADOS SINTÉTICOS (demonstração, sem alunos reais)" },
+              "sintetico": "DADOS SINTÉTICOS (demonstração, sem alunos reais)", "apresentacao": "modo apresentação (sem nomes)" },
   "titulo": "Rede de Apoio do Intercâmbio UFF",
   "filtros": { "titulo": "Filtros", "semestre": "Semestre", "pais": "País", "curso": "Curso", "todos": "Todos", "todas": "Todas",
                "limpar": "Limpar filtros", "resultado": "{n} alunos em {c} cidades",
@@ -8,7 +8,7 @@
   "legenda": { "titulo": "Legenda", "padrao": "Cidade (Europa)", "pendente": "Campus pendente", "fora": "Fora da Europa" },
   "painel": { "vazio": "Clique numa cidade para ver as instituições.", "alunos": "{n} alunos", "aluno": "1 aluno",
               "campusPendente": "campus pendente", "campusPadrao": "campus padrão", "semestre": "Semestre {s}",
-              "cursos": "Cursos", "ocultoPrivacidade": "Grupo com menos de 3 alunos: só a contagem é exibida.",
+              "cursos": "Cursos", "ocultoPrivacidade": "Grupo com menos de 3 alunos: o curso não é exibido.",
               "fechar": "Fechar" },
   "rodape": { "dados": "Dados: PDFs públicos do Edital 08/2026 (cidade e país inferidos pelo nome da instituição). Mapa © OpenStreetMap." }
 }

@@ -1,0 +1,249 @@
+{
+ "ipb": {
+  "2028.1": [
+   "Alfa"
+  ]
+ },
+ "ipbeja": {
+  "2028.1": [
+   "Bravo",
+   "Oscar"
+  ]
+ },
+ "ipc": {
+  "2028.1": [
+   "Juliet",
+   "Tango"
+  ]
+ },
+ "ipca": {
+  "2028.1": [
+   "Foxtrot",
+   "Hotel"
+  ]
+ },
+ "ipcb": {
+  "2027.2": [
+   "Juliet"
+  ],
+  "2028.1": [
+   "India",
+   "India"
+  ]
+ },
+ "ipp-esmad": {
+  "2028.1": [
+   "Papa"
+  ]
+ },
+ "ipp-isep": {
+  "2028.1": [
+   "Alfa",
+   "Bravo",
+   "Mike",
+   "Nova"
+  ]
+ },
+ "ipt": {
+  "2027.2": [
+   "India",
+   "Lima",
+   "Zulu"
+  ]
+ },
+ "masaryk": {
+  "2027.2": [
+   "Delta",
+   "Quebec"
+  ],
+  "2028.1": [
+   "Oscar"
+  ]
+ },
+ "pendente-universidade-ficticia-de-teste": {
+  "2028.1": [
+   "Charlie"
+  ]
+ },
+ "sorbonne-nouvelle": {
+  "2027.2": [
+   "Charlie",
+   "India"
+  ],
+  "2028.1": [
+   "Alfa",
+   "Eco",
+   "Hotel",
+   "Sierra",
+   "Tango"
+  ]
+ },
+ "uab": {
+  "2028.1": [
+   "Delta"
+  ]
+ },
+ "uac": {
+  "2027.2": [
+   "Charlie"
+  ]
+ },
+ "uaic": {
+  "2027.2": [
+   "Bravo"
+  ],
+  "2028.1": [
+   "Foxtrot"
+  ]
+ },
+ "ual": {
+  "2027.2": [
+   "Alfa",
+   "Bravo",
+   "Papa"
+  ],
+  "2028.1": [
+   "Eco",
+   "Hotel",
+   "Juliet",
+   "Nova"
+  ]
+ },
+ "uc": {
+  "2027.2": [
+   "Romeu"
+  ]
+ },
+ "ucan": {
+  "2028.1": [
+   "Mike"
+  ]
+ },
+ "ucongreso": {
+  "2028.1": [
+   "India"
+  ]
+ },
+ "ucundinamarca": {
+  "2027.2": [
+   "Delta"
+  ]
+ },
+ "udem": {
+  "2027.2": [
+   "Tango"
+  ]
+ },
+ "udg": {
+  "2027.2": [
+   "Quebec"
+  ],
+  "2028.1": [
+   "Romeu"
+  ]
+ },
+ "ugto": {
+  "2028.1": [
+   "Juliet",
+   "Nova"
+  ]
+ },
+ "ulisboa-fc": {
+  "2027.2": [
+   "Kilo"
+  ],
+  "2028.1": [
+   "Golf",
+   "Lima"
+  ]
+ },
+ "ulisboa-iseg": {
+  "2027.2": [
+   "Nova",
+   "Romeu"
+  ],
+  "2028.1": [
+   "Bravo",
+   "Foxtrot",
+   "Kilo"
+  ]
+ },
+ "ulm": {
+  "2027.2": [
+   "Kilo",
+   "Mike",
+   "Papa"
+  ],
+  "2028.1": [
+   "Eco",
+   "Kilo",
+   "Romeu",
+   "Sierra"
+  ]
+ },
+ "uminho": {
+  "2027.2": [
+   "Charlie",
+   "Hotel",
+   "Lima"
+  ],
+  "2028.1": [
+   "Eco"
+  ]
+ },
+ "unican": {
+  "2027.2": [
+   "Oscar"
+  ]
+ },
+ "unifi": {
+  "2027.2": [
+   "Golf",
+   "Hotel"
+  ]
+ },
+ "univie": {
+  "2027.2": [
+   "Alfa",
+   "Quebec",
+   "Sierra"
+  ],
+  "2028.1": [
+   "Charlie",
+   "Eco",
+   "Foxtrot",
+   "Golf"
+  ]
+ },
+ "unr": {
+  "2027.2": [
+   "Delta",
+   "Golf",
+   "Juliet"
+  ],
+  "2028.1": [
+   "Lima",
+   "Quebec"
+  ]
+ },
+ "uottawa": {
+  "2027.2": [
+   "Delta",
+   "Mike"
+  ],
+  "2028.1": [
+   "Oscar"
+  ]
+ },
+ "ut2j": {
+  "2027.2": [
+   "Golf"
+  ],
+  "2028.1": [
+   "Foxtrot",
+   "Papa",
+   "Sierra",
+   "Tango"
+  ]
+ }
+}

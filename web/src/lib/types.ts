@@ -35,3 +35,6 @@ export interface Filtros {
   pais: string;
   curso: string;
 }
+
+/** {instituicao_id: {semestre: [primeiro nome]}}; só chega ao cliente se MOSTRAR_NOMES=1 e fora do modo apresentação. */
+export type Nomes = Record<string, Record<string, string[]>>;

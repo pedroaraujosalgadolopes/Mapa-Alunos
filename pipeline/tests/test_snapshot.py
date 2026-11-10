@@ -72,3 +72,14 @@ def test_reconstruir_nao_le_pdfs(rodada):
     _, _, base = rodada
     out = snapshot.reconstruir(DATA, base=base)
     assert out["ativos"] > 0
+
+
+def test_nomes_por_grupo_ordenados_e_sem_inscricao(rodada):
+    _, _, base = rodada
+    nomes = json.loads((base / "public" / "nomes.json").read_text(encoding="utf8"))
+    for sem in nomes.values():
+        for lista in sem.values():
+            assert lista == sorted(lista, key=str.casefold)  # ordem alfabética: não revela a nota
+    assert not re.search(r"\d{5}", json.dumps(nomes))
+    ativos = sum(len(l) for sem in nomes.values() for l in sem.values())
+    assert ativos == json.loads((base / "public" / "resumo.json").read_text(encoding="utf8"))["total"]
