@@ -21,3 +21,5 @@ data/snapshots/
 data/public/resumo.json
 data/public/pendencias.md
 *.pdf
+*.tsbuildinfo
+next-env.d.ts
