@@ -76,5 +76,15 @@
     "dica": "Arraste as cidades. Linhas: tempo de viagem. Cinza tracejado: grupo isolado.",
     "semTempos": "O grafo precisa dos tempos de viagem, que ainda não estão disponíveis para estes dados.",
     "estimado": "estimado"
+  },
+  "medir": {
+    "titulo": "Medir entre duas cidades",
+    "entrar": "Medir distância e tempo",
+    "sair": "Sair do modo medir",
+    "marqueA": "Clique na primeira cidade.",
+    "marqueB": "Primeira: {a}. Agora clique na segunda cidade.",
+    "distancia": "{km} km em linha reta",
+    "semTempo": "sem tempo conhecido",
+    "verTodos": "← Ver todas as cidades"
   }
 }

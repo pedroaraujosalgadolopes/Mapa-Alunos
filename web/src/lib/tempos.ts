@@ -116,3 +116,10 @@ export function componentes(ids: string[], t: Tempos, corteMin: number, estimati
   for (const id of ids) grupos.set(raiz(id), [...(grupos.get(raiz(id)) ?? []), id]);
   return [...grupos.values()].sort((a, b) => b.length - a.length || a[0].localeCompare(b[0]));
 }
+
+/** Distância em linha reta (km) entre dois pontos. */
+export function distanciaKm(a: { lat: number; lon: number }, b: { lat: number; lon: number }): number {
+  const rad = (g: number) => (g * Math.PI) / 180;
+  const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lon - a.lon) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+}

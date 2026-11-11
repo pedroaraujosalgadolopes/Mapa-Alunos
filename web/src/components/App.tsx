@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { contarCidade } from "@/lib/filtro";
 import { t } from "@/lib/i18n";
-import { type Tempos, efetivo, vizinhos as vizinhosDe } from "@/lib/tempos";
+import { type Tempos, distanciaKm, efetivo, fmtDuracao, icone, vizinhos as vizinhosDe } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
 import type { Filtros, Nomes, Resumo } from "@/lib/types";
 import Faixa from "./Faixa";
@@ -12,7 +12,6 @@ import Grafo from "./Grafo";
 import MapView, { type ArestaMapa, type No } from "./MapView";
 import Painel, { type Vizinho } from "./Painel";
 
-const MAIS_PROXIMAS = 5;
 
 export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; tempos: Tempos | null; apresentacao: boolean }) {
@@ -22,6 +21,8 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   const [aba, setAba] = useState<"mapa" | "grafo">("mapa");
   const [corteH, setCorteH] = useState(3);
   const [estimativas, setEstimativas] = useState(true); // incluir estimativas (ônibus curto, voo)
+  const [medir, setMedir] = useState(false); // modo "medir": marcar duas cidades para ver tempo e distância
+  const [par, setPar] = useState<string[]>([]);
 
   const opcoes = useMemo(() => {
     const sem = new Set<string>(), paises = new Set<string>();
@@ -49,9 +50,8 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
 
   // "perto de mim": a cidade selecionada é a origem; vizinhos pelo tempo conhecido
   const perto = useMemo(() => {
-    if (!tempos || !selecionada) return null;
-    const todosPerto = vizinhosDe(tempos, selecionada, ids, raioH ? raioH * 60 : null, estimativas);
-    return raioH ? todosPerto : todosPerto.slice(0, MAIS_PROXIMAS);
+    if (!tempos || !selecionada || !raioH) return null; // só calcula quando a pessoa pede um raio
+    return vizinhosDe(tempos, selecionada, ids, raioH * 60, estimativas);
   }, [tempos, selecionada, ids, raioH, estimativas]);
 
   // cidades com alunos (no filtro) mas sem tempo conhecido a partir da selecionada: mostramos, não escondemos
@@ -69,14 +69,28 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
     return todos.filter((n) => dentro.has(n.id));
   }, [todos, tempos, selecionada, raioH, perto]);
 
+  // a única linha no mapa é a da medição entre duas cidades marcadas
+  const medicao = useMemo(() => {
+    if (!medir || par.length < 2) return null;
+    const [a, b] = [porId.get(par[0]), porId.get(par[1])];
+    if (!a || !b) return null;
+    const e = tempos ? efetivo(tempos, a.cidade_id, b.cidade_id, estimativas) : undefined;
+    return { a, b, km: Math.round(distanciaKm({ lat: a.lat!, lon: a.lon! }, { lat: b.lat!, lon: b.lon! })), e: e && e.min >= 0 ? e : null };
+  }, [medir, par, porId, tempos, estimativas]);
+
   const arestas = useMemo<ArestaMapa[]>(() => {
-    const o = selecionada ? porId.get(selecionada) : null;
-    if (!tempos || !o || !perto) return [];
-    return perto.map((v) => {
-      const d = porId.get(v.id)!;
-      return { id: `${o.cidade_id}-${d.cidade_id}`, de: [o.lon!, o.lat!], para: [d.lon!, d.lat!], min: v.min, modo: v.modo };
-    });
-  }, [tempos, selecionada, perto, porId]);
+    if (!medicao) return [];
+    const { a, b, e, km } = medicao;
+    return [{ id: `${a.cidade_id}-${b.cidade_id}`, de: [a.lon!, a.lat!], para: [b.lon!, b.lat!], min: e?.min ?? -1, modo: e?.modo ?? "terra", km }];
+  }, [medicao]);
+
+  const aoClicar = (id: string | null) => {
+    if (!medir) return setSelecionada(id);
+    if (!id) return setPar([]);
+    setPar((p) => (p.length === 1 && p[0] !== id ? [p[0], id] : [id]));
+  };
+  const alternarMedir = () => { setMedir((m) => !m); setPar([]); setSelecionada(null); };
+  const verTodos = () => { setSelecionada(null); setRaioH(0); setPar([]); setMedir(false); };
 
   const listaVizinhos = useMemo<Vizinho[] | null>(
     () => perto && perto.map((v) => {
@@ -99,6 +113,23 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
           <h1>{t("titulo")}</h1>
           <FiltrosView filtros={filtros} onChange={setFiltros} opcoes={opcoes}
             resultado={{ alunos: nos.reduce((s, n) => s + n.n, 0), cidades: nos.length }} />
+          <section>
+            <h2>{t("medir.titulo")}</h2>
+            <button className={medir ? "botao ativo" : "botao"} onClick={alternarMedir}>{medir ? t("medir.sair") : t("medir.entrar")}</button>
+            {medir && (
+              <p className="nota">
+                {par.length === 0 && t("medir.marqueA")}
+                {par.length === 1 && t("medir.marqueB", { a: porId.get(par[0])?.cidade ?? "" })}
+                {medicao && (
+                  <>
+                    <strong>{medicao.a.cidade} → {medicao.b.cidade}</strong><br />
+                    {t("medir.distancia", { km: medicao.km })} · {medicao.e ? <>{icone(medicao.e.modo)}~{fmtDuracao(medicao.e.min)}{medicao.e.modo !== "terra" && <> ({t("vizinhos.estimado")})</>}</> : t("medir.semTempo")}
+                  </>
+                )}
+              </p>
+            )}
+          </section>
+          {selecionada && !medir && <button className="botao" onClick={verTodos}>{t("medir.verTodos")}</button>}
           <section>
             <h2>{t("raio.titulo")}</h2>
             {tempos ? (
@@ -125,7 +156,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
             </div>
           </section>
           <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} vizinhos={listaVizinhos} semTempo={semTempo} raioH={raioH}
-            onFechar={() => setSelecionada(null)} onSelect={setSelecionada} />
+            onFechar={verTodos} onSelect={setSelecionada} />
           <p className="nota">{t("rodape.dados")}{tempos?.fonte === "transitous" && <> {t("rodape.tempos")}</>}</p>
         </aside>
         <main className="mapa">
@@ -135,13 +166,13 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
             ))}
           </div>
           <div className="mapa-camada" style={{ visibility: aba === "mapa" ? "visible" : "hidden" }}>
-            <MapView nos={nos} arestas={arestas} selecionada={selecionada} onSelect={setSelecionada} />
+            <MapView nos={nos} arestas={arestas} destaque={medir ? par : selecionada ? [selecionada] : []} onSelect={aoClicar} />
           </div>
           {aba === "grafo" && (
             <div className="grafo-wrap">
               {tempos ? (
                 <Grafo nos={nosGrafo} tempos={tempos} estimativas={estimativas} corteH={corteH} onCorte={setCorteH} k={resumo.k_min}
-                  selecionada={selecionada} onSelect={setSelecionada} />
+                  selecionada={medir ? (par[par.length - 1] ?? null) : selecionada} onSelect={aoClicar} />
               ) : <p className="nota" style={{ padding: 16 }}>{t("grafo.semTempos")}</p>}
             </div>
           )}

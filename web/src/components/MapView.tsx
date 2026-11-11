@@ -22,7 +22,7 @@ maplibregl.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
 const FONTE = "nos";
 const FONTE_ARESTAS = "arestas";
 
-export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number; modo: Modo }
+export interface ArestaMapa { id: string; de: [number, number]; para: [number, number]; min: number; modo: Modo; km: number }
 const estilo: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
@@ -46,7 +46,7 @@ const cor = [
   tokens.color.nodeDefault,
 ] as maplibregl.ExpressionSpecification;
 
-export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selecionada: string | null; onSelect: (id: string | null) => void }) {
+export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; destaque: string[]; onSelect: (id: string | null) => void }) {
   const el = useRef<HTMLDivElement>(null);
   const mapa = useRef<maplibregl.Map | null>(null);
   const pronto = useRef(false);
@@ -93,7 +93,11 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
       m.addLayer({ id: "sel", type: "circle", source: FONTE, filter: ["==", ["get", "id"], ""], paint: {
         "circle-radius": ["+", raio, 4] as maplibregl.ExpressionSpecification, "circle-color": "rgba(0,0,0,0)",
         "circle-stroke-color": tokens.color.nodeSelecionado, "circle-stroke-width": 3 } });
-      m.on("click", "nos", (e) => onSelect.current(String(e.features?.[0]?.properties?.id ?? "")));
+      // clique num ponto seleciona; clique no vazio desmarca (volta a ver todos)
+      m.on("click", (e) => {
+        const f = m.queryRenderedFeatures(e.point, { layers: ["nos"] })[0];
+        onSelect.current(f ? String(f.properties.id) : null);
+      });
       m.on("mouseenter", "nos", (e) => {
         m.getCanvas().style.cursor = "pointer";
         const p = e.features![0].properties!;
@@ -120,14 +124,14 @@ export default function MapView(props: { nos: No[]; arestas: ArestaMapa[]; selec
     for (const a of props.arestas) {
       const el = document.createElement("div");
       el.className = "rotulo-aresta";
-      el.textContent = `${icone(a.modo)}~${fmtDuracao(a.min)}`;
+      el.textContent = `${a.km} km · ${a.min >= 0 ? `${icone(a.modo)}~${fmtDuracao(a.min)}` : "—"}`;
       rotulos.current.push(new maplibregl.Marker({ element: el }).setLngLat([(a.de[0] + a.para[0]) / 2, (a.de[1] + a.para[1]) / 2]).addTo(mapa.current));
     }
   }, [geoArestas, props.arestas]);
 
   useEffect(() => {
-    if (pronto.current) mapa.current!.setFilter("sel", ["==", ["get", "id"], props.selecionada ?? ""]);
-  }, [props.selecionada, geo]);
+    if (pronto.current) mapa.current!.setFilter("sel", ["in", ["get", "id"], ["literal", props.destaque]]);
+  }, [props.destaque, geo]);
 
   return <div ref={el} role="application" aria-label="Mapa" />;
 }

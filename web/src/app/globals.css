@@ -83,3 +83,6 @@ button { cursor: pointer; }
 .segmentos button.ativa { background: var(--color-accent); color: #fff; font-weight: var(--font-weight-bold); }
 .sem-tempo { font-size: var(--font-size-small); margin: var(--space-2) 0; }
 .sem-tempo summary { cursor: pointer; color: var(--color-muted); }
+
+.botao { width: 100%; border-radius: var(--radius-pill); cursor: pointer; }
+.botao.ativo { background: var(--color-accent); color: #fff; font-weight: var(--font-weight-bold); }
