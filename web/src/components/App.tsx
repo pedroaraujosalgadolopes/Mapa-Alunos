@@ -14,8 +14,30 @@ import MapView, { type ArestaMapa, type No } from "./MapView";
 import Painel, { type Vizinho } from "./Painel";
 
 
-export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
+function comAreasDosNomes(r: Resumo, nomes: Nomes): Resumo {
+  return {
+    ...r,
+    cidades: r.cidades.map((c) => ({
+      ...c,
+      instituicoes: c.instituicoes.map((i) => {
+        const areas: Record<string, Record<string, number>> = {};
+        for (const [sem, ps] of Object.entries(nomes[i.instituicao_id] ?? {}))
+          for (const p of ps) {
+            if (p.cidade_id && p.cidade_id !== c.cidade_id) continue;
+            const a = p.area || "Outras áreas";
+            areas[a] = { ...areas[a], [sem]: (areas[a]?.[sem] ?? 0) + 1 };
+          }
+        return { ...i, areas };
+      }),
+    })),
+  };
+}
+
+export default function App({ resumo: resumoBase, fonte, nomes, tempos, apresentacao }: {
   resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; tempos: Tempos | null; apresentacao: boolean }) {
+  // com nomes liberados (uso local), a área vem das pessoas e vale também para grupos com menos de 3 alunos;
+  // sem nomes, o resumo público só traz área de grupos com 3 ou mais (privacidade)
+  const resumo = useMemo<Resumo>(() => (nomes ? comAreasDosNomes(resumoBase, nomes) : resumoBase), [resumoBase, nomes]);
   const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "", area: "" });
   const [selecionada, setSelecionada] = useState<string | null>(null);
   const [raioH, setRaioH] = useState(0); // 0 = sem limite
@@ -115,7 +137,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
       <div className="app">
         <aside className="lateral">
           <h1>{t("titulo")}</h1>
-          <FiltrosView filtros={filtros} onChange={setFiltros} opcoes={opcoes}
+          <FiltrosView avisoPrivacidade={!nomes} filtros={filtros} onChange={setFiltros} opcoes={opcoes}
             resultado={{ alunos: nos.reduce((s, n) => s + n.n, 0), cidades: nos.length }} />
           <section>
             <h2>{t("medir.titulo")}</h2>

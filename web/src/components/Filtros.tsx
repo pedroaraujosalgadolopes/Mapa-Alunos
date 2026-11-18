@@ -6,9 +6,10 @@ interface Props {
   onChange: (f: Filtros) => void;
   opcoes: { semestres: string[]; paises: string[]; areas: string[] };
   resultado: { alunos: number; cidades: number };
+  avisoPrivacidade: boolean; // sem nomes liberados, grupos pequenos ficam fora do filtro de área
 }
 
-export default function FiltrosView({ filtros, onChange, opcoes, resultado }: Props) {
+export default function FiltrosView({ filtros, onChange, opcoes, resultado, avisoPrivacidade }: Props) {
   return (
     <section>
       <h2>{t("filtros.titulo")}</h2>
@@ -37,7 +38,7 @@ export default function FiltrosView({ filtros, onChange, opcoes, resultado }: Pr
           <option value="">{t("filtros.todas")}</option>
           {opcoes.areas.map((v) => <option key={v} value={v}>{v}</option>)}
         </select>
-        {filtros.area && <span className="nota">{t("filtros.ajudaArea")}</span>}
+        {filtros.area && avisoPrivacidade && <span className="nota">{t("filtros.ajudaArea")}</span>}
       </label>
       <p><strong>{t(resultado.alunos === 1 ? "filtros.resultadoUm" : resultado.cidades === 1 ? "filtros.resultadoMisto" : "filtros.resultado",
         { n: resultado.alunos, c: resultado.cidades })}</strong></p>
