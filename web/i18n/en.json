@@ -1,0 +1,99 @@
+{
+  "banner": {
+    "preliminar": "Preliminary data from Call {edital}, updated on {data}",
+    "final": "Final allocation for Call {edital}, updated on {data}",
+    "snapshot": "snapshot {snapshot}",
+    "sintetico": "SYNTHETIC DATA (demonstration, no real students)",
+    "apresentacao": "presentation mode (no names)",
+    "temposSimulados": "SIMULATED TRAVEL TIMES (demonstration)"
+  },
+  "titulo": "UFF Students Map",
+  "filtros": {
+    "titulo": "Filters",
+    "semestre": "My semester",
+    "pais": "Country",
+    "todos": "All",
+    "todas": "All",
+    "limpar": "Clear filters",
+    "resultado": "{n} students in {c} cities",
+    "ajudaSemestre": "Shows only who will be there in the same semester as you: map, \"near me\" and graph.",
+    "resultadoUm": "{n} student in {c} city",
+    "resultadoMisto": "{n} students in {c} city",
+    "area": "Area of interest",
+    "ajudaArea": "Based on the degree program. Groups with fewer than 3 students do not appear in this filter (privacy)."
+  },
+  "legenda": {
+    "titulo": "Legend",
+    "padrao": "City (Europe)",
+    "pendente": "Campus pending",
+    "fora": "Outside Europe"
+  },
+  "painel": {
+    "vazio": "Click on a city to see the institutions.",
+    "alunos": "{n} students",
+    "aluno": "1 student",
+    "campusPendente": "campus pending",
+    "campusPadrao": "default campus",
+    "semestre": "Semester {s}",
+    "cursos": "Programs",
+    "uffNiteroi": "UFF",
+    "uffCampus": "UFF {campus}",
+    "semestreN": "{n} in {s}",
+    "ocultoPrivacidade": "Group with fewer than 3 students: the program is not shown.",
+    "fechar": "Close",
+    "ninguemNoSemestre": "Nobody in this city in {s}."
+  },
+  "rodape": {
+    "dados": "Data: public PDFs from Call 08/2026 (city and country inferred from the institution name). Map © OpenStreetMap.",
+    "tempos": "Travel times: Transitous (transitous.org/sources), weekday schedule."
+  },
+  "abas": {
+    "mapa": "Map",
+    "grafo": "Graph",
+    "lista": "List"
+  },
+  "raio": {
+    "titulo": "Near me",
+    "ajuda": "Select a city on the map and choose up to how many hours.",
+    "semLimite": "No limit",
+    "ate": "up to {h} h",
+    "semTempos": "Travel times are not yet available for this data.",
+    "notaTempos": "Approximate times, on a weekday. Real train/bus times come from incomplete open data and may be OVERESTIMATED; that is why we show the SHORTER of it and the estimates. 🚌 ✈ = estimated (does not check whether a direct line or flight exists).",
+    "estimativas": "Include estimates: 🚌 bus on short routes and ✈ flights"
+  },
+  "vizinhos": {
+    "titulo": "Who is nearby",
+    "maisProximas": "Closest cities",
+    "dentroDoRaio": "Within {h} h",
+    "nenhuma": "No city with students within this radius.",
+    "estimado": "estimated",
+    "noSemestre": "in {s}",
+    "semTempo": "No time available yet",
+    "semTempoAjuda": "Cities with students but no known travel time (lookup in progress or no data in the source). Nothing is estimated for train/bus.",
+    "emais": "and {n} more"
+  },
+  "grafo": {
+    "corte": "Connect cities up to {h} h apart",
+    "grupos": "Groups",
+    "isolado": "isolated (fewer than {k} students)",
+    "alunosN": "{n} students",
+    "dica": "Drag the cities. Lines: travel time. Dashed gray: isolated group.",
+    "semTempos": "The graph needs travel times, which are not yet available for this data.",
+    "estimado": "estimated"
+  },
+  "medir": {
+    "titulo": "Measure between two cities",
+    "entrar": "Measure distance and time",
+    "sair": "Exit measure mode",
+    "marqueA": "Click the first city.",
+    "marqueB": "First: {a}. Now click the second city.",
+    "distancia": "{km} km as the crow flies",
+    "semTempo": "no known time",
+    "verTodos": "← See all cities"
+  },
+  "sobre": {
+    "titulo": "Free project",
+    "texto": "Open source (MIT license), made to be used and modified by anyone. All data comes from public lists of the UFF call. Want to help? Contributions are welcome: code, data, translations and review of programs and cities.",
+    "edital": "UFF Call 08/2026"
+  }
+}
