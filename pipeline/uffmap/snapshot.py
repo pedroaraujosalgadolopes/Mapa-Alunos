@@ -71,7 +71,7 @@ def diferencas(antigas: list[dict], novas: list[dict]) -> dict:
 def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tuple[dict, int]:
     def loc(l):
         i = ref.instituicoes.get(l["instituicao_id"])
-        return (i["cidade_id"], i) if i else (None, None)
+        return (ref.cidade_do_aluno(l["instituicao_id"], l["curso"]), i) if i else (None, None)
     grupos = defaultdict(list)
     for l in ativos:
         grupos[(loc(l)[0], l["instituicao_id"])].append(l)
@@ -88,7 +88,8 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
         oculto = len(ls) < K_MIN
         ocultos += oculto
         ent["total"] += len(ls)
-        ent["campus_pendente"] |= bool(inst) and inst["campus_status"] == "pendente"
+        # campus trocado por curso (campus_por_curso.csv) resolve a dúvida: o nó deixa de ser provisório
+        ent["campus_pendente"] |= bool(inst) and inst["campus_status"] == "pendente" and cid == inst["cidade_id"]
         ent["instituicoes"].append({
             "instituicao_id": iid, "nome": inst["nome"] if inst else iid, "campus_status": inst["campus_status"] if inst else "pendente",
             "total": len(ls), "por_semestre": dict(sorted(Counter(l["semestre"] for l in ls).items())),
@@ -113,7 +114,7 @@ def nomes_por_grupo(ativos: list[dict], ref: Referencia | None = None) -> dict:
     out: dict = defaultdict(lambda: defaultdict(list))
     for l in ativos:
         out[l["instituicao_id"]][l["semestre"]].append(
-            {"nome": l["primeiro_nome"], "curso": l["curso"], "area": ref.area(l["curso"]) if ref else "", "campus_origem": l["campus_origem"]})
+            {"nome": l["primeiro_nome"], "curso": l["curso"], "area": ref.area(l["curso"]) if ref else "", "cidade_id": ref.cidade_do_aluno(l["instituicao_id"], l["curso"]) if ref else "", "campus_origem": l["campus_origem"]})
     return {i: {s: sorted(ps, key=lambda p: (p["nome"].casefold(), p["curso"])) for s, ps in sorted(sem.items())}
             for i, sem in sorted(out.items())}
 

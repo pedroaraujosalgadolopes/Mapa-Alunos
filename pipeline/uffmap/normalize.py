@@ -85,6 +85,17 @@ class Referencia:
         f_areas = ref_dir / "areas.csv"
         self.areas = {fold(r["curso"]): r["area"] for r in rd("areas.csv")} if f_areas.exists() else {}
 
+        # campus por curso: troca o local de quem faz certo curso numa instituição de vários campi
+        f_campus = ref_dir / "campus_por_curso.csv"
+        self.campus_curso = {(r["instituicao_id"], fold(r["curso"])): r["cidade_id"] for r in rd("campus_por_curso.csv")} if f_campus.exists() else {}
+        for (iid, _), cid in self.campus_curso.items():
+            if cid not in self.cidades:
+                raise ValueError(f"campus_por_curso.csv: cidade_id desconhecida '{cid}' (adicione em cidades.csv)")
+
+    def cidade_do_aluno(self, instituicao_id: str, curso: str) -> str | None:
+        i = self.instituicoes.get(instituicao_id)
+        return self.campus_curso.get((instituicao_id, fold(curso))) or (i["cidade_id"] if i else None)
+
     def area(self, curso: str) -> str:
         return self.areas.get(fold(curso), AREA_OUTRAS)
 

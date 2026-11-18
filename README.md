@@ -1,4 +1,4 @@
-# Rede de Apoio do Intercâmbio UFF
+# Mapa Alunos UFF
 
 Mapa para que quem vai de intercâmbio pelo **Edital 08/2026 de mobilidade internacional da UFF** (semestres 2027.2 e
 2028.1) veja onde cada colega vai ficar e **ninguém fique sozinho**: moradia, burocracia, viagens e troca cultural.

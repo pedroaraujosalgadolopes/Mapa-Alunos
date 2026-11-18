@@ -9,6 +9,7 @@ import type { Filtros, Nomes, Resumo } from "@/lib/types";
 import Faixa from "./Faixa";
 import FiltrosView from "./Filtros";
 import Grafo from "./Grafo";
+import Lista from "./Lista";
 import MapView, { type ArestaMapa, type No } from "./MapView";
 import Painel, { type Vizinho } from "./Painel";
 
@@ -18,7 +19,7 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "", area: "" });
   const [selecionada, setSelecionada] = useState<string | null>(null);
   const [raioH, setRaioH] = useState(0); // 0 = sem limite
-  const [aba, setAba] = useState<"mapa" | "grafo">("mapa");
+  const [aba, setAba] = useState<"mapa" | "grafo" | "lista">("mapa");
   const [corteH, setCorteH] = useState(3);
   const [estimativas, setEstimativas] = useState(true); // incluir estimativas (ônibus curto, voo)
   const [medir, setMedir] = useState(false); // modo "medir": marcar duas cidades para ver tempo e distância
@@ -168,13 +169,16 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
         </aside>
         <main className="mapa">
           <div className="abas" role="tablist">
-            {(["mapa", "grafo"] as const).map((a) => (
+            {(["mapa", "grafo", "lista"] as const).map((a) => (
               <button key={a} role="tab" aria-selected={aba === a} className={aba === a ? "ativa" : ""} onClick={() => setAba(a)}>{t(`abas.${a}`)}</button>
             ))}
           </div>
           <div className="mapa-camada" style={{ visibility: aba === "mapa" ? "visible" : "hidden" }}>
             <MapView nos={nos} arestas={arestas} destaque={medir ? par : selecionada ? [selecionada] : []} onSelect={aoClicar} />
           </div>
+          {aba === "lista" && (
+            <div className="grafo-wrap"><Lista resumo={resumo} nomes={nomes} filtros={filtros} onSelect={(id) => { setSelecionada(id); setAba("mapa"); }} /></div>
+          )}
           {aba === "grafo" && (
             <div className="grafo-wrap">
               {tempos ? (

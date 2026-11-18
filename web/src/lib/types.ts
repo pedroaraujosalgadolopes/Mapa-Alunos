@@ -41,6 +41,7 @@ export interface Filtros {
 export interface Pessoa {
   nome: string; // só o primeiro nome, nunca inscrição
   curso: string;
+  cidade_id?: string; // cidade do campus (pode diferir da sede; data/reference/campus_por_curso.csv)
   area?: string; // área de interesse do curso (data/reference/areas.csv)
   campus_origem: string; // campus da UFF de origem (ex.: Volta Redonda); vazio = Niterói
 }

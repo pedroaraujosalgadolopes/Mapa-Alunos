@@ -7,7 +7,7 @@
     "apresentacao": "modo apresentação (sem nomes)",
     "temposSimulados": "TEMPOS SIMULADOS (demonstração)"
   },
-  "titulo": "Rede de Apoio do Intercâmbio UFF",
+  "titulo": "Mapa Alunos UFF",
   "filtros": {
     "titulo": "Filtros",
     "semestre": "Meu semestre",
@@ -49,7 +49,8 @@
   },
   "abas": {
     "mapa": "Mapa",
-    "grafo": "Grafo"
+    "grafo": "Grafo",
+    "lista": "Lista"
   },
   "raio": {
     "titulo": "Perto de mim",

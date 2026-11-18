@@ -30,8 +30,11 @@ function CartaoAluno({ p }: { p: Pessoa }) {
   );
 }
 
-function Instituicao({ i, nomes, semestres, k, semestre, area, cursoArea }: { i: Instituicao; nomes: Nomes | null; semestres: string[]; k: number; semestre: string; area: string; cursoArea: Record<string, string> }) {
-  const gente = nomes?.[i.instituicao_id];
+function Instituicao({ i, nomes, semestres, k, semestre, area, cursoArea, cidadeId }: { i: Instituicao; cidadeId: string; nomes: Nomes | null; semestres: string[]; k: number; semestre: string; area: string; cursoArea: Record<string, string> }) {
+  const bruto = nomes?.[i.instituicao_id];
+  // a mesma instituição pode estar em mais de uma cidade (campus por curso): cada cidade mostra só os seus alunos
+  const gente = bruto && Object.fromEntries(Object.entries(bruto)
+    .map(([s, ps]) => [s, ps.filter((p) => !p.cidade_id || p.cidade_id === cidadeId)] as const).filter(([, ps]) => ps.length));
   const total = contar(i, { semestre, pais: "", area });
   return (
     <article className="inst">
@@ -124,7 +127,7 @@ export default function Painel({ cidade, k, nomes, semestres, semestre, area, cu
         </section>
       )}
       {totalCidade === 0 && <p className="nota">{t("painel.ninguemNoSemestre", { s: semestre })}</p>}
-      {instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} semestre={semestre} area={area} cursoArea={cursoArea} />)}
+      {instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} semestre={semestre} area={area} cursoArea={cursoArea} cidadeId={cidade.cidade_id} />)}
     </section>
   );
 }

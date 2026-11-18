@@ -81,7 +81,7 @@ def test_nomes_por_grupo_ordenados_e_sem_inscricao(rodada):
         for pessoas in sem.values():
             ns = [p["nome"] for p in pessoas]
             assert ns == sorted(ns, key=str.casefold)  # ordem alfabética: não revela a nota
-            assert all(set(p) == {"nome", "curso", "area", "campus_origem"} for p in pessoas)
+            assert all(set(p) == {"nome", "curso", "area", "cidade_id", "campus_origem"} for p in pessoas)
     assert not re.search(r"\d{5}", json.dumps(nomes))
     total = sum(len(l) for sem in nomes.values() for l in sem.values())
     assert total == json.loads((base / "public" / "resumo.json").read_text(encoding="utf8"))["total"]
@@ -97,3 +97,22 @@ def test_areas_por_curso_e_privacidade(rodada):
             else:
                 assert sum(n for por_sem in i["areas"].values() for n in por_sem.values()) == i["total"]
     assert set(res["curso_area"]) == set(res["por_curso"])
+
+
+def test_campus_por_curso_troca_a_cidade(tmp_path):
+    import shutil
+    from uffmap.normalize import Referencia
+    ref_dir = tmp_path / "reference"
+    shutil.copytree(DATA / "reference", ref_dir, ignore=shutil.ignore_patterns("tempos"))
+    ref = Referencia(ref_dir)
+    iid, inst = next(iter(ref.instituicoes.items()))
+    outra = next(c for c in ref.cidades if c != inst["cidade_id"])
+    assert ref.cidade_do_aluno(iid, "Direito") == inst["cidade_id"]
+    (ref_dir / "campus_por_curso.csv").write_text(f"instituicao_id,curso,cidade_id,observacao\n{iid},Direito,{outra},teste\n", encoding="utf8")
+    ref = Referencia(ref_dir)
+    assert ref.cidade_do_aluno(iid, "direito") == outra  # ignora caixa/acentos
+    assert ref.cidade_do_aluno(iid, "Medicina") == inst["cidade_id"]  # outro curso: sede
+    (ref_dir / "campus_por_curso.csv").write_text(f"instituicao_id,curso,cidade_id,observacao\n{iid},Direito,nao-existe,\n", encoding="utf8")
+    import pytest
+    with pytest.raises(ValueError):
+        Referencia(ref_dir)
