@@ -1,7 +1,7 @@
 # Mapa Alunos UFF
 
 Mapa para que quem vai de intercâmbio pelo **Edital 08/2026 de mobilidade internacional da UFF** (semestres 2027.2 e
-2028.1) veja onde cada colega vai ficar e **ninguém fique sozinho**: moradia, burocracia, viagens e troca cultural.
+2028.1) veja onde cada colega vai ficar, burocracia, viagens e troca cultural.
 A ideia central: um aluno em Santander poder visitar uma colega em Barcelona, e quem vai a Paris encontrar quem está
 perto.
 
