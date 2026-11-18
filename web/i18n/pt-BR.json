@@ -1,6 +1,7 @@
 {
   "banner": {
     "preliminar": "Dados preliminares do Edital {edital}, atualizados em {data}",
+    "final": "Alocação final do Edital {edital}, atualizada em {data}",
     "snapshot": "snapshot {snapshot}",
     "sintetico": "DADOS SINTÉTICOS (demonstração, sem alunos reais)",
     "apresentacao": "modo apresentação (sem nomes)",

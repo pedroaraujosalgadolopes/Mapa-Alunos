@@ -220,3 +220,41 @@ def reconstruir(data: Path, base: Path | None = None, rotulo: str | None = None)
     from . import flat
     flat.gerar(ref, (base or data) / "public" / "instituicoes_flat.csv")
     return out
+
+
+def aplicar_final(pdf: Path, data: Path, hoje: date | None = None, base: Path | None = None) -> dict:
+    """Aplica o PDF da alocação final sobre o alunos.csv atual (sem reler os PDFs antigos).
+
+    A lista final é a verdade: quem está nela passa a valer com o destino/semestre dela; quem
+    estava ativo e não está nela vira `fora_da_final` (desistência ou remanejamento: o PDF não diz).
+    """
+    base = base or data
+    snap = (hoje or date.today()).strftime("%Y_%m_%d")
+    ref, fontes = Referencia(data / "reference"), _fontes(None)
+    antigas = _le_csv(base / "private" / "alunos.csv")
+    man = json.loads((base / "private" / "manifest.json").read_text(encoding="utf8"))
+    ex = extract_pdf(pdf, sem_nota=True)
+    na_final = {}
+    for r in ex.rows:
+        curso, campus = normaliza_curso(r.curso)
+        na_final[r.inscricao] = {
+            "edital": fontes["edital"], "inscricao": r.inscricao, "primeiro_nome": normaliza_nome(r.nome), "curso": curso,
+            "campus_origem": campus or "", "instituicao_raw": r.instituicao, "instituicao_id": ref.resolver(r.instituicao).instituicao_id,
+            "semestre": r.semestre, "arquivo_origem": pdf.name, "status": "", "snapshot": snap}
+    linhas = []
+    for l in antigas:
+        if l["status"] == "ativo" and l["inscricao"] not in na_final:
+            l["status"] = "fora_da_final"
+        elif l["status"] == "ativo":
+            l["status"] = "substituido"  # a linha da final assume
+        l["snapshot"] = snap
+        linhas.append(l)
+    for f in na_final.values():
+        f["status"] = "sem_vaga" if f["instituicao_id"] == "sem-destino" else "ativo"
+        linhas.append(f)
+    hashes = dict(man.get("pdfs_sha256", {}), **{pdf.name: _sha(pdf)})
+    out = publicar(linhas, ref, ex.rejeitadas, hashes, fontes, snap, base, "final")
+    out["fora_da_final"] = sum(l["status"] == "fora_da_final" for l in linhas)
+    from . import flat
+    flat.gerar(ref, base / "public" / "instituicoes_flat.csv")
+    return out

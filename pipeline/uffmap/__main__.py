@@ -9,6 +9,8 @@ ap = argparse.ArgumentParser(prog="uffmap")
 sub = ap.add_subparsers(dest="cmd", required=True)
 r = sub.add_parser("rodar", help="nova rodada de snapshot lendo os PDFs (fora do repositório)")
 r.add_argument("--pdfs", type=Path, required=True)
+fi = sub.add_parser("final", help="aplica o PDF da alocação final sobre data/private/alunos.csv")
+fi.add_argument("--pdf", type=Path, required=True)
 sub.add_parser("reconstruir", help="regera resumo/pendências a partir de data/private/alunos.csv, sem PDFs")
 t = sub.add_parser("tempos", help="tempos de viagem (trem/ônibus) via Transitous, com cache em data/reference/tempos")
 t.add_argument("--contato", default=os.environ.get("TRANSITOUS_CONTACT", ""), help="e-mail ou site para o User-Agent (exigido pelo Transitous)")
@@ -29,6 +31,8 @@ ap.add_argument("--data", type=Path, default=Path("data"))
 a = ap.parse_args()
 if a.cmd == "rodar":
     out = snapshot.rodar(a.pdfs, a.data)
+elif a.cmd == "final":
+    out = snapshot.aplicar_final(a.pdf, a.data)
 elif a.cmd == "reconstruir":
     out = snapshot.reconstruir(a.data)
 elif a.cmd == "tempos":

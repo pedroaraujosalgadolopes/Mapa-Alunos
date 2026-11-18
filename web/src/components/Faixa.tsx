@@ -9,7 +9,7 @@ export default function Faixa({ resumo, fonte, apresentacao, temposSimulados }: 
       <strong>
         {fonte === "sintetico"
           ? t("banner.sintetico")
-          : t("banner.preliminar", { edital: resumo.edital, data: `${dia}/${mes}` })}
+          : t(resumo.rotulo === "final" ? "banner.final" : "banner.preliminar", { edital: resumo.edital, data: `${dia}/${mes}` })}
       </strong>
       {temposSimulados && fonte !== "sintetico" && <strong>{t("banner.temposSimulados")}</strong>}
       <span className="snap">{apresentacao && <>{t("banner.apresentacao")} · </>}{t("banner.snapshot", { snapshot: resumo.snapshot })}</span>

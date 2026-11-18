@@ -48,3 +48,17 @@ def test_pdf_sintetico_ida_e_volta(tmp_path):
     exc = extract_pdf(tmp_path / "Edital 082026 - Alocação dos candidatos excedentes.pdf")
     assert len(exc.rows) == 2 and all(r.semestre.startswith("20") for r in exc.rows)
     assert pdfplumber.open(tmp_path / "Edital 082026 - Lista de candidatos excedentes.pdf")
+
+
+def test_alocacao_final_sem_nota():
+    # PDF da alocação final: sem pontuação, só primeiro nome; o cabeçalho "Instituição" só existe na 1ª página
+    def w(text, x0, top):
+        return {"text": text, "x0": x0, "x1": x0 + 5 * len(text), "top": top}
+    p1 = [w("Instituição", 408, 148), w("99001", 40, 163), w("Alfa", 124, 163), w("Enfermagem", 207, 163),
+          w("Universidade", 408, 163), w("Exemplo", 470, 163), w("2027.2", 772, 163)]
+    p2 = [w("99002", 40, 100), w("Bravo", 124, 100), w("Direito", 207, 100), w("Universidade", 408, 100), w("Teste", 470, 100), w("2028.1", 772, 100)]
+    ex = parse_words(p1, "f.pdf", 1, sem_nota=True)
+    ex = parse_words(p2, "f.pdf", 2, ex, sem_nota=True)
+    assert [(r.inscricao, r.nome, r.curso, r.instituicao, r.semestre) for r in ex.rows] == [
+        ("99001", "Alfa", "Enfermagem", "Universidade Exemplo", "2027.2"),
+        ("99002", "Bravo", "Direito", "Universidade Teste", "2028.1")]

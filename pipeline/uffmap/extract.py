@@ -43,6 +43,7 @@ class RawRow:
 class Extraction:
     rows: list[RawRow] = field(default_factory=list)
     rejeitadas: list[str] = field(default_factory=list)  # descrição sem dados pessoais
+    inst_x: float | None = None  # coluna da instituição (só o cabeçalho da 1ª página a traz)
 
 
 def _join(words: list[dict]) -> str:
@@ -51,8 +52,12 @@ def _join(words: list[dict]) -> str:
     return " ".join(w["text"] for w in ws)
 
 
-def parse_words(words: list[dict], fonte: str, pagina: int, out: Extraction | None = None) -> Extraction:
-    """`words`: dicts com text, x0, x1, top (formato de pdfplumber.extract_words)."""
+def parse_words(words: list[dict], fonte: str, pagina: int, out: Extraction | None = None, sem_nota: bool = False) -> Extraction:
+    """`words`: dicts com text, x0, x1, top (formato de pdfplumber.extract_words).
+
+    `sem_nota`: PDF da alocação final, sem coluna de pontuação; a instituição começa na coluna
+    cujo cabeçalho é "Instituição" e o nome é só o primeiro nome.
+    """
     out = out or Extraction()
     words = [dict(w, text=RE_CID.sub("", w["text"])) for w in words]
     words = [w for w in words if w["text"]]
@@ -74,6 +79,14 @@ def parse_words(words: list[dict], fonte: str, pagina: int, out: Extraction | No
             continue
         rest = sorted((w for w in ws if w is not sem_w), key=lambda w: w["x0"])
         nota_w = next((w for w in rest if RE_NOTA.fullmatch(w["text"])), None)
+        if sem_nota:
+            inst_x = next((w["x0"] for w in words if w["text"] == "Instituição"), out.inst_x)
+            out.inst_x = inst_x
+            if inst_x is None:
+                out.rejeitadas.append(f"{fonte} p.{pagina}: sem cabeçalho da coluna de instituição")
+                continue
+            parsed.append((a["text"], sem_w["text"], "", [w for w in rest if w["x0"] < inst_x - 2], [w for w in rest if w["x0"] >= inst_x - 2]))
+            continue
         if nota_w is not None:
             nota, x0, x1 = nota_w["text"], nota_w["x0"], nota_w["x1"]
             left_ws = [w for w in rest if w["x0"] < x0 - 0.5]
@@ -99,9 +112,9 @@ def parse_words(words: list[dict], fonte: str, pagina: int, out: Extraction | No
     return out
 
 
-def extract_pdf(path: Path) -> Extraction:
+def extract_pdf(path: Path, sem_nota: bool = False) -> Extraction:
     out = Extraction()
     with pdfplumber.open(path) as pdf:
         for n, page in enumerate(pdf.pages, start=1):
-            parse_words(page.extract_words(), path.name, n, out)
+            parse_words(page.extract_words(), path.name, n, out, sem_nota)
     return out
