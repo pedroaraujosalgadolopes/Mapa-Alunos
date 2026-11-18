@@ -81,7 +81,19 @@ def test_nomes_por_grupo_ordenados_e_sem_inscricao(rodada):
         for pessoas in sem.values():
             ns = [p["nome"] for p in pessoas]
             assert ns == sorted(ns, key=str.casefold)  # ordem alfabética: não revela a nota
-            assert all(set(p) == {"nome", "curso", "campus_origem"} for p in pessoas)
+            assert all(set(p) == {"nome", "curso", "area", "campus_origem"} for p in pessoas)
     assert not re.search(r"\d{5}", json.dumps(nomes))
     total = sum(len(l) for sem in nomes.values() for l in sem.values())
     assert total == json.loads((base / "public" / "resumo.json").read_text(encoding="utf8"))["total"]
+
+
+def test_areas_por_curso_e_privacidade(rodada):
+    _, _, base = rodada
+    res = json.loads((base / "public" / "resumo.json").read_text(encoding="utf8"))
+    for c in res["cidades"]:
+        for i in c["instituicoes"]:
+            if i["total"] < res["k_min"]:
+                assert i["areas"] is None  # grupo pequeno não revela área
+            else:
+                assert sum(n for por_sem in i["areas"].values() for n in por_sem.values()) == i["total"]
+    assert set(res["curso_area"]) == set(res["por_curso"])

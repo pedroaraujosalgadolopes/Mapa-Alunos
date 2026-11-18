@@ -58,6 +58,9 @@ def _subseq(chave: str, texto: str) -> bool:
     return all(c in it for c in chave)
 
 
+AREA_OUTRAS = "Outras áreas"
+
+
 class Referencia:
     """Cidades, instituições e aliases lidos de data/reference (nada fixo no código)."""
 
@@ -77,6 +80,13 @@ class Referencia:
             self.grafias.append((a["alias"], a["instituicao_id"]))
             if a["observacao"]:
                 self.aliases_obs[a["instituicao_id"]] = (a["alias"], a["observacao"])
+
+        # área de interesse por curso (areas.csv é uma classificação editorial, revisável por PR)
+        f_areas = ref_dir / "areas.csv"
+        self.areas = {fold(r["curso"]): r["area"] for r in rd("areas.csv")} if f_areas.exists() else {}
+
+    def area(self, curso: str) -> str:
+        return self.areas.get(fold(curso), AREA_OUTRAS)
 
     def regiao_ativa(self, cidade_id: str | None) -> bool:
         c = self.cidades.get(cidade_id or "")

@@ -5,6 +5,7 @@ export interface Instituicao {
   total: number;
   por_semestre: Record<string, number>;
   cursos: Record<string, number> | null; // null quando o grupo tem menos de 3 alunos
+  areas?: Record<string, Record<string, number>> | null; // {área: {semestre: n}}; null com menos de 3 alunos
 }
 
 export interface Cidade {
@@ -27,17 +28,20 @@ export interface Resumo {
   rotulo: string;
   total: number;
   k_min: number;
+  curso_area?: Record<string, string>; // curso → área de interesse
   cidades: Cidade[];
 }
 
 export interface Filtros {
   semestre: string;
   pais: string;
+  area: string; // "" = todas as áreas
 }
 
 export interface Pessoa {
   nome: string; // só o primeiro nome, nunca inscrição
   curso: string;
+  area?: string; // área de interesse do curso (data/reference/areas.csv)
   campus_origem: string; // campus da UFF de origem (ex.: Volta Redonda); vazio = Niterói
 }
 

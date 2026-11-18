@@ -18,7 +18,9 @@
     "resultado": "{n} alunos em {c} cidades",
     "ajudaSemestre": "Mostra só quem estará lá no mesmo semestre que você: mapa, \"perto de mim\" e grafo.",
     "resultadoUm": "{n} aluno em {c} cidade",
-    "resultadoMisto": "{n} alunos em {c} cidade"
+    "resultadoMisto": "{n} alunos em {c} cidade",
+    "area": "Área de interesse",
+    "ajudaArea": "Pelo curso. Grupos com menos de 3 alunos não aparecem neste filtro (privacidade)."
   },
   "legenda": {
     "titulo": "Legenda",
@@ -87,5 +89,10 @@
     "distancia": "{km} km em linha reta",
     "semTempo": "sem tempo conhecido",
     "verTodos": "← Ver todas as cidades"
+  },
+  "sobre": {
+    "titulo": "Projeto livre",
+    "texto": "Código aberto (licença MIT), feito para ser usado e modificado por qualquer pessoa. Todos os dados vêm de listas públicas do edital da UFF. Quer ajudar? Contribuições são bem-vindas: código, dados, traduções e revisão de cursos e cidades.",
+    "edital": "Edital 08/2026 da UFF"
   }
 }

@@ -86,4 +86,4 @@ testes e comunicação.
   com sua licença (não são CC0). Veja [transitous.org/sources](https://transitous.org/sources/).
 - Mapa: © contribuidores do OpenStreetMap.
 
-Projeto de estudantes, sem vínculo oficial com a UFF. Os dados vêm de PDFs públicos do edital da UFF.
+Projeto de estudantes, sem vínculo oficial com a UFF. Os dados vêm de PDFs públicos do edital da UFF (https://editais.uff.br/11710). O projeto é livre e de código aberto: pode ser usado, modificado e redistribuído (MIT para o código, CC0 para os dados de referência), e ajuda é bem-vinda (veja CONTRIBUTING.md).

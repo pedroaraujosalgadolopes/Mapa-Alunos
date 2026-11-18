@@ -15,7 +15,7 @@ import Painel, { type Vizinho } from "./Painel";
 
 export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   resumo: Resumo; fonte: "real" | "sintetico"; nomes: Nomes | null; tempos: Tempos | null; apresentacao: boolean }) {
-  const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "" });
+  const [filtros, setFiltros] = useState<Filtros>({ semestre: "", pais: "", area: "" });
   const [selecionada, setSelecionada] = useState<string | null>(null);
   const [raioH, setRaioH] = useState(0); // 0 = sem limite
   const [aba, setAba] = useState<"mapa" | "grafo">("mapa");
@@ -25,13 +25,16 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
   const [par, setPar] = useState<string[]>([]);
 
   const opcoes = useMemo(() => {
-    const sem = new Set<string>(), paises = new Set<string>();
+    const sem = new Set<string>(), paises = new Set<string>(), areas = new Set<string>();
     for (const c of resumo.cidades) {
       if (c.pais) paises.add(c.pais);
-      for (const i of c.instituicoes) Object.keys(i.por_semestre).forEach((s) => sem.add(s));
+      for (const i of c.instituicoes) {
+        Object.keys(i.por_semestre).forEach((s) => sem.add(s));
+        Object.keys(i.areas ?? {}).forEach((a) => areas.add(a));
+      }
     }
     const ord = (s: Set<string>) => [...s].sort((a, b) => a.localeCompare(b, "pt-BR"));
-    return { semestres: ord(sem), paises: ord(paises) };
+    return { semestres: ord(sem), paises: ord(paises), areas: ord(areas) };
   }, [resumo]);
 
   const todos = useMemo<No[]>(
@@ -155,8 +158,12 @@ export default function App({ resumo, fonte, nomes, tempos, apresentacao }: {
               <span style={{ "--c": tokens.color.nodeFora } as React.CSSProperties}>{t("legenda.fora")}</span>
             </div>
           </section>
-          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} vizinhos={listaVizinhos} semTempo={semTempo} raioH={raioH}
+          <Painel cidade={cidade} k={resumo.k_min} nomes={nomes} semestres={opcoes.semestres} semestre={filtros.semestre} area={filtros.area} cursoArea={resumo.curso_area ?? {}} vizinhos={listaVizinhos} semTempo={semTempo} raioH={raioH}
             onFechar={verTodos} onSelect={setSelecionada} />
+          <section className="sobre">
+            <h2>{t("sobre.titulo")}</h2>
+            <p className="nota">{t("sobre.texto")} <a href="https://editais.uff.br/11710" target="_blank" rel="noopener noreferrer">{t("sobre.edital")}</a>.</p>
+          </section>
           <p className="nota">{t("rodape.dados")}{tempos?.fonte === "transitous" && <> {t("rodape.tempos")}</>}</p>
         </aside>
         <main className="mapa">

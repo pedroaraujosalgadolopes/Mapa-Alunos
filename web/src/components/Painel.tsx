@@ -1,3 +1,4 @@
+import { contar, porSemestre } from "@/lib/filtro";
 import { t } from "@/lib/i18n";
 import { type Modo, fmtDuracao, icone } from "@/lib/tempos";
 import { tokens } from "@/lib/tokens";
@@ -29,9 +30,9 @@ function CartaoAluno({ p }: { p: Pessoa }) {
   );
 }
 
-function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nomes: Nomes | null; semestres: string[]; k: number; semestre: string }) {
+function Instituicao({ i, nomes, semestres, k, semestre, area, cursoArea }: { i: Instituicao; nomes: Nomes | null; semestres: string[]; k: number; semestre: string; area: string; cursoArea: Record<string, string> }) {
   const gente = nomes?.[i.instituicao_id];
-  const total = semestre ? (i.por_semestre[semestre] ?? 0) : i.total;
+  const total = contar(i, { semestre, pais: "", area });
   return (
     <article className="inst">
       <h3>
@@ -40,12 +41,12 @@ function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nom
         {i.campus_status === "padrao" && <span className="selo">{t("painel.campusPadrao")}</span>}
       </h3>
       {gente ? (
-        Object.entries(gente).filter(([s]) => !semestre || s === semestre).map(([s, pessoas]) => (
+        Object.entries(gente).filter(([s]) => !semestre || s === semestre).filter(([, ps]) => !area || ps.some((p) => p.area === area)).map(([s, pessoas]) => (
           <section key={s} className="grupo-sem">
             <h4 style={{ "--c": corSemestre(semestres, s) } as React.CSSProperties}>
-              <span className="badge-sem">{s}</span> <span className="nota">{contagem(pessoas.length)}</span>
+              <span className="badge-sem">{s}</span> <span className="nota">{contagem(pessoas.filter((p) => !area || p.area === area).length)}</span>
             </h4>
-            <ul className="alunos">{pessoas.map((p, n) => <CartaoAluno key={`${p.nome}-${n}`} p={p} />)}</ul>
+            <ul className="alunos">{pessoas.filter((p) => !area || p.area === area).map((p, n) => <CartaoAluno key={`${p.nome}-${n}`} p={p} />)}</ul>
           </section>
         ))
       ) : (
@@ -55,12 +56,12 @@ function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nom
           {!semestre && i.total >= k && i.cursos ? (
             <>
               <div className="sem">
-                {Object.entries(i.por_semestre).map(([s, n]) => (
+                {Object.entries(porSemestre(i, { area })).map(([s, n]) => (
                   <span key={s} className="chip" style={{ "--c": corSemestre(semestres, s) } as React.CSSProperties}>{t("painel.semestreN", { n, s })}</span>
                 ))}
               </div>
               <strong className="nota">{t("painel.cursos")}</strong>
-              <ul className="cursos">{Object.entries(i.cursos).map(([c, n]) => <li key={c}>{c} ({n})</li>)}</ul>
+              <ul className="cursos">{Object.entries(i.cursos).filter(([c]) => !area || cursoArea[c] === area).map(([c, n]) => <li key={c}>{c} ({n})</li>)}</ul>
             </>
           ) : !semestre ? (
             <p className="nota">{t("painel.ocultoPrivacidade")}</p>
@@ -73,14 +74,14 @@ function Instituicao({ i, nomes, semestres, k, semestre }: { i: Instituicao; nom
 
 export interface Vizinho { id: string; nome: string; pais: string; iso2: string | null; n: number; min: number; modo: Modo }
 
-export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos, semTempo, raioH, onFechar, onSelect }: {
-  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; semestre: string; vizinhos: Vizinho[] | null; semTempo: string[]; raioH: number;
+export default function Painel({ cidade, k, nomes, semestres, semestre, area, cursoArea, vizinhos, semTempo, raioH, onFechar, onSelect }: {
+  cidade: Cidade | null; k: number; nomes: Nomes | null; semestres: string[]; semestre: string; area: string; cursoArea: Record<string, string>; vizinhos: Vizinho[] | null; semTempo: string[]; raioH: number;
   onFechar: () => void; onSelect: (id: string) => void }) {
   if (!cidade) return <p className="nota">{t("painel.vazio")}</p>;
   const porSem: Record<string, number> = {};
-  for (const i of cidade.instituicoes) for (const [s, n] of Object.entries(i.por_semestre)) if (!semestre || s === semestre) porSem[s] = (porSem[s] ?? 0) + n;
+  for (const i of cidade.instituicoes) for (const [s, n] of Object.entries(porSemestre(i, { area }))) if (!semestre || s === semestre) porSem[s] = (porSem[s] ?? 0) + n;
   const totalCidade = Object.values(porSem).reduce((a, b) => a + b, 0);
-  const instituicoes = cidade.instituicoes.filter((i) => !semestre || (i.por_semestre[semestre] ?? 0) > 0);
+  const instituicoes = cidade.instituicoes.filter((i) => contar(i, { semestre, pais: "", area }) > 0);
   return (
     <section className="painel">
       <header className="cidade-cab">
@@ -123,7 +124,7 @@ export default function Painel({ cidade, k, nomes, semestres, semestre, vizinhos
         </section>
       )}
       {totalCidade === 0 && <p className="nota">{t("painel.ninguemNoSemestre", { s: semestre })}</p>}
-      {instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} semestre={semestre} />)}
+      {instituicoes.map((i) => <Instituicao key={i.instituicao_id} i={i} nomes={nomes} semestres={semestres} k={k} semestre={semestre} area={area} cursoArea={cursoArea} />)}
     </section>
   );
 }

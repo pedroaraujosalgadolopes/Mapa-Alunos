@@ -12,7 +12,7 @@ from datetime import date
 from pathlib import Path
 
 from .extract import extract_pdf
-from .normalize import Referencia, normaliza_curso, normaliza_nome
+from .normalize import AREA_OUTRAS, Referencia, normaliza_curso, normaliza_nome
 
 K_MIN = 3  # grupos (cidade + instituição) menores só mostram a contagem
 RE_SEMESTRE = re.compile(r"^\d{4}\.[12]$")
@@ -92,7 +92,10 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
         ent["instituicoes"].append({
             "instituicao_id": iid, "nome": inst["nome"] if inst else iid, "campus_status": inst["campus_status"] if inst else "pendente",
             "total": len(ls), "por_semestre": dict(sorted(Counter(l["semestre"] for l in ls).items())),
-            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items()))})
+            "cursos": None if oculto else dict(sorted(Counter(l["curso"] for l in ls).items())),
+            # {área: {semestre: n}}; grupo com menos de k alunos não revela área (mesma regra dos cursos)
+            "areas": None if oculto else {a: dict(sorted(Counter(l["semestre"] for l in ls if ref.area(l["curso"]) == a).items()))
+                                          for a in sorted({ref.area(l["curso"]) for l in ls})}})
     por_pais = Counter()
     for c in cidades.values():
         por_pais[c["pais"] or "pendente"] += c["total"]
@@ -100,16 +103,17 @@ def resumo(ativos: list[dict], ref: Referencia, snap: str, fontes: dict) -> tupl
             "por_semestre": dict(sorted(Counter(l["semestre"] for l in ativos).items())),
             "por_pais": dict(sorted(por_pais.items())),
             "por_curso": dict(sorted(Counter(l["curso"] for l in ativos).items())),
+            "curso_area": {c: ref.area(c) for c in sorted({l["curso"] for l in ativos})},
             "cidades": list(cidades.values()), "k_min": K_MIN}, ocultos
 
 
-def nomes_por_grupo(ativos: list[dict]) -> dict:
+def nomes_por_grupo(ativos: list[dict], ref: Referencia | None = None) -> dict:
     """{instituicao_id: {semestre: [{nome, curso, campus_origem}]}} em ordem alfabética (não revela a nota).
     Sem inscrição. Dado pessoal: o arquivo é gitignored e o front o oculta no modo apresentação."""
     out: dict = defaultdict(lambda: defaultdict(list))
     for l in ativos:
         out[l["instituicao_id"]][l["semestre"]].append(
-            {"nome": l["primeiro_nome"], "curso": l["curso"], "campus_origem": l["campus_origem"]})
+            {"nome": l["primeiro_nome"], "curso": l["curso"], "area": ref.area(l["curso"]) if ref else "", "campus_origem": l["campus_origem"]})
     return {i: {s: sorted(ps, key=lambda p: (p["nome"].casefold(), p["curso"])) for s, ps in sorted(sem.items())}
             for i, sem in sorted(out.items())}
 
@@ -131,6 +135,9 @@ def pendencias(ativos, linhas, resol, rej, ref: Referencia, ocultos: int, snap: 
         for iid, i in ref.instituicoes.items():
             if i["campus_status"] == st and cont.get(iid):
                 md.append(f"- **{i['nome']}** ({ref.cidades[i['cidade_id']]['cidade']}, {cont[iid]} alunos): {i['como_resolver']}")
+    sem_area = sorted({l["curso"] for l in ativos if ref.area(l["curso"]) == AREA_OUTRAS})
+    md.append(f"\n## Cursos sem área em `data/reference/areas.csv` ({len(sem_area)})\nCaem em \"{AREA_OUTRAS}\" até alguém classificar.\n")
+    md += [f"- {c}" for c in sem_area]
     md.append("\n## Aliases com fusão assumida\n")
     md += [f"- {a} → {ref.instituicoes[iid]['nome']}: {o}" for iid, (a, o) in ref.aliases_obs.items() if o]
     md.append("\n## Cidade e país inferidos (revisar)\nTodas as cidades e países vêm da tabela de instituições, inferidos.\n")
@@ -178,7 +185,7 @@ def publicar(linhas: list[dict], ref: Referencia, rej: list[str], hashes: dict, 
     ativos = [l for l in linhas if l["status"] == "ativo"]
     res, ocultos = resumo(ativos, ref, snap, fontes)
     (pub / "resumo.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf8")
-    (pub / "nomes.json").write_text(json.dumps(nomes_por_grupo(ativos), ensure_ascii=False, indent=1), encoding="utf8")
+    (pub / "nomes.json").write_text(json.dumps(nomes_por_grupo(ativos, ref), ensure_ascii=False, indent=1), encoding="utf8")
     md_pub, md_priv = pendencias(ativos, linhas, resol, rej, ref, ocultos, snap)
     (pub / "pendencias.md").write_text(md_pub, encoding="utf8")
     (priv / "pendencias_alunos.md").write_text(md_priv, encoding="utf8")
