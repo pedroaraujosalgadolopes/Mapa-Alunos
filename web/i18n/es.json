@@ -1,0 +1,99 @@
+{
+  "banner": {
+    "preliminar": "Datos preliminares de la convocatoria {edital}, actualizados el {data}",
+    "final": "Asignación final de la convocatoria {edital}, actualizada el {data}",
+    "snapshot": "snapshot {snapshot}",
+    "sintetico": "DATOS SINTÉTICOS (demostración, sin alumnos reales)",
+    "apresentacao": "modo presentación (sin nombres)",
+    "temposSimulados": "TIEMPOS SIMULADOS (demostración)"
+  },
+  "titulo": "Mapa Alumnos UFF",
+  "filtros": {
+    "titulo": "Filtros",
+    "semestre": "Mi semestre",
+    "pais": "País",
+    "todos": "Todos",
+    "todas": "Todas",
+    "limpar": "Limpiar filtros",
+    "resultado": "{n} alumnos en {c} ciudades",
+    "ajudaSemestre": "Muestra solo a quienes estarán allí en el mismo semestre que tú: mapa, \"cerca de mí\" y grafo.",
+    "resultadoUm": "{n} alumno en {c} ciudad",
+    "resultadoMisto": "{n} alumnos en {c} ciudad",
+    "area": "Área de interés",
+    "ajudaArea": "Según la carrera. Los grupos con menos de 3 alumnos no aparecen en este filtro (privacidad)."
+  },
+  "legenda": {
+    "titulo": "Leyenda",
+    "padrao": "Ciudad (Europa)",
+    "pendente": "Campus pendiente",
+    "fora": "Fuera de Europa"
+  },
+  "painel": {
+    "vazio": "Haz clic en una ciudad para ver las instituciones.",
+    "alunos": "{n} alumnos",
+    "aluno": "1 alumno",
+    "campusPendente": "campus pendiente",
+    "campusPadrao": "campus predeterminado",
+    "semestre": "Semestre {s}",
+    "cursos": "Carreras",
+    "uffNiteroi": "UFF",
+    "uffCampus": "UFF {campus}",
+    "semestreN": "{n} en {s}",
+    "ocultoPrivacidade": "Grupo con menos de 3 alumnos: no se muestra la carrera.",
+    "fechar": "Cerrar",
+    "ninguemNoSemestre": "Nadie en esta ciudad en {s}."
+  },
+  "rodape": {
+    "dados": "Datos: PDF públicos de la convocatoria 08/2026 (ciudad y país inferidos por el nombre de la institución). Mapa © OpenStreetMap.",
+    "tempos": "Tiempos de viaje: Transitous (transitous.org/sources), horario de día laborable."
+  },
+  "abas": {
+    "mapa": "Mapa",
+    "grafo": "Grafo",
+    "lista": "Lista"
+  },
+  "raio": {
+    "titulo": "Cerca de mí",
+    "ajuda": "Selecciona una ciudad en el mapa y elige hasta cuántas horas.",
+    "semLimite": "Sin límite",
+    "ate": "hasta {h} h",
+    "semTempos": "Los tiempos de viaje aún no están disponibles para estos datos.",
+    "notaTempos": "Tiempos aproximados, de día laborable. El tiempo real de tren/autobús proviene de datos abiertos incompletos y puede estar SOBREESTIMADO; por eso mostramos el MENOR entre ese y las estimaciones. 🚌 ✈ = estimado (no verifica si existe una línea o un vuelo directo).",
+    "estimativas": "Incluir estimaciones: 🚌 autobús en tramos cortos y ✈ vuelos"
+  },
+  "vizinhos": {
+    "titulo": "Quién está cerca",
+    "maisProximas": "Ciudades más cercanas",
+    "dentroDoRaio": "Dentro de {h} h",
+    "nenhuma": "Ninguna ciudad con alumnos en ese radio.",
+    "estimado": "estimado",
+    "noSemestre": "en {s}",
+    "semTempo": "Aún sin tiempo disponible",
+    "semTempoAjuda": "Ciudades con alumnos pero sin tiempo de viaje conocido (consulta en curso o sin datos en la fuente). No se estima nada para tren/autobús.",
+    "emais": "y {n} más"
+  },
+  "grafo": {
+    "corte": "Conectar ciudades a hasta {h} h de viaje",
+    "grupos": "Grupos",
+    "isolado": "aislado (menos de {k} alumnos)",
+    "alunosN": "{n} alumnos",
+    "dica": "Arrastra las ciudades. Líneas: tiempo de viaje. Gris discontinuo: grupo aislado.",
+    "semTempos": "El grafo necesita los tiempos de viaje, que aún no están disponibles para estos datos.",
+    "estimado": "estimado"
+  },
+  "medir": {
+    "titulo": "Medir entre dos ciudades",
+    "entrar": "Medir distancia y tiempo",
+    "sair": "Salir del modo medir",
+    "marqueA": "Haz clic en la primera ciudad.",
+    "marqueB": "Primera: {a}. Ahora haz clic en la segunda ciudad.",
+    "distancia": "{km} km en línea recta",
+    "semTempo": "sin tiempo conocido",
+    "verTodos": "← Ver todas las ciudades"
+  },
+  "sobre": {
+    "titulo": "Proyecto libre",
+    "texto": "Código abierto (licencia MIT), hecho para ser usado y modificado por cualquier persona. Todos los datos provienen de listas públicas de la convocatoria de la UFF. ¿Quieres ayudar? Las contribuciones son bienvenidas: código, datos, traducciones y revisión de carreras y ciudades.",
+    "edital": "Convocatoria 08/2026 de la UFF"
+  }
+}
